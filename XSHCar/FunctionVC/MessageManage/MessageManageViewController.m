@@ -30,7 +30,7 @@
     //设置title
     self.title = @"消息管理";
     //初始化数据
-    self.imageArray = @[@"abnormal vibration_alert",@"deployment_of the_boot prompt",@"collision_warning",@"rollover_alarm",@"electronic_fence",@"peace_family",@"maintenance_tips"];
+    self.imageArray = @[@"abnormalvibration_alert",@"deployment_of_the_bootprompt",@"collision_warning",@"rollover_alarm",@"electronic_fence",@"peace_family",@"maintenance_tips"];
     self.dataArray = (NSMutableArray *)@[@"异常震动提醒",@"布防启动提示",@"碰撞报警",@"侧翻报警",@"电子围栏",@"平安亲人",@"保养提示"];
     //初始化UI
     [self createUI];
@@ -46,7 +46,7 @@
 - (void)addTableView
 {
     NSLog(@"self.table.contentInset.top===%f",self.table.contentInset.top);
-    [self addTableViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44.0 * [self.dataArray count] + 64.0) tableType:UITableViewStylePlain tableDelegate:self];
+    [self addTableViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44.0 * [self.dataArray count] + NAV_HEIGHT) tableType:UITableViewStylePlain tableDelegate:self];
     self.table.scrollEnabled = NO;
     self.table.separatorInset = UIEdgeInsetsZero;
 }
@@ -71,7 +71,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *homeCellID = @"homeCellID";
+    static NSString *homeCellID = @"messageCellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:homeCellID];
     
     if (cell == nil)
@@ -79,10 +79,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:homeCellID];
         cell.backgroundColor = [UIColor whiteColor];
         cell.imageView.transform = CGAffineTransformScale(cell.imageView.transform, 0.5, 0.5);
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60 , (cell.frame.size.height - 30)/2, 60, 30)];
-    [switchView setOn:YES];
+    [switchView setOn:NO];
 //    switchView.onImage = [UIImage imageNamed:@"open_btn"];
 //    switchView.offImage = [UIImage imageNamed:@"close_btn"];
     switchView.onTintColor = RGB(28.0, 130.0, 202.0);
