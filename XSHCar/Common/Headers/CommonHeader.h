@@ -13,6 +13,12 @@
 #import "RequestHeader.h"
 #import "DeviceHeader.h"
 
+//导航条高度
+#define NAV_HEIGHT                  64.0
+
+//tabbar高度
+#define TABBAR_HEIGHT               49.0
+
 //设置字体大小
 #define FONT(f)                     [UIFont systemFontOfSize:f]
 

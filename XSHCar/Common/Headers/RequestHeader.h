@@ -10,10 +10,10 @@
 #define SmallPig_RequestHeader_h
 
 //服务器地址
-#define WEB_SERVER_URL @"http://112.95.225.12"
+#define WEB_SERVER_URL @"http://pcnew.xshcar.com:9988"
 
 //登陆地址
-#define LOGIN_URL [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/iface/iaplogin40.do"]
+#define LOGIN_URL [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/userlogin!login"]
 
 
 #endif
