@@ -57,9 +57,7 @@
 		7789E0D31A427FF300B4CD09 /* MessageManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789E0D21A427FF300B4CD09 /* MessageManageViewController.m */; };
 		7789E0D61A42800400B4CD09 /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789E0D51A42800400B4CD09 /* MineViewController.m */; };
 		7789E0D91A42801600B4CD09 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789E0D81A42801600B4CD09 /* SettingViewController.m */; };
-		7792DF761A42A1F5008F43A6 /* abnormal vibration_alert.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DF6F1A42A1F4008F43A6 /* abnormal vibration_alert.png */; };
 		7792DF771A42A1F5008F43A6 /* collision_warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DF701A42A1F4008F43A6 /* collision_warning.png */; };
-		7792DF781A42A1F5008F43A6 /* deployment_of the_boot prompt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DF711A42A1F4008F43A6 /* deployment_of the_boot prompt.png */; };
 		7792DF791A42A1F5008F43A6 /* electronic_fence.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DF721A42A1F4008F43A6 /* electronic_fence.png */; };
 		7792DF7A1A42A1F5008F43A6 /* maintenance_tips.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DF731A42A1F5008F43A6 /* maintenance_tips.png */; };
 		7792DF7B1A42A1F5008F43A6 /* peace_family.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DF741A42A1F5008F43A6 /* peace_family.png */; };
@@ -89,6 +87,12 @@
 		7792DFAC1A42C64C008F43A6 /* icon11.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DFA01A42C64C008F43A6 /* icon11.png */; };
 		7792DFAD1A42C64C008F43A6 /* icon12.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DFA11A42C64C008F43A6 /* icon12.png */; };
 		7792DFB21A42D17A008F43A6 /* CustomSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 7792DFB11A42D17A008F43A6 /* CustomSwitch.m */; };
+		CEF3EF811A43001C004262E2 /* deployment_of_the_bootprompt.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF7F1A43001C004262E2 /* deployment_of_the_bootprompt.png */; };
+		CEF3EF831A4300CB004262E2 /* abnormalvibration_alert.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF821A4300CB004262E2 /* abnormalvibration_alert.png */; };
+		CEF3EF881A431ACA004262E2 /* background_monitor.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF841A431ACA004262E2 /* background_monitor.png */; };
+		CEF3EF891A431ACA004262E2 /* communication_mode_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF851A431ACA004262E2 /* communication_mode_setting.png */; };
+		CEF3EF8A1A431ACA004262E2 /* maintenance_prompt_correction.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF861A431ACA004262E2 /* maintenance_prompt_correction.png */; };
+		CEF3EF8B1A431ACA004262E2 /* position_switch.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF871A431ACA004262E2 /* position_switch.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,9 +206,7 @@
 		7789E0D51A42800400B4CD09 /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
 		7789E0D71A42801600B4CD09 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		7789E0D81A42801600B4CD09 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
-		7792DF6F1A42A1F4008F43A6 /* abnormal vibration_alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "abnormal vibration_alert.png"; sourceTree = "<group>"; };
 		7792DF701A42A1F4008F43A6 /* collision_warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collision_warning.png; sourceTree = "<group>"; };
-		7792DF711A42A1F4008F43A6 /* deployment_of the_boot prompt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deployment_of the_boot prompt.png"; sourceTree = "<group>"; };
 		7792DF721A42A1F4008F43A6 /* electronic_fence.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = electronic_fence.png; sourceTree = "<group>"; };
 		7792DF731A42A1F5008F43A6 /* maintenance_tips.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maintenance_tips.png; sourceTree = "<group>"; };
 		7792DF741A42A1F5008F43A6 /* peace_family.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = peace_family.png; sourceTree = "<group>"; };
@@ -235,6 +237,12 @@
 		7792DFA11A42C64C008F43A6 /* icon12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon12.png; sourceTree = "<group>"; };
 		7792DFB01A42D17A008F43A6 /* CustomSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSwitch.h; sourceTree = "<group>"; };
 		7792DFB11A42D17A008F43A6 /* CustomSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSwitch.m; sourceTree = "<group>"; };
+		CEF3EF7F1A43001C004262E2 /* deployment_of_the_bootprompt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deployment_of_the_bootprompt.png; sourceTree = "<group>"; };
+		CEF3EF821A4300CB004262E2 /* abnormalvibration_alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = abnormalvibration_alert.png; sourceTree = "<group>"; };
+		CEF3EF841A431ACA004262E2 /* background_monitor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_monitor.png; sourceTree = "<group>"; };
+		CEF3EF851A431ACA004262E2 /* communication_mode_setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = communication_mode_setting.png; sourceTree = "<group>"; };
+		CEF3EF861A431ACA004262E2 /* maintenance_prompt_correction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maintenance_prompt_correction.png; sourceTree = "<group>"; };
+		CEF3EF871A431ACA004262E2 /* position_switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = position_switch.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -469,9 +477,9 @@
 		7789E04B1A427B4100B4CD09 /* message_images */ = {
 			isa = PBXGroup;
 			children = (
-				7792DF6F1A42A1F4008F43A6 /* abnormal vibration_alert.png */,
+				CEF3EF821A4300CB004262E2 /* abnormalvibration_alert.png */,
+				CEF3EF7F1A43001C004262E2 /* deployment_of_the_bootprompt.png */,
 				7792DF701A42A1F4008F43A6 /* collision_warning.png */,
-				7792DF711A42A1F4008F43A6 /* deployment_of the_boot prompt.png */,
 				7792DF721A42A1F4008F43A6 /* electronic_fence.png */,
 				7792DF731A42A1F5008F43A6 /* maintenance_tips.png */,
 				7792DF741A42A1F5008F43A6 /* peace_family.png */,
@@ -495,6 +503,10 @@
 		7789E04D1A427B4100B4CD09 /* setting_images */ = {
 			isa = PBXGroup;
 			children = (
+				CEF3EF841A431ACA004262E2 /* background_monitor.png */,
+				CEF3EF851A431ACA004262E2 /* communication_mode_setting.png */,
+				CEF3EF861A431ACA004262E2 /* maintenance_prompt_correction.png */,
+				CEF3EF871A431ACA004262E2 /* position_switch.png */,
 				7792DF7D1A42A3E2008F43A6 /* close_btn.png */,
 				7792DF7E1A42A3E2008F43A6 /* open_btn.png */,
 			);
@@ -717,7 +729,9 @@
 			files = (
 				7792DF771A42A1F5008F43A6 /* collision_warning.png in Resources */,
 				7792DF911A42AA82008F43A6 /* tabbar_home1@2x.png in Resources */,
+				CEF3EF881A431ACA004262E2 /* background_monitor.png in Resources */,
 				7792DFAA1A42C64C008F43A6 /* icon9.png in Resources */,
+				CEF3EF811A43001C004262E2 /* deployment_of_the_bootprompt.png in Resources */,
 				7792DFA51A42C64C008F43A6 /* icon4.png in Resources */,
 				7792DF871A42A40F008F43A6 /* check_forupdates.png in Resources */,
 				7792DFA81A42C64C008F43A6 /* icon7.png in Resources */,
@@ -726,23 +740,25 @@
 				7792DFAC1A42C64C008F43A6 /* icon11.png in Resources */,
 				7792DFA61A42C64C008F43A6 /* icon5.png in Resources */,
 				7792DF791A42A1F5008F43A6 /* electronic_fence.png in Resources */,
-				7792DF761A42A1F5008F43A6 /* abnormal vibration_alert.png in Resources */,
 				7792DF921A42AA82008F43A6 /* tabbar_message1@2x.png in Resources */,
 				7792DFA41A42C64C008F43A6 /* icon3.png in Resources */,
 				7792DFA31A42C64C008F43A6 /* icon2.png in Resources */,
 				7792DFA21A42C64C008F43A6 /* icon1.png in Resources */,
 				7792DF7F1A42A3E2008F43A6 /* close_btn.png in Resources */,
 				7792DF931A42AA82008F43A6 /* tabbar_mine1@2x.png in Resources */,
-				7792DF781A42A1F5008F43A6 /* deployment_of the_boot prompt.png in Resources */,
+				CEF3EF891A431ACA004262E2 /* communication_mode_setting.png in Resources */,
 				7792DFA91A42C64C008F43A6 /* icon8.png in Resources */,
+				CEF3EF8A1A431ACA004262E2 /* maintenance_prompt_correction.png in Resources */,
 				7792DFAD1A42C64C008F43A6 /* icon12.png in Resources */,
 				7792DF7A1A42A1F5008F43A6 /* maintenance_tips.png in Resources */,
 				7792DFA71A42C64C008F43A6 /* icon6.png in Resources */,
 				7792DF881A42A40F008F43A6 /* exit.png in Resources */,
 				7792DF891A42A40F008F43A6 /* help.png in Resources */,
 				7792DFAB1A42C64C008F43A6 /* icon10.png in Resources */,
+				CEF3EF831A4300CB004262E2 /* abnormalvibration_alert.png in Resources */,
 				7792DF7C1A42A1F5008F43A6 /* rollover_alarm.png in Resources */,
 				7792DF941A42AA82008F43A6 /* tabbar_setting1@2x.png in Resources */,
+				CEF3EF8B1A431ACA004262E2 /* position_switch.png in Resources */,
 				7792DF8A1A42A40F008F43A6 /* sms_recharge.png in Resources */,
 				7792DF861A42A40F008F43A6 /* account_information.png in Resources */,
 				7792DF801A42A3E2008F43A6 /* open_btn.png in Resources */,
