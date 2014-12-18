@@ -21,12 +21,14 @@
 {
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]init];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    //[manager.requestSerializer setValue:[userinfo valueForKey:kCookie] forHTTPHeaderField:@"cookie"];
+//    [manager.requestSerializer setValue:@"0001" forHTTPHeaderField:@"t_code"];
+//    [manager.requestSerializer setValue:@"1.2.3" forHTTPHeaderField:@"version_code"];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/json",@"application/json",@"text/plain",nil];
     requestOperation = [manager POST:url parameters:paramas
           success:^(AFHTTPRequestOperation *operation,id responeDic)
           {
+              NSLog(@"==111==%@",operation.response.allHeaderFields);
               if (sucess)
               {
                   sucess(operation,responeDic);
@@ -39,7 +41,6 @@
                   fail(operation,err);
               }
           }];
-    
     if (RequestTypeSynchronous == type)
     {
         [requestOperation waitUntilFinished];
