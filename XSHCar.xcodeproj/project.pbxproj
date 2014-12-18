@@ -17,8 +17,6 @@
 		7789E01C1A42796500B4CD09 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789E01B1A42796500B4CD09 /* XCTest.framework */; };
 		7789E01D1A42796500B4CD09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789E0021A42796500B4CD09 /* Foundation.framework */; };
 		7789E01E1A42796500B4CD09 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789E0061A42796500B4CD09 /* UIKit.framework */; };
-		7789E0261A42796500B4CD09 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7789E0241A42796500B4CD09 /* InfoPlist.strings */; };
-		7789E0281A42796500B4CD09 /* XSHCarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789E0271A42796500B4CD09 /* XSHCarTests.m */; };
 		7789E0581A427CCD00B4CD09 /* BasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789E0571A427CCD00B4CD09 /* BasicViewController.m */; };
 		7789E07B1A427CD900B4CD09 /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789E05B1A427CD900B4CD09 /* NSData+GIF.m */; };
 		7789E07C1A427CD900B4CD09 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789E05D1A427CD900B4CD09 /* NSData+ImageContentType.m */; };
@@ -117,9 +115,6 @@
 		7789E0141A42796500B4CD09 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7789E01A1A42796500B4CD09 /* XSHCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XSHCarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7789E01B1A42796500B4CD09 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		7789E0231A42796500B4CD09 /* XSHCarTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XSHCarTests-Info.plist"; sourceTree = "<group>"; };
-		7789E0251A42796500B4CD09 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7789E0271A42796500B4CD09 /* XSHCarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XSHCarTests.m; sourceTree = "<group>"; };
 		7789E0561A427CCD00B4CD09 /* BasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicViewController.h; sourceTree = "<group>"; };
 		7789E0571A427CCD00B4CD09 /* BasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicViewController.m; sourceTree = "<group>"; };
 		7789E05A1A427CD900B4CD09 /* NSData+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+GIF.h"; sourceTree = "<group>"; };
@@ -270,7 +265,6 @@
 			isa = PBXGroup;
 			children = (
 				7789E0081A42796500B4CD09 /* XSHCar */,
-				7789E0211A42796500B4CD09 /* XSHCarTests */,
 				7789E0011A42796500B4CD09 /* Frameworks */,
 				7789E0001A42796500B4CD09 /* Products */,
 			);
@@ -317,24 +311,6 @@
 				7789E00B1A42796500B4CD09 /* InfoPlist.strings */,
 				7789E00E1A42796500B4CD09 /* main.m */,
 				7789E0101A42796500B4CD09 /* XSHCar-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		7789E0211A42796500B4CD09 /* XSHCarTests */ = {
-			isa = PBXGroup;
-			children = (
-				7789E0271A42796500B4CD09 /* XSHCarTests.m */,
-				7789E0221A42796500B4CD09 /* Supporting Files */,
-			);
-			path = XSHCarTests;
-			sourceTree = "<group>";
-		};
-		7789E0221A42796500B4CD09 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7789E0231A42796500B4CD09 /* XSHCarTests-Info.plist */,
-				7789E0241A42796500B4CD09 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -779,7 +755,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7789E0261A42796500B4CD09 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -840,7 +815,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7789E0281A42796500B4CD09 /* XSHCarTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,14 +833,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				7789E00C1A42796500B4CD09 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		7789E0241A42796500B4CD09 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7789E0251A42796500B4CD09 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
