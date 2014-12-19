@@ -87,6 +87,9 @@
 		7792DFAC1A42C64C008F43A6 /* icon11.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DFA01A42C64C008F43A6 /* icon11.png */; };
 		7792DFAD1A42C64C008F43A6 /* icon12.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DFA11A42C64C008F43A6 /* icon12.png */; };
 		7792DFB21A42D17A008F43A6 /* CustomSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 7792DFB11A42D17A008F43A6 /* CustomSwitch.m */; };
+		77DA08921A43C97E00BA72D1 /* XSH_Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DA08911A43C97E00BA72D1 /* XSH_Application.m */; };
+		77DA08951A44167B00BA72D1 /* ExcitingActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DA08941A44167B00BA72D1 /* ExcitingActivitiesViewController.m */; };
+		77DA08981A44177400BA72D1 /* MobileStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DA08971A44177400BA72D1 /* MobileStoreViewController.m */; };
 		CEF3EF811A43001C004262E2 /* deployment_of_the_bootprompt.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF7F1A43001C004262E2 /* deployment_of_the_bootprompt.png */; };
 		CEF3EF831A4300CB004262E2 /* abnormalvibration_alert.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF821A4300CB004262E2 /* abnormalvibration_alert.png */; };
 		CEF3EF881A431ACA004262E2 /* background_monitor.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF841A431ACA004262E2 /* background_monitor.png */; };
@@ -237,6 +240,12 @@
 		7792DFA11A42C64C008F43A6 /* icon12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon12.png; sourceTree = "<group>"; };
 		7792DFB01A42D17A008F43A6 /* CustomSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSwitch.h; sourceTree = "<group>"; };
 		7792DFB11A42D17A008F43A6 /* CustomSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSwitch.m; sourceTree = "<group>"; };
+		77DA08901A43C97E00BA72D1 /* XSH_Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XSH_Application.h; sourceTree = "<group>"; };
+		77DA08911A43C97E00BA72D1 /* XSH_Application.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XSH_Application.m; sourceTree = "<group>"; };
+		77DA08931A44167B00BA72D1 /* ExcitingActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExcitingActivitiesViewController.h; sourceTree = "<group>"; };
+		77DA08941A44167B00BA72D1 /* ExcitingActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExcitingActivitiesViewController.m; sourceTree = "<group>"; };
+		77DA08961A44177400BA72D1 /* MobileStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileStoreViewController.h; sourceTree = "<group>"; };
+		77DA08971A44177400BA72D1 /* MobileStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileStoreViewController.m; sourceTree = "<group>"; };
 		CEF3EF7F1A43001C004262E2 /* deployment_of_the_bootprompt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deployment_of_the_bootprompt.png; sourceTree = "<group>"; };
 		CEF3EF821A4300CB004262E2 /* abnormalvibration_alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = abnormalvibration_alert.png; sourceTree = "<group>"; };
 		CEF3EF841A431ACA004262E2 /* background_monitor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_monitor.png; sourceTree = "<group>"; };
@@ -383,6 +392,8 @@
 				7789E0C41A427D2100B4CD09 /* CreateViewTool.m */,
 				7789E0C51A427D2100B4CD09 /* RequestTool.h */,
 				7789E0C61A427D2100B4CD09 /* RequestTool.m */,
+				77DA08901A43C97E00BA72D1 /* XSH_Application.h */,
+				77DA08911A43C97E00BA72D1 /* XSH_Application.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -403,6 +414,10 @@
 			children = (
 				7789E0CE1A427FDC00B4CD09 /* HomeViewController.h */,
 				7789E0CF1A427FDC00B4CD09 /* HomeViewController.m */,
+				77DA08931A44167B00BA72D1 /* ExcitingActivitiesViewController.h */,
+				77DA08941A44167B00BA72D1 /* ExcitingActivitiesViewController.m */,
+				77DA08961A44177400BA72D1 /* MobileStoreViewController.h */,
+				77DA08971A44177400BA72D1 /* MobileStoreViewController.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -793,8 +808,11 @@
 				7789E07D1A427CD900B4CD09 /* SDImageCache.m in Sources */,
 				7789E0131A42796500B4CD09 /* AppDelegate.m in Sources */,
 				7789E0BC1A427CEF00B4CD09 /* UIButton+AFNetworking.m in Sources */,
+				77DA08951A44167B00BA72D1 /* ExcitingActivitiesViewController.m in Sources */,
 				7789E0C81A427D2100B4CD09 /* CreateViewTool.m in Sources */,
 				7789E0C71A427D2100B4CD09 /* CommonTool.m in Sources */,
+				77DA08921A43C97E00BA72D1 /* XSH_Application.m in Sources */,
+				77DA08981A44177400BA72D1 /* MobileStoreViewController.m in Sources */,
 				7789E00F1A42796500B4CD09 /* main.m in Sources */,
 				7789E0BD1A427CEF00B4CD09 /* UIImageView+AFNetworking.m in Sources */,
 				7789E07F1A427CD900B4CD09 /* SDWebImageDecoder.m in Sources */,
