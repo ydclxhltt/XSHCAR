@@ -75,12 +75,15 @@
  */
 + (void)clipView:(UIView *)view withCornerRadius:(float)radius;
 
+
 /*
- *  设置特层圆角属性
+ *  MD5
  *
  *  @pram   str    需要加密的字符串
  *
  *  @return        加密后的字符串
  */
 + (NSString *)md5:(NSString *)str;
+
+
 @end
