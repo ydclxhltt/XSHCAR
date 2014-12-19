@@ -28,6 +28,8 @@ typedef enum : NSUInteger
 #import "CommonHeader.h"
 #import "CreateViewTool.h"
 #import "AppDelegate.h"
+#import "XSH_Application.h"
+#import "RequestTool.h"
 
 @interface BasicViewController : UIViewController
 {
