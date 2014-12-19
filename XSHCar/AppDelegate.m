@@ -11,9 +11,12 @@
 #import "MessageManageViewController.h"
 #import "SettingViewController.h"
 #import "MineViewController.h"
-#import "CommonHeader.h"
-#import "RequestTool.h"
-#import <CommonCrypto/CommonDigest.h>
+
+
+
+@interface AppDelegate()
+
+@end
 
 @implementation AppDelegate
 
@@ -31,26 +34,23 @@
     //添加主视图
     [self addMainView];
     
-    
+
     RequestTool *request = [[RequestTool alloc] init];
-    [request requestWithUrl:LOGIN_URL requestParamas:@{@"s_name":@"tom",@"s_password":[self md5:@"123456"]} requestType:RequestTypeSynchronous requestSucess:^(AFHTTPRequestOperation *operation,id responseDic){NSLog(@"=====%@",responseDic);} requestFail:^(AFHTTPRequestOperation *operation,NSError *error){NSLog(@"error===%@",error);}];
-    
+    [request requestWithUrl:LOGIN_URL requestParamas:@{@"s_name":@"tom",@"s_password":[CommonTool md5:@"123456"]} requestType:RequestTypeSynchronous
+    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+    {
+        NSLog(@"loginResponseDic===%@",responseDic);
+        [[XSH_Application shareXshApplication] setLoginDic:responseDic];
+        [[XSH_Application shareXshApplication] setShopID:[[responseDic objectForKey:@"shop_id"] intValue]];
+        [[XSH_Application shareXshApplication] setUserID:[[responseDic objectForKey:@"user_id"] intValue]];
+    }
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+    {
+        NSLog(@"error===%@",error);
+    }];
     return YES;
 }
 
-- (NSString *)md5:(NSString *)str
-{
-    const char *cStr = [str UTF8String];
-    unsigned char result[16];
-    CC_MD5(cStr, strlen(cStr), result); // This is the md5 call
-    return [NSString stringWithFormat:
-            @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-            result[0], result[1], result[2], result[3],
-            result[4], result[5], result[6], result[7],
-            result[8], result[9], result[10], result[11],
-            result[12], result[13], result[14], result[15]
-            ]; 
-}
 
 //添加主界面
 - (void)addMainView
