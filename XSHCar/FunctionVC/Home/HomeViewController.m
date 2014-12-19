@@ -7,6 +7,7 @@
 //
 
 #import "HomeViewController.h"
+#import "ExcitingActivitiesViewController.h"
 
 @interface HomeViewController ()
 {
@@ -89,11 +90,75 @@
             button.titleLabel.font = FONT(12.0);
             [button setTitleEdgeInsets:UIEdgeInsetsMake(35.0, 0.0, 0.0, 0.0)];
             [button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"icon%d",(int)button.tag]] forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
             button.showsTouchWhenHighlighted = YES;
             [scrollView addSubview:button];
         }
     }
 }
+
+
+#pragma mark 按钮响应时间
+- (void)buttonPressed:(UIButton *)button
+{
+    UIViewController *viewController = nil;
+    int tag = (int)button.tag;
+    switch (tag)
+    {
+        case 1:
+            [self getPhoneNumber];
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            viewController = [[ExcitingActivitiesViewController alloc] init];
+            break;
+        case 4:
+            
+            break;
+        case 5:
+            
+            break;
+        case 6:
+            
+            break;
+        case 7:
+            
+            break;
+        case 8:
+            
+            break;
+        case 9:
+            
+            break;
+        case 10:
+            
+            break;
+        case 11:
+            
+            break;
+        case 12:
+            
+            break;
+        default:
+            break;
+    }
+    if (viewController)
+    {
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+}
+
+#pragma mark 获取一键救援号码
+- (void)getPhoneNumber
+{
+    RequestTool *request = [[RequestTool alloc] init];
+    int shopID = [[XSH_Application shareXshApplication] shopID];
+    [request requestWithUrl1:KEY_RESCUE_URL requestParamas:@{@"shop_id":[NSNumber numberWithInt:shopID]} requestType:RequestTypeSynchronous requestSucess:^(AFHTTPRequestOperation *operation,id responseDic){NSLog(@"=====%@",responseDic);} requestFail:^(AFHTTPRequestOperation *operation,NSError *error){NSLog(@"error===%@",error);}];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
