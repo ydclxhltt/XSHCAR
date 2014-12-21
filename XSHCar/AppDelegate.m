@@ -83,8 +83,6 @@
      mainTabbarViewController.viewControllers = [NSArray arrayWithObjects:homeNavViewController,messageManageNavViewController,settingNavViewController,mineNavViewController,nil];
     self.window.rootViewController = mainTabbarViewController;
     
-
-    
 }
 
 
