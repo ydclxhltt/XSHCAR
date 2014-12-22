@@ -57,7 +57,6 @@
 // 1.设置导航条Item
 - (void)setNavBarItemWithTitle:(NSString *)title navItemType:(NavItemType)type selectorName:(NSString *)selName
 {
-
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, 0, 60, 30);
     button.showsTouchWhenHighlighted = YES;
@@ -92,9 +91,9 @@
     }
     UIBarButtonItem  *barItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     if(LeftItem == type)
-    self.navigationItem.leftBarButtonItem = barItem;
+        self.navigationItem.leftBarButtonItem = barItem;
     else if (rightItem == type)
-    self.navigationItem.rightBarButtonItem = barItem;
+        self.navigationItem.rightBarButtonItem = barItem;
 }
 
 #pragma mark 添加返回Item

@@ -10,6 +10,7 @@ typedef enum : NSUInteger
 {
     LeftItem,
     rightItem,
+    backItem,
 } NavItemType;
 
 typedef enum : NSUInteger
