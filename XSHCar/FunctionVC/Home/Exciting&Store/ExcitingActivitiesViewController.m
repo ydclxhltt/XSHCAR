@@ -19,19 +19,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //设置title
-    self.title = @"精彩活动";
     //添加backitem
     [self addBackItem];
     //初始化数据
     currentPage = 1;
-    self.dataArray = [[NSMutableArray alloc] init];
     //初始化UI
     [self createUI];
     //获取数据
     [self getDataList];
     // Do any additional setup after loading the view.
 }
+
 
 #pragma mark 初始化UI
 - (void)createUI
@@ -47,7 +45,7 @@
 #pragma mark 获取数据
 - (void)getDataList
 {
-    __weak NSMutableArray *array = self.dataArray;
+    __weak typeof(self) weakSelf = self;
     NSDictionary *requestDic = @{@"shop_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] shopID]],@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"currentPage":[NSNumber numberWithInt:currentPage],@"pageNum":[NSNumber numberWithInt:10]};
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl:EXCITING_LIST_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
@@ -56,19 +54,26 @@
          NSLog(@"excitingResponseDic===%@",responseDic);
          if ([responseDic isKindOfClass:[NSArray class]] || [responseDic isKindOfClass:[NSMutableArray class]])
          {
-             NSArray *tempArray = (NSArray *)responseDic;
+             NSMutableArray *tempArray = (NSMutableArray *)responseDic;
              if ([tempArray count] == 0)
              {
                  //最后一页
              }
-             else if ([tempArray count] < 10)
+             else
              {
-                 //最后一页
-                 [array addObjectsFromArray:tempArray];
-             }
-             else if ([tempArray count] == 10)
-             {
-                 [array addObjectsFromArray:tempArray];
+                 if (!weakSelf.dataArray)
+                 {
+                     weakSelf.dataArray = tempArray;
+                 }
+                 if ([tempArray count] < 10)
+                 {
+                     //最后一页
+                     [weakSelf.dataArray addObjectsFromArray:tempArray];
+                 }
+                 else if ([tempArray count] == 10)
+                 {
+                     [weakSelf.dataArray addObjectsFromArray:tempArray];
+                 }
              }
              [self.table reloadData];
          }
@@ -108,24 +113,24 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:homeCellID];
         cell.backgroundColor = [UIColor whiteColor];
         cell.separatorInset = UIEdgeInsetsZero;
-        cell.imageView.transform = CGAffineTransformScale(cell.imageView.transform, 0.5, 0.5);
+        //cell.imageView.transform = CGAffineTransformScale(cell.imageView.transform, 0.5, 0.5);
     }
     
     NSDictionary *rowDataDic = self.dataArray[indexPath.row];
-    cell.textLabel.text = [rowDataDic objectForKey:@"mdtTitle"];
-    cell.detailTextLabel.text = [rowDataDic objectForKey:@"mdtContent"];
-    cell.textLabel.font = FONT(16.0);
-    cell.detailTextLabel.font = FONT(14.0);
-    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+    
     NSString *imageUrl = [rowDataDic objectForKey:@"mdtTopimage"];
+    imageUrl = @"http://211.154.155.29:8086/epg30/selfadaimg.do?path=/pgicon/20141222/3066944/144209.jpg";
     if (imageUrl && ![@"" isEqualToString:imageUrl])
     {
         [cell.imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
     }
     
-    //[UIImage imageNamed:[[self.imageArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
-    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-    
+    cell.textLabel.text = [rowDataDic objectForKey:@"mdtTitle"];
+    cell.detailTextLabel.text = [rowDataDic objectForKey:@"mdtContent"];
+    cell.textLabel.font = FONT(16.0);
+    cell.detailTextLabel.font = FONT(14.0);
+    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+
     return cell;
 }
 

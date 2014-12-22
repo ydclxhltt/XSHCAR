@@ -7,7 +7,10 @@
 //
 
 #import "HomeViewController.h"
+#import "BookingViewController.h"
 #import "ExcitingActivitiesViewController.h"
+#import "BugsTipViewController.h"
+#import "AdvView.h"
 
 @interface HomeViewController ()
 {
@@ -36,7 +39,7 @@
     self.dataArray = (NSMutableArray *)@[@"一键救援",@"预约服务",@"精彩活动",@"移动商城",@"仪表盘",@"驾驶习惯",@"故障提示",@"车况检查",@"违章查询",@"油耗里程",@"位置服务",@"4S服务"];
     //初始化UI
     [self createUI];
-
+    self.automaticallyAdjustsScrollViewInsets = NO;
     // Do any additional setup after loading the view.
 }
 
@@ -49,11 +52,33 @@
 
 - (void)addAdvView
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_HEIGHT, 160)];
-    view.backgroundColor = [UIColor lightGrayColor];
-    [self.view addSubview:view];
+    //设置frame
+    float advHeight = ADV_HEIGHT;
     
-    height += view.frame.size.height;
+    if (SCREEN_WIDTH > 320.0)
+    {
+        advHeight = (SCREEN_WIDTH/320.0) * ADV_HEIGHT;
+    }
+    
+    //设置广告数据
+    NSDictionary *loginDic = [[XSH_Application  shareXshApplication] loginDic];
+    NSArray *imageUrlArray = nil;
+    if (loginDic)
+    {
+        imageUrlArray = [loginDic objectForKey:@""];
+    }
+    
+    if (!imageUrlArray || [imageUrlArray count] == 0)
+    {
+        imageUrlArray = @[@""];
+    }
+    
+    //初始化广告视图
+    AdvView *advView = [[AdvView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, advHeight)];
+    [advView setAdvData:imageUrlArray];
+    [self.view addSubview:advView];
+    
+    height += advView.frame.size.height;
 }
 
 - (void)addFunctionsView
@@ -109,7 +134,7 @@
             [self getPhoneNumber];
             break;
         case 2:
-            
+            viewController = [[BookingViewController alloc] init];
             break;
         case 3:
             viewController = [[ExcitingActivitiesViewController alloc] init];
@@ -124,7 +149,7 @@
             
             break;
         case 7:
-            
+            viewController = [[BugsTipViewController alloc] init];
             break;
         case 8:
             
@@ -146,6 +171,7 @@
     }
     if (viewController)
     {
+        viewController.title = self.dataArray[(int)tag - 1];
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }
@@ -156,7 +182,31 @@
 {
     RequestTool *request = [[RequestTool alloc] init];
     int shopID = [[XSH_Application shareXshApplication] shopID];
-    [request requestWithUrl1:KEY_RESCUE_URL requestParamas:@{@"shop_id":[NSNumber numberWithInt:shopID]} requestType:RequestTypeSynchronous requestSucess:^(AFHTTPRequestOperation *operation,id responseDic){NSLog(@"=====%@",responseDic);} requestFail:^(AFHTTPRequestOperation *operation,NSError *error){NSLog(@"error===%@",error);}];
+    [request requestWithUrl1:KEY_RESCUE_URL requestParamas:@{@"shop_id":[NSNumber numberWithInt:shopID]} requestType:RequestTypeSynchronous requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+    {
+        NSLog(@"=====%@",responseDic);
+        NSString *responseString = (NSString *)responseDic;
+        if(responseString && ![@"" isEqualToString:responseString])
+        {
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",responseString]];
+            if ([[UIApplication sharedApplication] canOpenURL:url])
+            {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+            else
+            {
+                //设备不支持
+                [CommonTool addAlertTipWithMessage:@"设备不支持"];
+            }
+        }
+        else
+        {
+            //获取失败
+            [CommonTool addAlertTipWithMessage:@"获取号码失败"];
+        }
+    }
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+    {NSLog(@"error===%@",error);}];
 }
 
 

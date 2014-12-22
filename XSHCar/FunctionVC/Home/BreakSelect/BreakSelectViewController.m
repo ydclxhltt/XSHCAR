@@ -1,26 +1,21 @@
 //
-//  MobileStoreViewController.m
+//  BreakSelectViewController.m
 //  XSHCar
 //
-//  Created by clei on 14/12/19.
+//  Created by clei on 14/12/22.
 //  Copyright (c) 2014年 chenlei. All rights reserved.
 //
 
-#import "MobileStoreViewController.h"
+#import "BreakSelectViewController.h"
 
-@interface MobileStoreViewController ()
+@interface BreakSelectViewController ()
 
 @end
 
-@implementation MobileStoreViewController
+@implementation BreakSelectViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    //设置title
-    self.title = @"移动商城";
-    //添加backitem
-    [self addBackItem];
     // Do any additional setup after loading the view.
 }
 
