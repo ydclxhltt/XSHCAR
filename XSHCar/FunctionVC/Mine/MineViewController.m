@@ -44,7 +44,7 @@
 
 - (void)addTableView
 {
-    [self addTableViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44.0 *  4 + 10 * 2 + NAV_HEIGHT) tableType:UITableViewStylePlain tableDelegate:self];
+    [self addTableViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44.0 *  4 + 15 * 2 + NAV_HEIGHT) tableType:UITableViewStylePlain tableDelegate:self];
     self.table.scrollEnabled = NO;
 }
 
@@ -53,7 +53,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 10.0;
+    return 15.0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
