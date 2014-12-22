@@ -53,7 +53,7 @@
 - (void)requestWithUrl1:(NSString *)url requestParamas:(NSDictionary *)paramas requestType:(RequestType)type requestSucess:(void (^)(AFHTTPRequestOperation *operation,id responseDic))sucess requestFail:(void (^)(AFHTTPRequestOperation *operation,NSError *error))fail
 {
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]init];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.requestSerializer.timeoutInterval = 10.0;
     //    [manager.requestSerializer setValue:@"0001" forHTTPHeaderField:@"t_code"];
     //    [manager.requestSerializer setValue:@"1.2.3" forHTTPHeaderField:@"version_code"];

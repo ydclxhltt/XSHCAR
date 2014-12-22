@@ -85,5 +85,11 @@
  */
 + (NSString *)md5:(NSString *)str;
 
+/*
+ *  创建提示alert
+ *
+ *  @pram   message 提示文字
+ */
++ (void)addAlertTipWithMessage:(NSString *)message;
 
 @end
