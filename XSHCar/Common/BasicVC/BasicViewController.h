@@ -31,6 +31,7 @@ typedef enum : NSUInteger
 #import "AppDelegate.h"
 #import "XSH_Application.h"
 #import "RequestTool.h"
+#import "SVProgressHUD.h"
 
 @interface BasicViewController : UIViewController
 {

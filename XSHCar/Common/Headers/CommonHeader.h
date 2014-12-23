@@ -13,6 +13,19 @@
 #import "RequestHeader.h"
 #import "DeviceHeader.h"
 
+
+//
+#define LOADING_DEFAULT_TIP         @"加载中..."
+
+//
+#define LOADING_SUCESS_TIP          @"加载成功"
+
+//
+#define LOADING_FAIL_TIP            @"加载失败"
+
+//
+#define LOADING_WEBERROR_TIP        @"服务器异常"
+
 //导航条高度
 #define NAV_HEIGHT                  64.0
 
