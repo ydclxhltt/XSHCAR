@@ -180,14 +180,16 @@
 #pragma mark 获取一键救援号码
 - (void)getPhoneNumber
 {
+    [SVProgressHUD showWithStatus:@"正在获取"];
     RequestTool *request = [[RequestTool alloc] init];
     int shopID = [[XSH_Application shareXshApplication] shopID];
-    [request requestWithUrl1:KEY_RESCUE_URL requestParamas:@{@"shop_id":[NSNumber numberWithInt:shopID]} requestType:RequestTypeSynchronous requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+    [request requestWithUrl1:KEY_RESCUE_URL requestParamas:@{@"shop_id":[NSNumber numberWithInt:shopID]} requestType:RequestTypeAsynchronous requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
         NSLog(@"=====%@",responseDic);
         NSString *responseString = (NSString *)responseDic;
         if(responseString && ![@"" isEqualToString:responseString])
         {
+            [SVProgressHUD showSuccessWithStatus:@"获取成功" duration:.5];
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",responseString]];
             if ([[UIApplication sharedApplication] canOpenURL:url])
             {
@@ -202,11 +204,14 @@
         else
         {
             //获取失败
-            [CommonTool addAlertTipWithMessage:@"获取号码失败"];
+            [SVProgressHUD showErrorWithStatus:@"获取号码失败"];
         }
     }
     requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
-    {NSLog(@"error===%@",error);}];
+    {
+        [SVProgressHUD showErrorWithStatus:@"获取号码失败"];
+        NSLog(@"error===%@",error);
+    }];
 }
 
 
