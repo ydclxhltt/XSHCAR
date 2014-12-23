@@ -163,8 +163,16 @@
 //创建提示alert
 + (void)addAlertTipWithMessage:(NSString *)message
 {
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
+}
+
+//時間轉換成字符串
++ (NSString *)getStringFromDate:(NSDate *)date formatterString:(NSString *)fmtString;
+{
+    NSDateFormatter *formatter = [[NSDateFormatter  alloc]init];
+    [formatter setDateFormat:fmtString];
+    return [formatter stringFromDate:date];
 }
 
 

@@ -92,4 +92,13 @@
  */
 + (void)addAlertTipWithMessage:(NSString *)message;
 
+/*
+ *  時間轉換為字符串
+ *
+ *  @pram   date   時間
+ *
+ *  @return        時間字符串
+ */
++ (NSString *)getStringFromDate:(NSDate *)date formatterString:(NSString *)fmtString;
+
 @end

@@ -59,7 +59,7 @@
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, 0, 60, 30);
-    button.showsTouchWhenHighlighted = YES;
+    //button.showsTouchWhenHighlighted = YES;
     button.titleLabel.font = FONT(17.0);
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];

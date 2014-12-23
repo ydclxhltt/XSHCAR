@@ -17,6 +17,6 @@ typedef enum : NSUInteger {
 
 @property(nonatomic, retain) NSArray *dataArray;
 
-- (instancetype)initWithFrame:(CGRect)frame pickerViewType:(PickerViewType)type;
+- (instancetype)initWithFrame:(CGRect)frame pickerViewType:(PickerViewType)type sureBlock:(void (^)(UIDatePicker *datePicker,NSDate *date))sure cancelBlock:(void (^)())cancel;
 
 @end
