@@ -9,6 +9,7 @@
 #import "HomeViewController.h"
 #import "BookingViewController.h"
 #import "ExcitingActivitiesViewController.h"
+#import "MobileStoreViewController.h"
 #import "BugsTipViewController.h"
 #import "AdvView.h"
 
@@ -140,7 +141,7 @@
             viewController = [[ExcitingActivitiesViewController alloc] init];
             break;
         case 4:
-            
+            viewController = [[MobileStoreViewController alloc] init];
             break;
         case 5:
             
