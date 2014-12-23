@@ -49,6 +49,7 @@
 #pragma mark 获取消息状态
 - (void)getMessageStatus
 {
+    [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
     __weak typeof(self) weakSelf = self;
     NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]]};
     RequestTool *request = [[RequestTool alloc] init];
@@ -58,17 +59,20 @@
          NSLog(@"messageStatusResponseDic===%@",responseDic);
          if ([responseDic isKindOfClass:[NSArray class]] || [NSMutableArray isKindOfClass:[NSMutableArray class]])
          {
+             [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
              weakSelf.dataArray = (NSMutableArray *)responseDic;
              [self createUI];
          }
          else
          {
              //服务器异常
-             [CommonTool addAlertTipWithMessage:@"服务器异常"];
+             [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
+             //[CommonTool addAlertTipWithMessage:LOADING_WEBERROR_TIP];
          }
      }
      requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
      {
+         [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
          NSLog(@"error===%@",error);
      }];
 
@@ -196,6 +200,7 @@
 #pragma mark 更新状态
 - (void)switchViewStatusChange:(UISwitch *)switchView  smsID:(int)sms_id  ussId:(int)uss_id ussStatus:(int)uss_status
 {
+    [SVProgressHUD showWithStatus:@"正在保存..."];
     NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"sms_id":[NSNumber numberWithInt:sms_id],@"uss_id":[NSNumber numberWithInt:uss_id],@"uss_status":[NSNumber numberWithInt:uss_status]};
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl1:MESSAGE_UPDATE_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
@@ -204,15 +209,20 @@
          NSLog(@"messageStatusResponseDic===%@",responseDic);
         if (!responseDic || [@"" isEqualToString:responseDic])
         {
-            [CommonTool addAlertTipWithMessage:@"服务器异常"];
+            [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
+            //[CommonTool addAlertTipWithMessage:LOADING_WEBERROR_TIP];
             [switchView setOn:!switchView.isOn];
         }
         else
         {
             if (uss_id != [responseDic intValue])
             {
-                [CommonTool addAlertTipWithMessage:@"修改失败"];
+                [SVProgressHUD showErrorWithStatus:@"修改失败"];
                 [switchView setOn:!switchView.isOn];
+            }
+            else
+            {
+                [SVProgressHUD showSuccessWithStatus:@"修改成功"];
             }
         }
 
