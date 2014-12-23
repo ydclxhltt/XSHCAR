@@ -6,10 +6,19 @@
 //  Copyright (c) 2014年 chenlei. All rights reserved.
 //
 
+
+
 #import "BookingViewController.h"
+#import "CLPickerView.h"
 
 @interface BookingViewController ()
-@property(nonatomic, retain) NSDictionary *bookingInfoDic;
+{
+    NSMutableArray *sortArray;
+    UIScrollView *scrollView;
+}
+@property(nonatomic, retain) NSArray *bookingInfoArray;
+@property(nonatomic, retain) NSArray *placeStringArray;
+@property(nonatomic, retain) NSArray *titleArray;
 @end
 
 @implementation BookingViewController
@@ -21,6 +30,12 @@
     [self addBackItem];
     //添加右边item
     [self setNavBarItemWithTitle:@"   提交" navItemType:rightItem selectorName:@"commitButtonPressed:"];
+    //初始化
+    sortArray = [[NSMutableArray alloc]init];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    //初始化数据
+    self.titleArray = @[@"车主电话:",@"品       牌:",@"车牌号码:",@"车       系:",@"车       型:",@"预约时间:",@"预约类型"];
+    self.placeStringArray = @[@"请输入车主电话",@"请输入品牌类型",@"请输入车牌号码",@"请输入车系",@"请输入车型",@"请选择时间"];
     // Do any additional setup after loading the view.
 }
 
@@ -30,9 +45,89 @@
     [self getBookingInfo];
 }
 
+#pragma mark 初始化UI
+- (void)createUI
+{
+    [self addScrollView];
+}
+
+- (void)addScrollView
+{
+    
+    float labelHeight = 30.0;
+    float sortHeight  = 25.0;
+    float addHeight = 10.0;
+    
+    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    scrollView.pagingEnabled = NO;
+    scrollView.scrollEnabled = YES;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.showsVerticalScrollIndicator = NO;
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, labelHeight * [self.titleArray count] + addHeight * ([self.titleArray count] + 1) + [self.dataArray count] * (addHeight + sortHeight));
+    [self.view addSubview:scrollView];
+    
+    
+    for (int i = 0; i < [self.titleArray count]; i++)
+    {
+        UILabel *titlelabel = [CreateViewTool createLabelWithFrame:CGRectMake(0, addHeight * (i + 1) + labelHeight * i, 80.0, labelHeight) textString:self.titleArray[i] textColor:[UIColor grayColor] textFont:FONT(15.0)];
+        titlelabel.textAlignment = NSTextAlignmentCenter;
+        [scrollView addSubview:titlelabel];
+        
+        if (i == [self.titleArray count] - 1)
+        {
+            break;
+        }
+        
+        UITextField *textField = [CreateViewTool createTextFieldWithFrame:CGRectMake(titlelabel.frame.size.width ,titlelabel.frame.origin.y, scrollView.frame.size.width - titlelabel.frame.size.width - 10, labelHeight) textColor:[UIColor blackColor] textFont:FONT(16.0) placeholderText:self.placeStringArray[i]];
+        textField.tag = i + 1;
+        if (i == 0)
+        {
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }
+        if (i == 5)
+        {
+            textField.inputView = [[CLPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200.0) pickerViewType:PickerViewTypeDate];
+        }
+        textField.borderStyle = UITextBorderStyleRoundedRect;
+        textField.text = self.bookingInfoArray[i];
+        [scrollView addSubview:textField];
+    }
+    
+    float sort_y = labelHeight * [self.titleArray count] + addHeight * ([self.titleArray count] + 1);
+    
+    UIImageView *bgImageView = [CreateViewTool createImageViewWithFrame:CGRectMake(10, sort_y, SCREEN_WIDTH - 10 *2, [self.dataArray count] * (addHeight + sortHeight)) placeholderImage:nil];
+    [CommonTool clipView:bgImageView withCornerRadius:5.0];
+    bgImageView.userInteractionEnabled = YES;
+    [CommonTool setViewLayer:bgImageView withLayerColor:APP_MAIN_COLOR bordWidth:.5];
+    [scrollView addSubview:bgImageView];
+    
+    for (int i = 0; i < [self.dataArray count]; i++)
+    {
+        UIImage *sortImage = [UIImage imageNamed:@"sort_up.png"];
+        UIButton *iconButton = [CreateViewTool createButtonWithFrame:CGRectMake(10, 5 + (sortHeight - sortImage.size.height/2)/2 + (addHeight + sortHeight) * i, sortImage.size.width/2 , sortImage.size.height/2) buttonImage:@"" selectorName:@"" tagDelegate:nil];
+        iconButton.tag = 100 + i;
+        [iconButton setBackgroundImage:sortImage forState:UIControlStateNormal];
+        [iconButton setBackgroundImage:[UIImage imageNamed:@"sort_down.png"] forState:UIControlStateSelected];
+        [bgImageView addSubview:iconButton];
+        
+        UIButton *button = [CreateViewTool createButtonWithFrame:CGRectMake(10, 5 + (addHeight + sortHeight) * i, bgImageView.frame.size.width - 10 * 2, sortHeight) buttonImage:@"" selectorName:@"buttonPressed:" tagDelegate:self];
+        button.tag = 1000 + i;
+        button.titleLabel.font = FONT(15.0);
+        button.titleEdgeInsets = UIEdgeInsetsMake(0, 40, 0, 0);
+        [button setBackgroundColor:[UIColor clearColor]];
+        [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+        [button setTitle:self.dataArray[i][1] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+        [bgImageView addSubview:button];
+    }
+    
+}
+
 #pragma mark 获取预约信息
 - (void)getBookingInfo
 {
+    [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
     __weak typeof(self) weakSelf = self;
     NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]]};
     RequestTool *request = [[RequestTool alloc] init];
@@ -42,17 +137,53 @@
         NSLog(@"excitingResponseDic===%@",responseDic);
         if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableArray class]])
         {
-            weakSelf.bookingInfoDic = responseDic;
+            [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+            NSString *phone = ([responseDic objectForKey:@"AM_Telphone"]) ? [responseDic objectForKey:@"AM_Telphone"] : @"";
+            NSString *c_plates = ([responseDic objectForKey:@"c_plates"]) ? [responseDic objectForKey:@"c_plates"] : @"";
+            NSString *cb_name = ([responseDic objectForKey:@"cb_name"]) ? [responseDic objectForKey:@"cb_name"] : @"";
+            NSString *cl_name = ([responseDic objectForKey:@"cl_name"]) ? [responseDic objectForKey:@"cl_name"] : @"";
+            NSString *cm_name = ([responseDic objectForKey:@"cm_name"]) ? [responseDic objectForKey:@"cm_name"] : @"";
+            weakSelf.bookingInfoArray = @[phone,c_plates,cb_name,cl_name,cm_name,@""];
+            weakSelf.dataArray = (NSMutableArray *)[responseDic objectForKey:@"list"];
+            [weakSelf createUI];
         }
         else
         {
+            [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
             //服务器异常
         }
     }
     requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
     {
+        [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
         NSLog(@"error===%@",error);
     }];
+}
+
+
+#pragma mark 提交预约信息
+- (void)commitBooking
+{
+    //__weak typeof(self) weakSelf = self;
+//    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"AM_Telphone":[self.bookingInfoDic objectForKey:@"AM_Telphone"],@"AM_AppointmentTime":@"2014-12-22",@"ac_id":@"1",@"shop_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] shopID]]};
+//    RequestTool *request = [[RequestTool alloc] init];
+//    [request requestWithUrl1:BOOKING_COMMIT_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
+//    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+//    {
+//         NSLog(@"excitingResponseDic===%@",responseDic);
+//         if ([responseDic isKindOfClass:[NSString class]])
+//         {
+//             
+//         }
+//         else
+//         {
+//             //服务器异常
+//         }
+//    }
+//    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+//    {
+//         NSLog(@"error===%@",error);
+//    }];
 }
 
 #pragma mark 提交按钮响应事件
@@ -61,28 +192,20 @@
     [self commitBooking];
 }
 
-- (void)commitBooking
+#pragma mark 预约类型响应时间
+- (void)buttonPressed:(UIButton *)sender
 {
-    //__weak typeof(self) weakSelf = self;
-    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"AM_Telphone":[self.bookingInfoDic objectForKey:@"AM_Telphone"],@"AM_AppointmentTime":@"2014-12-22",@"ac_id":@"1",@"shop_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] shopID]]};
-    RequestTool *request = [[RequestTool alloc] init];
-    [request requestWithUrl1:BOOKING_COMMIT_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
-    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+    sender.selected = !sender.selected;
+    UIButton *button = (UIButton *)[scrollView viewWithTag:sender.tag - (1000 - 100)];
+    button.selected = !button.selected;
+    if (sender.selected)
     {
-         NSLog(@"excitingResponseDic===%@",responseDic);
-         if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableArray class]])
-         {
-             
-         }
-         else
-         {
-             //服务器异常
-         }
+        [sortArray addObject:self.dataArray[sender.tag - 1000][0]];
     }
-    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+    else
     {
-         NSLog(@"error===%@",error);
-    }];
+        [sortArray removeObject:self.dataArray[sender.tag - 1000][0]];
+    }
 }
 
 - (void)didReceiveMemoryWarning
