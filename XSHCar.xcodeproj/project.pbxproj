@@ -113,6 +113,9 @@
 		7792DFB21A42D17A008F43A6 /* CustomSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 7792DFB11A42D17A008F43A6 /* CustomSwitch.m */; };
 		77DA08921A43C97E00BA72D1 /* XSH_Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DA08911A43C97E00BA72D1 /* XSH_Application.m */; };
 		CE8444541A4672DE00F500B9 /* tabbar_home1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8444531A4672DE00F500B9 /* tabbar_home1@2x.png */; };
+		CEB3A81D1A49BA2100F8B0C6 /* pic_default.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB3A81C1A49BA2100F8B0C6 /* pic_default.png */; };
+		CEB3A8201A49BB3E00F8B0C6 /* ExcitingListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB3A81F1A49BB3E00F8B0C6 /* ExcitingListCell.m */; };
+		CEB3A8241A49CED200F8B0C6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB3A8231A49CED200F8B0C6 /* LoginViewController.m */; };
 		CEF3EF811A43001C004262E2 /* deployment_of_the_bootprompt.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF7F1A43001C004262E2 /* deployment_of_the_bootprompt.png */; };
 		CEF3EF831A4300CB004262E2 /* abnormalvibration_alert.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF821A4300CB004262E2 /* abnormalvibration_alert.png */; };
 		CEF3EF881A431ACA004262E2 /* background_monitor.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF841A431ACA004262E2 /* background_monitor.png */; };
@@ -305,6 +308,11 @@
 		77DA08901A43C97E00BA72D1 /* XSH_Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XSH_Application.h; sourceTree = "<group>"; };
 		77DA08911A43C97E00BA72D1 /* XSH_Application.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XSH_Application.m; sourceTree = "<group>"; };
 		CE8444531A4672DE00F500B9 /* tabbar_home1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_home1@2x.png"; sourceTree = "<group>"; };
+		CEB3A81C1A49BA2100F8B0C6 /* pic_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_default.png; sourceTree = "<group>"; };
+		CEB3A81E1A49BB3E00F8B0C6 /* ExcitingListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExcitingListCell.h; sourceTree = "<group>"; };
+		CEB3A81F1A49BB3E00F8B0C6 /* ExcitingListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExcitingListCell.m; sourceTree = "<group>"; };
+		CEB3A8221A49CED200F8B0C6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		CEB3A8231A49CED200F8B0C6 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		CEF3EF7F1A43001C004262E2 /* deployment_of_the_bootprompt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deployment_of_the_bootprompt.png; sourceTree = "<group>"; };
 		CEF3EF821A4300CB004262E2 /* abnormalvibration_alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = abnormalvibration_alert.png; sourceTree = "<group>"; };
 		CEF3EF841A431ACA004262E2 /* background_monitor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_monitor.png; sourceTree = "<group>"; };
@@ -349,6 +357,8 @@
 		770425701A47E4D200E6E470 /* Exciting&Store */ = {
 			isa = PBXGroup;
 			children = (
+				CEB3A81E1A49BB3E00F8B0C6 /* ExcitingListCell.h */,
+				CEB3A81F1A49BB3E00F8B0C6 /* ExcitingListCell.m */,
 				770425711A47E4D200E6E470 /* ExcitingActivitiesViewController.h */,
 				770425721A47E4D200E6E470 /* ExcitingActivitiesViewController.m */,
 				770425731A47E4D200E6E470 /* MobileStoreViewController.h */,
@@ -594,6 +604,7 @@
 		7789E0421A427B2C00B4CD09 /* FunctionVC */ = {
 			isa = PBXGroup;
 			children = (
+				CEB3A8211A49CEC200F8B0C6 /* Login&Register */,
 				7789E0431A427B2C00B4CD09 /* Home */,
 				7789E0441A427B2C00B4CD09 /* MessageManage */,
 				7789E0451A427B2C00B4CD09 /* Mine */,
@@ -689,6 +700,7 @@
 				7792DF8B1A42A43D008F43A6 /* wether_bg.png */,
 				774A7B951A4971E200D5B2CB /* sort_up.png */,
 				774A7B961A4971E200D5B2CB /* sort_down.png */,
+				CEB3A81C1A49BA2100F8B0C6 /* pic_default.png */,
 			);
 			path = home_images;
 			sourceTree = "<group>";
@@ -874,6 +886,15 @@
 			path = customSwitch;
 			sourceTree = "<group>";
 		};
+		CEB3A8211A49CEC200F8B0C6 /* Login&Register */ = {
+			isa = PBXGroup;
+			children = (
+				CEB3A8221A49CED200F8B0C6 /* LoginViewController.h */,
+				CEB3A8231A49CED200F8B0C6 /* LoginViewController.m */,
+			);
+			path = "Login&Register";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -951,6 +972,7 @@
 			files = (
 				7792DF771A42A1F5008F43A6 /* collision_warning.png in Resources */,
 				CEF3EF881A431ACA004262E2 /* background_monitor.png in Resources */,
+				CEB3A81D1A49BA2100F8B0C6 /* pic_default.png in Resources */,
 				7792DFAA1A42C64C008F43A6 /* icon9.png in Resources */,
 				CEF3EF811A43001C004262E2 /* deployment_of_the_bootprompt.png in Resources */,
 				7792DFA51A42C64C008F43A6 /* icon4.png in Resources */,
@@ -1048,6 +1070,7 @@
 				770425791A47E4FC00E6E470 /* BookingViewController.m in Sources */,
 				770425881A48089F00E6E470 /* BugsTipViewController.m in Sources */,
 				7789E0B21A427CEF00B4CD09 /* AFHTTPSessionManager.m in Sources */,
+				CEB3A8201A49BB3E00F8B0C6 /* ExcitingListCell.m in Sources */,
 				7789E0581A427CCD00B4CD09 /* BasicViewController.m in Sources */,
 				7704258F1A48269000E6E470 /* 4SServiceViewController.m in Sources */,
 				7789E0891A427CD900B4CD09 /* UIImageView+LK.m in Sources */,
@@ -1058,6 +1081,7 @@
 				7789E0BF1A427CEF00B4CD09 /* UIRefreshControl+AFNetworking.m in Sources */,
 				770425981A4826EE00E6E470 /* BearingClockViewController.m in Sources */,
 				7789E0871A427CD900B4CD09 /* UIImageView+WebCache.m in Sources */,
+				CEB3A8241A49CED200F8B0C6 /* LoginViewController.m in Sources */,
 				7789E0BA1A427CEF00B4CD09 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				770425921A4826A900E6E470 /* BreakSelectViewController.m in Sources */,
 				774A7B911A49186700D5B2CB /* CLPickerView.m in Sources */,
