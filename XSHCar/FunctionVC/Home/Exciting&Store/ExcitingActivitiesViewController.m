@@ -46,6 +46,10 @@
 - (void)getDataList
 {
     __weak typeof(self) weakSelf = self;
+    if (currentPage == 1)
+    {
+        [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
+    }
     NSDictionary *requestDic = @{@"shop_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] shopID]],@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"currentPage":[NSNumber numberWithInt:currentPage],@"pageNum":[NSNumber numberWithInt:10]};
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl:EXCITING_LIST_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
@@ -58,12 +62,17 @@
              if ([tempArray count] == 0)
              {
                  //最后一页
+                [SVProgressHUD showSuccessWithStatus:@"已经是最后一页"];
              }
              else
              {
+                 if (currentPage == 1)
+                 {
+                     [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+                 }
                  if (!weakSelf.dataArray)
                  {
-                     weakSelf.dataArray = tempArray;
+                     weakSelf.dataArray = [NSMutableArray arrayWithArray:tempArray];
                  }
                  if ([tempArray count] < 10)
                  {
@@ -80,6 +89,10 @@
          else
          {
              //失败
+             if (currentPage == 1)
+             {
+                 [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
+             }
          }
      }
      requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
@@ -105,12 +118,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *homeCellID = @"excitingCellID";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:homeCellID];
+    static NSString *cellID = @"excitingCellID";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:homeCellID];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
         cell.backgroundColor = [UIColor whiteColor];
         cell.separatorInset = UIEdgeInsetsZero;
         //cell.imageView.transform = CGAffineTransformScale(cell.imageView.transform, 0.5, 0.5);
