@@ -11,17 +11,17 @@
 #import "BookingViewController.h"
 #import "CLPickerView.h"
 
-@interface BookingViewController ()
+@interface BookingViewController ()<UITextFieldDelegate>
 {
     NSMutableArray *sortArray;
     UIScrollView *scrollView;
 }
+@property(nonatomic, strong) NSString *timeStr;
 @property(nonatomic, retain) NSArray *bookingInfoArray;
 @property(nonatomic, retain) NSArray *placeStringArray;
 @property(nonatomic, retain) NSArray *titleArray;
 @end
-
-@implementation BookingViewController
+ @implementation BookingViewController
 
 - (void)viewDidLoad
 {
@@ -29,7 +29,7 @@
     //添加backitem
     [self addBackItem];
     //添加右边item
-    [self setNavBarItemWithTitle:@"   提交" navItemType:rightItem selectorName:@"commitButtonPressed:"];
+    [self setNavBarItemWithTitle:@"     提交" navItemType:rightItem selectorName:@"commitButtonPressed:"];
     //初始化
     sortArray = [[NSMutableArray alloc]init];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -79,6 +79,8 @@
         }
         
         UITextField *textField = [CreateViewTool createTextFieldWithFrame:CGRectMake(titlelabel.frame.size.width ,titlelabel.frame.origin.y, scrollView.frame.size.width - titlelabel.frame.size.width - 10, labelHeight) textColor:[UIColor blackColor] textFont:FONT(16.0) placeholderText:self.placeStringArray[i]];
+        textField.returnKeyType = UIReturnKeyDone;
+        textField.delegate = self;
         textField.tag = i + 1;
         if (i == 0)
         {
@@ -86,7 +88,8 @@
         }
         if (i == 5)
         {
-            textField.inputView = [[CLPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200.0) pickerViewType:PickerViewTypeDate];
+            __weak typeof(self) weakSelf = self;
+            textField.inputView = [[CLPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240.0) pickerViewType:PickerViewTypeDate sureBlock:^(UIDatePicker *datePicker,NSDate *date){textField.text = [CommonTool getStringFromDate:date formatterString:@"YYYY-MM-dd"];weakSelf.timeStr = textField.text; [textField resignFirstResponder];} cancelBlock:^{[textField resignFirstResponder];}];
         }
         textField.borderStyle = UITextBorderStyleRoundedRect;
         textField.text = self.bookingInfoArray[i];
@@ -162,34 +165,92 @@
 
 
 #pragma mark 提交预约信息
-- (void)commitBooking
+- (void)commitBookingWithPhone:(NSString *)phone acID:(NSString *)ac_id
 {
-    //__weak typeof(self) weakSelf = self;
-//    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"AM_Telphone":[self.bookingInfoDic objectForKey:@"AM_Telphone"],@"AM_AppointmentTime":@"2014-12-22",@"ac_id":@"1",@"shop_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] shopID]]};
-//    RequestTool *request = [[RequestTool alloc] init];
-//    [request requestWithUrl1:BOOKING_COMMIT_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
-//    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
-//    {
-//         NSLog(@"excitingResponseDic===%@",responseDic);
-//         if ([responseDic isKindOfClass:[NSString class]])
-//         {
-//             
-//         }
-//         else
-//         {
-//             //服务器异常
-//         }
-//    }
-//    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
-//    {
-//         NSLog(@"error===%@",error);
-//    }];
+    [SVProgressHUD showWithStatus:@"正在提交..."];
+    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"AM_Telphone":phone,@"AM_AppointmentTime":self.timeStr,@"ac_id":ac_id,@"shop_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] shopID]]};
+    NSLog(@"requestDic===%@",requestDic);
+    RequestTool *request = [[RequestTool alloc] init];
+    [request requestWithUrl1:BOOKING_COMMIT_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
+    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+    {
+         NSLog(@"excitingResponseDic===%@",responseDic);
+         if ([responseDic isKindOfClass:[NSString class]])
+         {
+             [SVProgressHUD showSuccessWithStatus:@"提交成功"];
+         }
+         else
+         {
+             //服务器异常
+             [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
+         }
+    }
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+    {
+        [SVProgressHUD showErrorWithStatus:@"提交失败"];
+         NSLog(@"error===%@",error);
+    }];
 }
 
 #pragma mark 提交按钮响应事件
 - (void)commitButtonPressed:(UIButton *)button
 {
-    [self commitBooking];
+
+    NSString *phone = @"";
+     NSString *ac_id = @"";
+    for (int i = 0; i < [sortArray count]; i++)
+    {
+        if (i == 0)
+        {
+            ac_id = [NSString stringWithFormat:@"%d",[sortArray[i] intValue]];
+        }
+        else
+        {
+            ac_id = [ac_id stringByAppendingString:[NSString stringWithFormat:@",%@",sortArray[i]]];
+        }
+        
+    }
+    for (int i = 0; i < [self.titleArray count]; i++)
+    {
+        if (i < [self.titleArray count] - 1)
+        {
+            UITextField *textField = (UITextField *)[scrollView viewWithTag:i + 1];
+            
+            if (i == 0)
+            {
+                if (![textField.text isEqualToString:@""] && ![CommonTool isEmailOrPhoneNumber:textField.text])
+                {
+                    [CommonTool addAlertTipWithMessage:@"请输入正确的手机号"];
+                    return;
+                }
+                else
+                {
+                    phone = textField.text;
+                }
+                
+            }
+            
+            if (i == [self.titleArray count] - 2)
+            {
+                if ([@"" isEqualToString:textField.text])
+                {
+                    NSString *tipString = [NSString stringWithFormat:@"请填写%@",self.titleArray[i]];
+                    tipString = @"请选择预约时间";
+                    [CommonTool addAlertTipWithMessage:tipString];
+                    return;
+                }
+
+            }
+        }
+    }
+    
+    if ([@"" isEqualToString:ac_id])
+    {
+        [CommonTool addAlertTipWithMessage:@"请选择预约类型"];
+        return;
+    }
+    
+    [self commitBookingWithPhone:phone acID:ac_id];
 }
 
 #pragma mark 预约类型响应时间
@@ -207,6 +268,20 @@
         [sortArray removeObject:self.dataArray[sender.tag - 1000][0]];
     }
 }
+
+#pragma mark UITextFieldDelehate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
 
 - (void)didReceiveMemoryWarning
 {
