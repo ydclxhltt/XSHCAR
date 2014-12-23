@@ -7,6 +7,7 @@
 //
 
 #import "ExcitingActivitiesViewController.h"
+#import "ExcitingListCell.h"
 
 @interface ExcitingActivitiesViewController ()
 {
@@ -119,31 +120,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellID = @"excitingCellID";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    
+    ExcitingListCell *cell = (ExcitingListCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
     
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
+        cell = [[ExcitingListCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
         cell.backgroundColor = [UIColor whiteColor];
         cell.separatorInset = UIEdgeInsetsZero;
-        //cell.imageView.transform = CGAffineTransformScale(cell.imageView.transform, 0.5, 0.5);
     }
-    
     NSDictionary *rowDataDic = self.dataArray[indexPath.row];
-    
     NSString *imageUrl = [rowDataDic objectForKey:@"mdtTopimage"];
     imageUrl = @"http://211.154.155.29:8086/epg30/selfadaimg.do?path=/pgicon/20141222/3066944/144209.jpg";
-    if (imageUrl && ![@"" isEqualToString:imageUrl])
-    {
-        [cell.imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
-    }
-    
-    cell.textLabel.text = [rowDataDic objectForKey:@"mdtTitle"];
-    cell.detailTextLabel.text = [rowDataDic objectForKey:@"mdtContent"];
-    cell.textLabel.font = FONT(16.0);
-    cell.detailTextLabel.font = FONT(14.0);
-    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-
+    [cell setCellDataWithImageUrl:imageUrl titleText:[rowDataDic objectForKey:@"mdtTitle"] contentText:[rowDataDic objectForKey:@"mdtContent"]];
     return cell;
 }
 
