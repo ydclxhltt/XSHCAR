@@ -11,6 +11,7 @@
 #import "ExcitingActivitiesViewController.h"
 #import "MobileStoreViewController.h"
 #import "BugsTipViewController.h"
+#import "CarCheckViewController.h"
 #import "AdvView.h"
 
 @interface HomeViewController ()
@@ -153,7 +154,7 @@
             viewController = [[BugsTipViewController alloc] init];
             break;
         case 8:
-            
+            viewController = [[CarCheckViewController alloc] init];
             break;
         case 9:
             
