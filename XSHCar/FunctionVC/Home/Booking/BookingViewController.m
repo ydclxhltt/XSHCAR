@@ -177,7 +177,14 @@
          NSLog(@"excitingResponseDic===%@",responseDic);
          if ([responseDic isKindOfClass:[NSString class]])
          {
-             [SVProgressHUD showSuccessWithStatus:@"提交成功"];
+             if ([@"8888" isEqualToString:responseDic])
+             {
+                 [SVProgressHUD showSuccessWithStatus:@"提交成功"];
+             }
+             else
+             {
+                 [SVProgressHUD showErrorWithStatus:@"提交失败"];
+             }
          }
          else
          {
