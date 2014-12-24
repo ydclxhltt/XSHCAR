@@ -88,8 +88,7 @@
         }
         if (i == 5)
         {
-            __weak typeof(self) weakSelf = self;
-            textField.inputView = [[CLPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240.0) pickerViewType:PickerViewTypeDate sureBlock:^(UIDatePicker *datePicker,NSDate *date){textField.text = [CommonTool getStringFromDate:date formatterString:@"YYYY-MM-dd"];weakSelf.timeStr = textField.text; [textField resignFirstResponder];} cancelBlock:^{[textField resignFirstResponder];}];
+            textField.inputView = [[CLPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240.0) pickerViewType:PickerViewTypeDate sureBlock:^(UIDatePicker *datePicker,NSDate *date){textField.text = [CommonTool getStringFromDate:date formatterString:@"YYYY-MM-dd"];self.timeStr = textField.text; [textField resignFirstResponder];} cancelBlock:^{[textField resignFirstResponder];}];
         }
         textField.borderStyle = UITextBorderStyleRoundedRect;
         textField.text = self.bookingInfoArray[i];
@@ -137,13 +136,13 @@
     [request requestWithUrl:BOOKING_PERSONAL_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
-        NSLog(@"excitingResponseDic===%@",responseDic);
+        NSLog(@"bookingResponseDic===%@",responseDic);
         if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableArray class]])
         {
             [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
             NSString *phone = ([responseDic objectForKey:@"AM_Telphone"]) ? [responseDic objectForKey:@"AM_Telphone"] : @"";
-            NSString *c_plates = ([responseDic objectForKey:@"c_plates"]) ? [responseDic objectForKey:@"c_plates"] : @"";
             NSString *cb_name = ([responseDic objectForKey:@"cb_name"]) ? [responseDic objectForKey:@"cb_name"] : @"";
+            NSString *c_plates = ([responseDic objectForKey:@"c_plates"]) ? [responseDic objectForKey:@"c_plates"] : @"";
             NSString *cl_name = ([responseDic objectForKey:@"cl_name"]) ? [responseDic objectForKey:@"cl_name"] : @"";
             NSString *cm_name = ([responseDic objectForKey:@"cm_name"]) ? [responseDic objectForKey:@"cm_name"] : @"";
             weakSelf.bookingInfoArray = @[phone,c_plates,cb_name,cl_name,cm_name,@""];
