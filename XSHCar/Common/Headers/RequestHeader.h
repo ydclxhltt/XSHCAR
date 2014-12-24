@@ -21,6 +21,9 @@
 //精彩活动
 #define EXCITING_LIST_URL       [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/userlogin!getMessagedetail"]
 
+//移动商城
+#define MOBILE_STORE_URL        [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/userlogin!shopmall"]
+
 //预约获取个人信息
 #define BOOKING_PERSONAL_URL    [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/userlogin!appponitment"]
 
@@ -35,4 +38,6 @@
 
 //更新消息状态
 #define MESSAGE_UPDATE_URL      [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/smsInfor!addAndUpdateSms"]
+
+
 #endif
