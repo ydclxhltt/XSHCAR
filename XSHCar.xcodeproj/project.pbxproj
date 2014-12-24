@@ -32,6 +32,8 @@
 		774A7B911A49186700D5B2CB /* CLPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 774A7B901A49186700D5B2CB /* CLPickerView.m */; };
 		774A7B971A4971E200D5B2CB /* sort_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 774A7B951A4971E200D5B2CB /* sort_up.png */; };
 		774A7B981A4971E200D5B2CB /* sort_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 774A7B961A4971E200D5B2CB /* sort_down.png */; };
+		7786E3F81A4AB22B000E450E /* ExcitingActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7786E3F71A4AB22B000E450E /* ExcitingActivityDetailViewController.m */; };
+		7786E3FA1A4AC590000E450E /* login_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7786E3F91A4AC590000E450E /* login_logo.png */; };
 		7789E0031A42796500B4CD09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789E0021A42796500B4CD09 /* Foundation.framework */; };
 		7789E0051A42796500B4CD09 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789E0041A42796500B4CD09 /* CoreGraphics.framework */; };
 		7789E0071A42796500B4CD09 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789E0061A42796500B4CD09 /* UIKit.framework */; };
@@ -175,6 +177,9 @@
 		774A7B901A49186700D5B2CB /* CLPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLPickerView.m; sourceTree = "<group>"; };
 		774A7B951A4971E200D5B2CB /* sort_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort_up.png; sourceTree = "<group>"; };
 		774A7B961A4971E200D5B2CB /* sort_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort_down.png; sourceTree = "<group>"; };
+		7786E3F61A4AB22B000E450E /* ExcitingActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExcitingActivityDetailViewController.h; sourceTree = "<group>"; };
+		7786E3F71A4AB22B000E450E /* ExcitingActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExcitingActivityDetailViewController.m; sourceTree = "<group>"; };
+		7786E3F91A4AC590000E450E /* login_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_logo.png; sourceTree = "<group>"; };
 		7789DFFF1A42796500B4CD09 /* XSHCar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XSHCar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7789E0021A42796500B4CD09 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7789E0041A42796500B4CD09 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -363,6 +368,8 @@
 				770425721A47E4D200E6E470 /* ExcitingActivitiesViewController.m */,
 				770425731A47E4D200E6E470 /* MobileStoreViewController.h */,
 				770425741A47E4D200E6E470 /* MobileStoreViewController.m */,
+				7786E3F61A4AB22B000E450E /* ExcitingActivityDetailViewController.h */,
+				7786E3F71A4AB22B000E450E /* ExcitingActivityDetailViewController.m */,
 			);
 			path = "Exciting&Store";
 			sourceTree = "<group>";
@@ -477,6 +484,14 @@
 				774A7B881A49170900D5B2CB /* SVProgressHUD.m */,
 			);
 			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		7786E3F51A4A4FDC000E450E /* login_reg_images */ = {
+			isa = PBXGroup;
+			children = (
+				7786E3F91A4AC590000E450E /* login_logo.png */,
+			);
+			path = login_reg_images;
 			sourceTree = "<group>";
 		};
 		7789DFF61A42796500B4CD09 = {
@@ -662,6 +677,7 @@
 		7789E0471A427B4100B4CD09 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				7786E3F51A4A4FDC000E450E /* login_reg_images */,
 				7789E0481A427B4100B4CD09 /* common_images */,
 				7789E04A1A427B4100B4CD09 /* home_images */,
 				7789E04B1A427B4100B4CD09 /* message_images */,
@@ -1006,6 +1022,7 @@
 				774A7B8A1A49170900D5B2CB /* error@2x.png in Resources */,
 				774A7B6E1A4907C000D5B2CB /* car1.png in Resources */,
 				7792DF881A42A40F008F43A6 /* exit.png in Resources */,
+				7786E3FA1A4AC590000E450E /* login_logo.png in Resources */,
 				7792DF891A42A40F008F43A6 /* help.png in Resources */,
 				CE8444541A4672DE00F500B9 /* tabbar_home1@2x.png in Resources */,
 				7792DFAB1A42C64C008F43A6 /* icon10.png in Resources */,
@@ -1052,6 +1069,7 @@
 				770425751A47E4D200E6E470 /* ExcitingActivitiesViewController.m in Sources */,
 				7789E0C81A427D2100B4CD09 /* CreateViewTool.m in Sources */,
 				7789E0C71A427D2100B4CD09 /* CommonTool.m in Sources */,
+				7786E3F81A4AB22B000E450E /* ExcitingActivityDetailViewController.m in Sources */,
 				77DA08921A43C97E00BA72D1 /* XSH_Application.m in Sources */,
 				770425761A47E4D200E6E470 /* MobileStoreViewController.m in Sources */,
 				770425951A4826BA00E6E470 /* CarCheckViewController.m in Sources */,
