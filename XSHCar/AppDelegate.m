@@ -43,6 +43,7 @@
         [[XSH_Application shareXshApplication] setLoginDic:responseDic];
         [[XSH_Application shareXshApplication] setShopID:[[responseDic objectForKey:@"shop_id"] intValue]];
         [[XSH_Application shareXshApplication] setUserID:[[responseDic objectForKey:@"user_id"] intValue]];
+        [[XSH_Application shareXshApplication] setCarID:[[responseDic objectForKey:@"car_id"] intValue]];
     }
     requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
     {
