@@ -13,7 +13,7 @@
 @property(nonatomic, strong) NSDictionary *loginDic;
 @property(nonatomic, assign) int shopID;
 @property(nonatomic, assign) int userID;
-
+@property(nonatomic, assign) int carID;
 /*
  *  初始化
  *

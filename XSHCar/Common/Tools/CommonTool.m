@@ -95,6 +95,7 @@
     else
     {
         theHeigth = number*titleBrandSizeForHeight.height;
+        textLabel.numberOfLines = number + 1;
     }
     return theHeigth;
 }
