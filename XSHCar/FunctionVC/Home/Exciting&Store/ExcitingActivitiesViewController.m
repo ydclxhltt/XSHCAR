@@ -8,10 +8,12 @@
 
 #import "ExcitingActivitiesViewController.h"
 #import "ExcitingListCell.h"
+#import "ExcitingActivityDetailViewController.h"
 
 @interface ExcitingActivitiesViewController ()
 {
     int currentPage;
+    UIButton *moreButton;
 }
 @end
 
@@ -26,6 +28,7 @@
     currentPage = 1;
     //初始化UI
     [self createUI];
+
     //获取数据
     [self getDataList];
     // Do any additional setup after loading the view.
@@ -43,10 +46,22 @@
     [self addTableViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) tableType:UITableViewStylePlain tableDelegate:self];
 }
 
+- (void)addGetMoreView
+{
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 35)];
+    footView.backgroundColor = [UIColor clearColor];
+    moreButton = [CreateViewTool createButtonWithFrame:CGRectMake(20, (footView.frame.size.height - 20)/2, SCREEN_WIDTH - 20 * 2, 20) buttonTitle:@"点击加载更多" titleColor:[UIColor grayColor] normalBackgroundColor:nil highlightedBackgroundColor:nil selectorName:@"getMoreData" tagDelegate:self];
+    moreButton.titleLabel.font = FONT(15.0);
+    [footView addSubview:moreButton];
+    self.table.tableFooterView = footView;
+}
+
+
 #pragma mark 获取数据
 - (void)getDataList
 {
     __weak typeof(self) weakSelf = self;
+    moreButton.enabled = NO;
     if (currentPage == 1)
     {
         [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
@@ -57,51 +72,83 @@
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
          NSLog(@"excitingResponseDic===%@",responseDic);
-         if ([responseDic isKindOfClass:[NSArray class]] || [responseDic isKindOfClass:[NSMutableArray class]])
+         if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
          {
-             NSMutableArray *tempArray = (NSMutableArray *)responseDic;
-             if ([tempArray count] == 0)
-             {
-                 //最后一页
-                [SVProgressHUD showSuccessWithStatus:@"已经是最后一页"];
-             }
-             else
-             {
-                 if (currentPage == 1)
-                 {
-                     [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
-                 }
-                 if (!weakSelf.dataArray)
-                 {
-                     weakSelf.dataArray = [NSMutableArray arrayWithArray:tempArray];
-                 }
-                 if ([tempArray count] < 10)
-                 {
-                     //最后一页
-                     [weakSelf.dataArray addObjectsFromArray:tempArray];
-                 }
-                 else if ([tempArray count] == 10)
-                 {
-                     [weakSelf.dataArray addObjectsFromArray:tempArray];
-                 }
-             }
-             [self.table reloadData];
+             [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+             [weakSelf reloadDataWithDic:responseDic];
          }
          else
          {
+             moreButton.enabled = YES;
              //失败
              if (currentPage == 1)
              {
                  [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
              }
+             if (currentPage > 1)
+             {
+                 currentPage--;
+             }
          }
      }
      requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
      {
+         moreButton.enabled = YES;
+         if (currentPage > 1)
+         {
+             currentPage--;
+         }
+         [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
          NSLog(@"error===%@",error);
      }];
 }
 
+#pragma mark 刷新数据
+- (void)reloadDataWithDic:(NSDictionary *)dataDic
+{
+    NSMutableArray *dataArray = (NSMutableArray *)[dataDic objectForKey:@"list"];
+    
+    if (([dataArray count] == 0 || !dataArray) && currentPage == 1)
+    {
+        //暂无数据
+        [CommonTool addAlertTipWithMessage:@"暂无数据"];
+    }
+    else if (dataArray)
+    {
+        if (currentPage == 1)
+        {
+            [self addGetMoreView];
+        }
+        if (!self.dataArray)
+        {
+            self.dataArray = dataArray;
+        }
+        else
+        {
+            [self.dataArray addObjectsFromArray:dataArray];
+        }
+    }
+    
+    int countPage = [[dataDic objectForKey:@"countpage"] intValue];
+    if (countPage == currentPage)
+    {
+        //最后一页
+        [moreButton setTitle:@"已是最后一页" forState:UIControlStateNormal];
+        moreButton.enabled = NO;
+    }
+    else
+    {
+        moreButton.enabled = YES;
+    }
+    [self.table reloadData];
+}
+
+#pragma mark 加载更多
+- (void)getMoreData
+{
+    currentPage++;
+    [self getDataList];
+}
 
 
 #pragma mark - tableView代理
@@ -140,6 +187,11 @@
 {
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSDictionary *dic = self.dataArray[indexPath.row];
+    ExcitingActivityDetailViewController *detailViewController = [[ExcitingActivityDetailViewController alloc]init];
+    detailViewController.title = [dic objectForKey:@"mdtTitle"];
+    detailViewController.detailText = [dic objectForKey:@"mdtContent"];
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

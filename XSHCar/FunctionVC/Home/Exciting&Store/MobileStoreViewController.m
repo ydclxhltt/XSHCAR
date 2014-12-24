@@ -9,7 +9,9 @@
 #import "MobileStoreViewController.h"
 
 @interface MobileStoreViewController ()
-
+{
+    int currentPage;
+}
 @end
 
 @implementation MobileStoreViewController
@@ -19,10 +21,63 @@
     [super viewDidLoad];
     //添加backitem
     [self addBackItem];
+    //加载数据
+    [self getMobileStoreListWithCatagory:0];
+    //初始化数据
+    currentPage = 1;
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
+
+#pragma mark 获取移动商城列表
+- (void)getMobileStoreListWithCatagory:(int)catagoryID
+{
+    //__weak typeof(self) weakSelf = self;
+    if (currentPage == 1)
+    {
+        [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
+    }
+
+    NSDictionary *requestDic = @{@"shop_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] shopID]],@"catagory_id":[NSNumber numberWithInt:catagoryID],@"pageno":[NSNumber numberWithInt:currentPage]};
+    NSLog(@"MOBILE_STORE_URL===%@",MOBILE_STORE_URL);
+    NSLog(@"requestDic===%@",requestDic);
+    RequestTool *request = [[RequestTool alloc] init];
+    [request requestWithUrl:MOBILE_STORE_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
+    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+    {
+         NSLog(@"storeResponseDic===%@",responseDic);
+        NSLog(@"storeResponseDic===%@",operation.responseString);
+         if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
+         {
+             [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+         }
+         else
+         {
+             //失败
+             if (currentPage == 1)
+             {
+                 [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
+             }
+             if (currentPage > 1)
+             {
+                 currentPage--;
+             }
+         }
+    }
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+    {
+         if (currentPage > 1)
+         {
+             currentPage--;
+         }
+         [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
+         NSLog(@"error===%@",error);
+    }];
+
+}
+
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
