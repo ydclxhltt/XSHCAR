@@ -62,7 +62,7 @@
         if ([responseDic isKindOfClass:[NSArray class]] || [responseDic isKindOfClass:[NSMutableArray class]])
         {
             [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
-            weakSelf.dataArray = (NSMutableArray *)responseDic;
+            weakSelf.dataArray = (NSMutableArray *)responseDic; 
             [weakSelf.table reloadData];
         }
         else

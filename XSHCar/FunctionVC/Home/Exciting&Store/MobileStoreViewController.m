@@ -21,10 +21,10 @@
     [super viewDidLoad];
     //添加backitem
     [self addBackItem];
-    //加载数据
-    [self getMobileStoreListWithCatagory:0];
     //初始化数据
     currentPage = 1;
+    //加载数据
+    [self getMobileStoreListWithCatagory:0];
     // Do any additional setup after loading the view.
 }
 

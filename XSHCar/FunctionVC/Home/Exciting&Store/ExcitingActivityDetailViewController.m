@@ -34,7 +34,7 @@
 
 - (void)addTextView
 {
-    UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(10, NAV_HEIGHT + 20, SCREEN_WIDTH - 10 * 2, SCREEN_WIDTH - (NAV_HEIGHT + 20) - 20)];
+    UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(10, NAV_HEIGHT + 20, SCREEN_WIDTH - 10 * 2, SCREEN_HEIGHT - (NAV_HEIGHT + 20) - 20)];
     [CommonTool setViewLayer:textView withLayerColor:[UIColor grayColor] bordWidth:.5];
     [CommonTool clipView:textView withCornerRadius:5.0];
     textView.editable = NO;

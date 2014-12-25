@@ -12,6 +12,7 @@
 #import "MobileStoreViewController.h"
 #import "BugsTipViewController.h"
 #import "CarCheckViewController.h"
+#import "BreakSelectViewController.h"
 #import "AdvView.h"
 
 @interface HomeViewController ()
@@ -157,7 +158,7 @@
             viewController = [[CarCheckViewController alloc] init];
             break;
         case 9:
-            
+            viewController = [[BreakSelectViewController alloc]init];
             break;
         case 10:
             
