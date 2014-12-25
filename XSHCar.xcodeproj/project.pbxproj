@@ -113,6 +113,11 @@
 		7792DFAC1A42C64C008F43A6 /* icon11.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DFA01A42C64C008F43A6 /* icon11.png */; };
 		7792DFAD1A42C64C008F43A6 /* icon12.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DFA11A42C64C008F43A6 /* icon12.png */; };
 		7792DFB21A42D17A008F43A6 /* CustomSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 7792DFB11A42D17A008F43A6 /* CustomSwitch.m */; };
+		77A145161A4B9FDC005717B3 /* ASPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A145131A4B9FDC005717B3 /* ASPopUpView.m */; };
+		77A145171A4B9FDC005717B3 /* ASProgressPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A145151A4B9FDC005717B3 /* ASProgressPopUpView.m */; };
+		77A145261A4BF254005717B3 /* SDSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A145251A4BF254005717B3 /* SDSegmentedControl.m */; };
+		77A145291A4BFB8F005717B3 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 77A145271A4BFB8F005717B3 /* arrow.png */; };
+		77A1452A1A4BFB8F005717B3 /* btn_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 77A145281A4BFB8F005717B3 /* btn_bg.png */; };
 		77DA08921A43C97E00BA72D1 /* XSH_Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DA08911A43C97E00BA72D1 /* XSH_Application.m */; };
 		CE8444541A4672DE00F500B9 /* tabbar_home1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8444531A4672DE00F500B9 /* tabbar_home1@2x.png */; };
 		CEA0F97D1A4B16AA00711AB4 /* BugTipListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0F97C1A4B16AA00711AB4 /* BugTipListCell.m */; };
@@ -311,6 +316,14 @@
 		7792DFA11A42C64C008F43A6 /* icon12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon12.png; sourceTree = "<group>"; };
 		7792DFB01A42D17A008F43A6 /* CustomSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSwitch.h; sourceTree = "<group>"; };
 		7792DFB11A42D17A008F43A6 /* CustomSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSwitch.m; sourceTree = "<group>"; };
+		77A145121A4B9FDC005717B3 /* ASPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASPopUpView.h; sourceTree = "<group>"; };
+		77A145131A4B9FDC005717B3 /* ASPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASPopUpView.m; sourceTree = "<group>"; };
+		77A145141A4B9FDC005717B3 /* ASProgressPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASProgressPopUpView.h; sourceTree = "<group>"; };
+		77A145151A4B9FDC005717B3 /* ASProgressPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASProgressPopUpView.m; sourceTree = "<group>"; };
+		77A145241A4BF254005717B3 /* SDSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSegmentedControl.h; sourceTree = "<group>"; };
+		77A145251A4BF254005717B3 /* SDSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSegmentedControl.m; sourceTree = "<group>"; };
+		77A145271A4BFB8F005717B3 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		77A145281A4BFB8F005717B3 /* btn_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_bg.png; sourceTree = "<group>"; };
 		77DA08901A43C97E00BA72D1 /* XSH_Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XSH_Application.h; sourceTree = "<group>"; };
 		77DA08911A43C97E00BA72D1 /* XSH_Application.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XSH_Application.m; sourceTree = "<group>"; };
 		CE8444531A4672DE00F500B9 /* tabbar_home1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_home1@2x.png"; sourceTree = "<group>"; };
@@ -722,6 +735,8 @@
 				774A7B951A4971E200D5B2CB /* sort_up.png */,
 				774A7B961A4971E200D5B2CB /* sort_down.png */,
 				CEB3A81C1A49BA2100F8B0C6 /* pic_default.png */,
+				77A145271A4BFB8F005717B3 /* arrow.png */,
+				77A145281A4BFB8F005717B3 /* btn_bg.png */,
 			);
 			path = home_images;
 			sourceTree = "<group>";
@@ -890,6 +905,8 @@
 		7792DFAE1A42D16C008F43A6 /* commonViews */ = {
 			isa = PBXGroup;
 			children = (
+				77A145181A4BE0A5005717B3 /* MCSegment */,
+				77A145101A4B9FDC005717B3 /* process */,
 				774A7B801A49170900D5B2CB /* PickView */,
 				774A7B811A49170900D5B2CB /* SVProgressHUD */,
 				770425891A48253A00E6E470 /* advView */,
@@ -905,6 +922,34 @@
 				7792DFB11A42D17A008F43A6 /* CustomSwitch.m */,
 			);
 			path = customSwitch;
+			sourceTree = "<group>";
+		};
+		77A145101A4B9FDC005717B3 /* process */ = {
+			isa = PBXGroup;
+			children = (
+				77A145111A4B9FDC005717B3 /* ASProgressPopUpView */,
+			);
+			path = process;
+			sourceTree = "<group>";
+		};
+		77A145111A4B9FDC005717B3 /* ASProgressPopUpView */ = {
+			isa = PBXGroup;
+			children = (
+				77A145121A4B9FDC005717B3 /* ASPopUpView.h */,
+				77A145131A4B9FDC005717B3 /* ASPopUpView.m */,
+				77A145141A4B9FDC005717B3 /* ASProgressPopUpView.h */,
+				77A145151A4B9FDC005717B3 /* ASProgressPopUpView.m */,
+			);
+			path = ASProgressPopUpView;
+			sourceTree = "<group>";
+		};
+		77A145181A4BE0A5005717B3 /* MCSegment */ = {
+			isa = PBXGroup;
+			children = (
+				77A145241A4BF254005717B3 /* SDSegmentedControl.h */,
+				77A145251A4BF254005717B3 /* SDSegmentedControl.m */,
+			);
+			path = MCSegment;
 			sourceTree = "<group>";
 		};
 		CEB3A8211A49CEC200F8B0C6 /* Login&Register */ = {
@@ -1004,12 +1049,14 @@
 				7792DFA81A42C64C008F43A6 /* icon7.png in Resources */,
 				774A7B8B1A49170900D5B2CB /* success.png in Resources */,
 				7789E00D1A42796500B4CD09 /* InfoPlist.strings in Resources */,
+				77A145291A4BFB8F005717B3 /* arrow.png in Resources */,
 				7789E0151A42796500B4CD09 /* Images.xcassets in Resources */,
 				774A7B8D1A49170900D5B2CB /* SVProgressHUD.bundle in Resources */,
 				7792DFAC1A42C64C008F43A6 /* icon11.png in Resources */,
 				7792DFA61A42C64C008F43A6 /* icon5.png in Resources */,
 				774A7B8C1A49170900D5B2CB /* success@2x.png in Resources */,
 				7704257D1A47EDC700E6E470 /* back_up.png in Resources */,
+				77A1452A1A4BFB8F005717B3 /* btn_bg.png in Resources */,
 				7704257B1A47EDB900E6E470 /* back_down.png in Resources */,
 				7792DF791A42A1F5008F43A6 /* electronic_fence.png in Resources */,
 				7792DF921A42AA82008F43A6 /* tabbar_message1@2x.png in Resources */,
@@ -1071,7 +1118,9 @@
 				7789E0801A427CD900B4CD09 /* SDWebImageDownloader.m in Sources */,
 				774A7B8E1A49170900D5B2CB /* SVProgressHUD.m in Sources */,
 				7789E0881A427CD900B4CD09 /* THProgressView.m in Sources */,
+				77A145161A4B9FDC005717B3 /* ASPopUpView.m in Sources */,
 				7789E07D1A427CD900B4CD09 /* SDImageCache.m in Sources */,
+				77A145261A4BF254005717B3 /* SDSegmentedControl.m in Sources */,
 				7789E0131A42796500B4CD09 /* AppDelegate.m in Sources */,
 				7789E0BC1A427CEF00B4CD09 /* UIButton+AFNetworking.m in Sources */,
 				770425751A47E4D200E6E470 /* ExcitingActivitiesViewController.m in Sources */,
@@ -1111,6 +1160,7 @@
 				CEB3A8241A49CED200F8B0C6 /* LoginViewController.m in Sources */,
 				7789E0BA1A427CEF00B4CD09 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				770425921A4826A900E6E470 /* BreakSelectViewController.m in Sources */,
+				77A145171A4B9FDC005717B3 /* ASProgressPopUpView.m in Sources */,
 				774A7B911A49186700D5B2CB /* CLPickerView.m in Sources */,
 				7789E0841A427CD900B4CD09 /* UIButton+WebCache.m in Sources */,
 				7789E0BB1A427CEF00B4CD09 /* UIAlertView+AFNetworking.m in Sources */,
@@ -1230,15 +1280,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 磊 陈 (47PU6N76KB)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 磊 陈 (47PU6N76KB)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XSHCar/XSHCar-Prefix.pch";
 				INFOPLIST_FILE = "XSHCar/XSHCar-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0ed788b3-f19f-4327-a329-8b721883ff8d";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos8.1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1249,15 +1299,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 磊 陈 (47PU6N76KB)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 磊 陈 (47PU6N76KB)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XSHCar/XSHCar-Prefix.pch";
 				INFOPLIST_FILE = "XSHCar/XSHCar-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0ed788b3-f19f-4327-a329-8b721883ff8d";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos8.1;
 				WRAPPER_EXTENSION = app;
 			};
