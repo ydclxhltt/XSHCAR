@@ -10,8 +10,9 @@
 
 #import "BreakSelectViewController.h"
 #import "SDSegmentedControl.h"
+#import "CityListViewController.h"
 
-@interface BreakSelectViewController ()
+@interface BreakSelectViewController ()<UIScrollViewDelegate>
 {
     SDSegmentedControl *segmentView;
     UIScrollView *contentScrollView;
@@ -25,11 +26,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     //添加返回item
     [self addBackItem];
     //初始化UI
     [self createUI];
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBar.translucent = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    self.navigationController.navigationBar.translucent = YES;
 }
 
 #pragma mark 初始化UI
@@ -45,7 +57,7 @@
     NSMutableArray *itemsArray = (NSMutableArray *)@[@"违章查询",@"违章记录",@"违章处理"];
     segmentView = [[SDSegmentedControl alloc] initWithItems:itemsArray];
     [segmentView addTarget:self action:@selector(segmentedValueChanged:) forControlEvents:UIControlEventValueChanged];
-    segmentView.frame = CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SEGMENT_HEIGHT);
+    segmentView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SEGMENT_HEIGHT);
     [self.view addSubview:segmentView];
 }
 
@@ -55,6 +67,7 @@
     contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, start_y, SCREEN_WIDTH, SCREEN_HEIGHT - start_y)];
     contentScrollView.backgroundColor = [UIColor clearColor];
     contentScrollView.pagingEnabled = YES;
+    contentScrollView.delegate = self;
     contentScrollView.showsHorizontalScrollIndicator = NO;
     contentScrollView.showsVerticalScrollIndicator = NO;
     contentScrollView.contentSize = CGSizeMake(SCREEN_WIDTH * 3, contentScrollView.frame.size.height);
@@ -92,7 +105,7 @@
 {
     if (!selectView)
     {
-        NSArray *titleArray = @[@"车牌号码:",@"车架号码:",@"发动机号:"];
+        NSArray *titleArray = @[@" 车牌号码:",@" 车架号码:",@" 发动机号:"];
         NSArray *deArray = @[@"请输入后台后6位",@"请输入车架号后6位",@"请输入完整发动机号"];
         selectView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, contentScrollView.frame.size.height)];
 
@@ -116,8 +129,8 @@
                 cityButton = [UIButton buttonWithType:UIButtonTypeCustom];
                 cityButton.frame = CGRectMake(label.frame.size.width - 5, label.frame.origin.y, image.size.width/4, image.size.height/4);
                 [cityButton setTitle:@"粤" forState:UIControlStateNormal];
-                //[cityButton addTarget:self action:@selector(showCity) forControlEvents:UIControlEventTouchUpInside];
-                [cityButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+                [cityButton addTarget:self action:@selector(showCity) forControlEvents:UIControlEventTouchUpInside];
+                [cityButton setTitleColor:APP_MAIN_COLOR forState:UIControlStateNormal];
                 [selectView addSubview:cityButton];
                 x += 32.0;
                 w = 190.0;
@@ -127,7 +140,6 @@
                 w = 225.0;
             }
             UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(x,label.frame.origin.y, w, 35)];
-            textField.background=[UIImage imageNamed:@"框"];
             textField.tag = i + 1;
             textField.placeholder = [deArray objectAtIndex:i];
             textField.returnKeyType =  UIReturnKeyDone;
@@ -138,7 +150,7 @@
             textField.leftView = left;
             textField.font = [UIFont systemFontOfSize:14.0];
             textField.leftViewMode = UITextFieldViewModeAlways;
-            //[textField addTarget:self action:@selector(exitEvent:) forControlEvents:UIControlEventEditingDidEndOnExit];
+            [textField addTarget:self action:@selector(exitEvent:) forControlEvents:UIControlEventEditingDidEndOnExit];
             [selectView addSubview:textField];
             
             UIImageView *lineImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, textField.frame.origin.y + textField.frame.size.height + 4,SCREEN_WIDTH , .5)];
@@ -146,13 +158,17 @@
             [selectView addSubview:lineImageView];
             
             
-            height = label.frame.origin.y + 35 + 15;
+            height = label.frame.origin.y + 35 + 20;
         }
-        UIImage *image = [UIImage imageNamed:@"btn_bg"];
-        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake((SCREEN_WIDTH - 2*image.size.width/3)/2, height, 2*image.size.width/3, 2*image.size.height/3)];
-        [button setBackgroundImage:image forState:UIControlStateNormal];
+    
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(20, height, SCREEN_WIDTH - 20 * 2, 35)];
+        //[button setBackgroundImage:image forState:UIControlStateNormal];
+        button.backgroundColor = APP_MAIN_COLOR;
+        button.showsTouchWhenHighlighted = YES;
         [button setTitle:@"开始查询" forState:UIControlStateNormal];
-        //[button addTarget:self action:@selector(commitButtonPressed) forControlEvents:UIControlEventTouchDown];
+        button.titleLabel.font = FONT(16.0);
+        [CommonTool clipView:button withCornerRadius:5.0];
+        [button addTarget:self action:@selector(commitButtonPressed) forControlEvents:UIControlEventTouchDown];
         [selectView addSubview:button];
         
         [contentScrollView addSubview:selectView];
@@ -168,6 +184,44 @@
 {
     
 }
+
+#pragma mark 城市列表
+- (void)showCity
+{
+    CityListViewController *cityListViewController = [[CityListViewController alloc]init];
+    UINavigationController  *nav = [[UINavigationController alloc] initWithRootViewController:cityListViewController];
+    [self presentViewController:nav animated:YES completion:Nil];
+}
+
+#pragma mark 获取违章数据
+- (void)getBreakList
+{
+    
+}
+
+
+#pragma mark 键盘消失
+- (void)exitEvent:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+}
+
+#pragma mark 查询按钮
+- (void)commitButtonPressed
+{
+    
+}
+
+
+#pragma mark scrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    int page = scrollView.contentOffset.x/SCREEN_WIDTH;
+    segmentView.selectedSegmentIndex = page;
+    [self addContentViewWithIndex:page];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
