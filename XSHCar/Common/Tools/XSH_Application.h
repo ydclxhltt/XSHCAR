@@ -14,6 +14,8 @@
 @property(nonatomic, assign) int shopID;
 @property(nonatomic, assign) int userID;
 @property(nonatomic, assign) int carID;
+@property(nonatomic, strong) NSArray *cityArray;
+
 /*
  *  初始化
  *
