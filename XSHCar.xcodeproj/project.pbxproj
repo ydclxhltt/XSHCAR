@@ -32,6 +32,8 @@
 		774A7B911A49186700D5B2CB /* CLPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 774A7B901A49186700D5B2CB /* CLPickerView.m */; };
 		774A7B971A4971E200D5B2CB /* sort_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 774A7B951A4971E200D5B2CB /* sort_up.png */; };
 		774A7B981A4971E200D5B2CB /* sort_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 774A7B961A4971E200D5B2CB /* sort_down.png */; };
+		7772FE351A4D2C5500A992FC /* BreakListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772FE341A4D2C5500A992FC /* BreakListViewController.m */; };
+		7772FE381A4D2CD200A992FC /* BreakCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772FE371A4D2CD200A992FC /* BreakCell.m */; };
 		7786E3F81A4AB22B000E450E /* ExcitingActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7786E3F71A4AB22B000E450E /* ExcitingActivityDetailViewController.m */; };
 		7786E3FA1A4AC590000E450E /* login_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7786E3F91A4AC590000E450E /* login_logo.png */; };
 		7789E0031A42796500B4CD09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789E0021A42796500B4CD09 /* Foundation.framework */; };
@@ -195,6 +197,10 @@
 		774A7B901A49186700D5B2CB /* CLPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLPickerView.m; sourceTree = "<group>"; };
 		774A7B951A4971E200D5B2CB /* sort_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort_up.png; sourceTree = "<group>"; };
 		774A7B961A4971E200D5B2CB /* sort_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort_down.png; sourceTree = "<group>"; };
+		7772FE331A4D2C5500A992FC /* BreakListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreakListViewController.h; sourceTree = "<group>"; };
+		7772FE341A4D2C5500A992FC /* BreakListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreakListViewController.m; sourceTree = "<group>"; };
+		7772FE361A4D2CD200A992FC /* BreakCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreakCell.h; sourceTree = "<group>"; };
+		7772FE371A4D2CD200A992FC /* BreakCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreakCell.m; sourceTree = "<group>"; };
 		7786E3F61A4AB22B000E450E /* ExcitingActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExcitingActivityDetailViewController.h; sourceTree = "<group>"; };
 		7786E3F71A4AB22B000E450E /* ExcitingActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExcitingActivityDetailViewController.m; sourceTree = "<group>"; };
 		7786E3F91A4AC590000E450E /* login_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_logo.png; sourceTree = "<group>"; };
@@ -440,6 +446,10 @@
 				CE0E2C6E1A4C629E00364124 /* CityListViewController.m */,
 				770425901A4826A900E6E470 /* BreakSelectViewController.h */,
 				770425911A4826A900E6E470 /* BreakSelectViewController.m */,
+				7772FE331A4D2C5500A992FC /* BreakListViewController.h */,
+				7772FE341A4D2C5500A992FC /* BreakListViewController.m */,
+				7772FE361A4D2CD200A992FC /* BreakCell.h */,
+				7772FE371A4D2CD200A992FC /* BreakCell.m */,
 			);
 			path = BreakSelect;
 			sourceTree = "<group>";
@@ -1214,6 +1224,7 @@
 				7789E0B91A427CEF00B4CD09 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				7789E0811A427CD900B4CD09 /* SDWebImageDownloaderOperation.m in Sources */,
 				7789E0C01A427CEF00B4CD09 /* UIWebView+AFNetworking.m in Sources */,
+				7772FE351A4D2C5500A992FC /* BreakListViewController.m in Sources */,
 				770425791A47E4FC00E6E470 /* BookingViewController.m in Sources */,
 				CE0E2C671A4C572900364124 /* CLTreeView_LEVEL2_Model.m in Sources */,
 				CEA0F97D1A4B16AA00711AB4 /* BugTipListCell.m in Sources */,
@@ -1230,6 +1241,7 @@
 				7789E0B81A427CEF00B4CD09 /* AFURLSessionManager.m in Sources */,
 				7789E0B71A427CEF00B4CD09 /* AFURLResponseSerialization.m in Sources */,
 				7789E0BF1A427CEF00B4CD09 /* UIRefreshControl+AFNetworking.m in Sources */,
+				7772FE381A4D2CD200A992FC /* BreakCell.m in Sources */,
 				770425981A4826EE00E6E470 /* BearingClockViewController.m in Sources */,
 				7789E0871A427CD900B4CD09 /* UIImageView+WebCache.m in Sources */,
 				CEB3A8241A49CED200F8B0C6 /* LoginViewController.m in Sources */,
