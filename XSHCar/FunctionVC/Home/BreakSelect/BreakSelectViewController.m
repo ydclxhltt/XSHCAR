@@ -11,6 +11,7 @@
 #import "BreakSelectViewController.h"
 #import "SDSegmentedControl.h"
 #import "CityListViewController.h"
+#import "BreakListViewController.h"
 
 @interface BreakSelectViewController ()<UIScrollViewDelegate>
 {
@@ -37,12 +38,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBar.translucent = NO;
+    //初始化车牌
+    [self initCarInfo];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    self.navigationController.navigationBar.translucent = YES;
-}
 
 #pragma mark 初始化UI
 - (void)createUI
@@ -58,6 +57,7 @@
     segmentView = [[SDSegmentedControl alloc] initWithItems:itemsArray];
     [segmentView addTarget:self action:@selector(segmentedValueChanged:) forControlEvents:UIControlEventValueChanged];
     segmentView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SEGMENT_HEIGHT);
+    //segmentView.frame = CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SEGMENT_HEIGHT);
     [self.view addSubview:segmentView];
 }
 
@@ -75,10 +75,26 @@
 }
 
 
+#pragma mark 初始化车牌等信息
+- (void)initCarInfo
+{
+    NSString *proString = [[XSH_Application shareXshApplication] shortName];
+    NSString *city = [[XSH_Application shareXshApplication] carHeader];
+    if (proString && ![@"" isEqualToString:proString])
+    {
+        [cityButton setTitle:city forState:UIControlStateNormal];
+    }
+//    UITextField *textfield = (UITextField *)[selectView viewWithTag:1];
+//    if (![city isEqualToString:@""])
+//    {
+//        textfield.text = [city stringByReplacingOccurrencesOfString:proString withString:@""];
+//    }
+}
+
 #pragma mark 点击分段控件
 - (void)segmentedValueChanged:(SDSegmentedControl *)segment
 {
-    [self addContentViewWithIndex:segment.selectedSegmentIndex];
+    [self addContentViewWithIndex:(int)segment.selectedSegmentIndex];
 }
 
 #pragma mark 添加视图
@@ -106,7 +122,7 @@
     if (!selectView)
     {
         NSArray *titleArray = @[@" 车牌号码:",@" 车架号码:",@" 发动机号:"];
-        NSArray *deArray = @[@"请输入后台后6位",@"请输入车架号后6位",@"请输入完整发动机号"];
+        NSArray *deArray = @[@"请输入完整的车牌号",@"请输入车架号后6位",@"请输入完整发动机号"];
         selectView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, contentScrollView.frame.size.height)];
 
         float height = 0.0;
@@ -127,8 +143,8 @@
             {
                 UIImage *image = [UIImage imageNamed:@"arrow.png"];
                 cityButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                cityButton.frame = CGRectMake(label.frame.size.width - 5, label.frame.origin.y, image.size.width/4, image.size.height/4);
-                [cityButton setTitle:@"粤" forState:UIControlStateNormal];
+                cityButton.frame = CGRectMake(label.frame.size.width - 3, label.frame.origin.y + 2, image.size.width/4, image.size.height/4);
+                [cityButton setTitle:@"粤B" forState:UIControlStateNormal];
                 [cityButton addTarget:self action:@selector(showCity) forControlEvents:UIControlEventTouchUpInside];
                 [cityButton setTitleColor:APP_MAIN_COLOR forState:UIControlStateNormal];
                 [selectView addSubview:cityButton];
@@ -193,12 +209,6 @@
     [self presentViewController:nav animated:YES completion:Nil];
 }
 
-#pragma mark 获取违章数据
-- (void)getBreakList
-{
-    
-}
-
 
 #pragma mark 键盘消失
 - (void)exitEvent:(UITextField *)textField
@@ -206,16 +216,134 @@
     [textField resignFirstResponder];
 }
 
+- (void)returnKeyboard
+{
+    [((UITextField *)[selectView viewWithTag:1]) resignFirstResponder];
+    [((UITextField *)[selectView viewWithTag:2]) resignFirstResponder];
+    [((UITextField *)[selectView viewWithTag:3]) resignFirstResponder];
+}
+
 #pragma mark 查询按钮
 - (void)commitButtonPressed
 {
+    [self returnKeyboard];
+    NSString *carNo = ((UITextField *)[selectView viewWithTag:1]).text;
+    NSString *classNo = ((UITextField *)[selectView viewWithTag:2]).text;
+    NSString *engineNo = ((UITextField *)[selectView viewWithTag:3]).text;
+    NSLog(@"classNo===%@====engineNo====%@",classNo,engineNo);
+    NSString *message = @"";
+    NSString *carString = [[cityButton titleForState:UIControlStateNormal] stringByAppendingString:carNo];
+    if (!carNo && [carNo isEqualToString:@""])
+    {
+        message = @"请输入车牌号";
+    }
+    else if (!classNo && [classNo isEqualToString:@""])
+    {
+        message = @"请输入车架号码";
+    }
+    else if (!engineNo && [engineNo isEqualToString:@""])
+    {
+        message = @"请输入发动机号";
+    }
+    else if (carString.length != 7)
+    {
+        message = @"请输入正确的车牌号";
+    }
+    else if (classNo.length != 6)
+    {
+        message = @"请输后6位车架号";
+    }
+    if (![message isEqualToString:@""])
+    {
+        [CommonTool addAlertTipWithMessage:message];
+        return;
+    }
+    NSNumber *cityNumber = [[XSH_Application shareXshApplication] carCity];
+    NSString *cityStr = @"";
+    if (!cityNumber)
+    {
+        cityStr = @"152";
+    }
+    else
+    {
+        int cityID = [cityNumber intValue];
+        [NSString stringWithFormat:@"%d",cityID];
+    }
     
+    NSString *appKey = APP_KEY;
+    NSString *urlStr = BREAK_SELECT_URL;
+    NSString *car_info = [NSString stringWithFormat:@"{hphm=%@&classno=%@&engineno=%@&registno=&city_id=%@&car_type=02}",[[cityButton titleForState:UIControlStateNormal] stringByAppendingString:carNo],classNo,engineNo,cityStr];
+    //NSString *car_info = [NSString stringWithFormat:@"{hphm=%@&classno=%@&engineno=%@&registno=&city_id=152&car_type=02}",@"粤BF176F",@"302947",@"0788"];
+    NSString *timeStr = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSince1970]];
+    NSString *appID = APP_ID;
+    NSString *sign = [NSString stringWithFormat:@"%@%@%@%@",appID,car_info,timeStr,appKey];
+    NSLog(@"car_info====%@",car_info);
+    sign = [CommonTool md5:sign];
+    
+    NSString *requestUrlStr = [NSString stringWithFormat:@"%@car_info=%@&sign=%@&timestamp=%@&app_id=%@",urlStr,[CommonTool encodeToPercentEscapeString:car_info],sign,timeStr,appID];
+    NSLog(@"requestUrlStr====%@",requestUrlStr);
+
+    [self getBreakListWith:requestUrlStr];
+}
+
+#pragma mark 获取违章数据
+- (void)getBreakListWith:(NSString *)urlStr
+{
+    typeof(self) weakSelf = self;
+    [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
+    RequestTool *request = [[RequestTool alloc] init];
+    [request requestWithUrl:urlStr requestParamas:nil requestType:RequestTypeAsynchronous
+    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+    {
+         NSLog(@"breakListResponseDic===%@",responseDic);
+         if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
+         {
+             int status = [[responseDic objectForKey:@"status"] intValue];
+             if (status == 2001)
+             {
+                 [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+                 NSArray *array = [responseDic objectForKey:@"historys"];
+                 if (array && [array count] > 0)
+                 {
+                     
+                     BreakListViewController *breakListVC = [[BreakListViewController alloc] init];
+                     breakListVC.dataArray = breakListVC.dataArray;
+                     UINavigationController *nav = [[UINavigationController  alloc] initWithRootViewController:breakListVC];
+                     [weakSelf presentViewController:nav animated:YES completion:Nil];
+                 }
+             }
+             else if (status == 2000)
+             {
+                 [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP duration:.5];
+                 [CommonTool addAlertTipWithMessage:@"暂无违章记录"];
+             }
+             else
+             {
+                 [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
+             }
+         }
+         else
+         {
+             [SVProgressHUD showSuccessWithStatus:LOADING_WEBERROR_TIP];
+         }
+     }
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+    {
+         [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
+         NSLog(@"error===%@",error);
+    }];
 }
 
 
 #pragma mark scrollViewDelegate
 
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self returnKeyboard];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     int page = scrollView.contentOffset.x/SCREEN_WIDTH;
     segmentView.selectedSegmentIndex = page;

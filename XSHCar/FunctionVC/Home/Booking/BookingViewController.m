@@ -145,7 +145,7 @@
             NSString *c_plates = ([responseDic objectForKey:@"c_plates"]) ? [responseDic objectForKey:@"c_plates"] : @"";
             NSString *cl_name = ([responseDic objectForKey:@"cl_name"]) ? [responseDic objectForKey:@"cl_name"] : @"";
             NSString *cm_name = ([responseDic objectForKey:@"cm_name"]) ? [responseDic objectForKey:@"cm_name"] : @"";
-            weakSelf.bookingInfoArray = @[phone,c_plates,cb_name,cl_name,cm_name,@""];
+            weakSelf.bookingInfoArray = @[phone,cb_name,c_plates,cl_name,cm_name,@""];
             weakSelf.dataArray = (NSMutableArray *)[responseDic objectForKey:@"list"];
             [weakSelf createUI];
         }

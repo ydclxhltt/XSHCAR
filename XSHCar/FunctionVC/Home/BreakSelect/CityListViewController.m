@@ -1,5 +1,5 @@
 //
-//  ProviceListViewController.m
+//  CityListViewController.m
 //  XSHCar
 //
 //  Created by clei on 14/11/19.
@@ -69,6 +69,13 @@
     [self dismissViewControllerAnimated:YES completion:Nil];
 }
 
+#pragma mark 保存城市列表数据
+- (void)saveCityArray
+{
+    [[XSH_Application shareXshApplication] setCityArray:self.dataArray];
+}
+
+
 #pragma mark 获取城市列表
 - (void)getCityData
 {
@@ -79,11 +86,20 @@
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
          NSLog(@"cityListResponseDic===%@",responseDic);
-         if ([responseDic isKindOfClass:[NSArray class]] || [responseDic isKindOfClass:[NSMutableArray class]])
+         if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
          {
-             [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
-             weakSelf.dataArray = (NSMutableArray *)responseDic;
-             //[weakSelf.table reloadData];
+             NSMutableArray *array = (NSMutableArray *)[responseDic objectForKey:@"configs"];
+             if (array && [array count] > 0)
+             {
+                 [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+                 weakSelf.dataArray = array;
+                 [weakSelf.table reloadData];
+                 [weakSelf saveCityArray];
+             }
+             else
+             {
+                 [SVProgressHUD showErrorWithStatus:@"暂无数据"];
+             }
          }
          else
          {
@@ -137,7 +153,14 @@
     if (array && [array count] > 0)
     {
         NSDictionary *cityDic = [array objectAtIndex:indexPath.row];
-        cell.textLabel.text = [NSString stringWithFormat:@"%@     %@",[cityDic objectForKey:@"car_head"],[cityDic objectForKey:@"city_name"]];;
+        NSString *carHeader = [cityDic objectForKey:@"car_head"];
+        NSString *cityName = [cityDic objectForKey:@"city_name"];
+        NSString *textString = [NSString stringWithFormat:@"%@     %@",carHeader,cityName];
+        if (!carHeader || [@"" isEqualToString:carHeader])
+        {
+            textString = cityName;
+        }
+        cell.textLabel.text = textString;
     }
     return cell;
 }
@@ -150,10 +173,10 @@
     if (array && [array count] > 0)
     {
         NSDictionary *cityDic = [array objectAtIndex:indexPath.row];
-//       [[[XSHRequest sharedInstance] userInfo] setValue:cityDic forKeyPath:@"CarCity"];
-//        [[[XSHRequest sharedInstance] userInfo] setValue:[dic objectForKey:@"province_short_name"] forKeyPath:@"ProString"];
-//        [self blackBTN:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"SelectCity" object:nil userInfo:nil];
+        [[XSH_Application  shareXshApplication] setCarCity:[NSNumber numberWithInt:[[cityDic objectForKey:@"city_id"] intValue]]];
+        [[XSH_Application shareXshApplication] setShortName:[dic objectForKey:@"province_short_name"]];
+        [[XSH_Application shareXshApplication] setCarHeader:[cityDic objectForKey:@"car_head"]];
+        [self backButtonPressed:nil];
     }
    
 }

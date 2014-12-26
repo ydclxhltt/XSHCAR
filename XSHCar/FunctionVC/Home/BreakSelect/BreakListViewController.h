@@ -1,5 +1,5 @@
 //
-//  CityListViewController.h
+//  BreakListViewController.h
 //  XSHCar
 //
 //  Created by clei on 14/11/19.
@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BasicViewController.h"
 
-@interface CityListViewController : BasicViewController<UITableViewDataSource,UITableViewDelegate>
+@interface BreakListViewController : BasicViewController
 
 @end

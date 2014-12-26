@@ -46,6 +46,12 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBar.translucent = YES;
+}
+
+
 #pragma mark 初始化UI
 - (void)createUI
 {
