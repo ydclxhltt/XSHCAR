@@ -15,6 +15,9 @@
 @property(nonatomic, assign) int userID;
 @property(nonatomic, assign) int carID;
 @property(nonatomic, strong) NSArray *cityArray;
+@property(nonatomic, assign) NSNumber *carCity;
+@property(nonatomic, strong) NSString *shortName;
+@property(nonatomic, strong) NSString *carHeader;
 
 /*
  *  初始化

@@ -101,4 +101,13 @@
  */
 + (NSString *)getStringFromDate:(NSDate *)date formatterString:(NSString *)fmtString;
 
+/*
+ *  URL编码
+ *
+ *  @pram   input  需要编码的字符串
+ *
+ *  @return        编码后的字符串
+ */
++ (NSString *)encodeToPercentEscapeString: (NSString *) input;
+
 @end

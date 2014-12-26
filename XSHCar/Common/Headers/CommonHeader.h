@@ -13,6 +13,9 @@
 #import "RequestHeader.h"
 #import "DeviceHeader.h"
 
+//违章查询
+#define APP_KEY                     @"21dce05b4cee5accc6c2b197910a306d"
+#define APP_ID                      @"63"
 
 //导航条高度
 #define NAV_HEIGHT                  64.0

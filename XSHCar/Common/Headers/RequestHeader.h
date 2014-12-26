@@ -43,6 +43,9 @@
 #define MESSAGE_UPDATE_URL      [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/smsInfor!addAndUpdateSms"]
 
 //城市列表
-#define CITY_LIST_URL           @"http://182.92.111.32:33/io2/city.aspx"
+#define CITY_LIST_URL           @"http://www.cheshouye.com/api/weizhang/get_all_config"
+
+//违章查询
+#define BREAK_SELECT_URL        @"http://www.cheshouye.com/api/weizhang/query_task?"
 
 #endif

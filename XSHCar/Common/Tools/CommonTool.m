@@ -176,5 +176,30 @@
     return [formatter stringFromDate:date];
 }
 
+//URL编码
++ (NSString *)encodeToPercentEscapeString: (NSString *) input
+{
+    NSString *outputStr = (NSString *)
+    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                              (CFStringRef)input,
+                                                              NULL,
+                                                              (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                              kCFStringEncodingUTF8));
+    //自定义需要编码的特殊字符
+    return outputStr;
+}
+
+//URL解码
++ (NSString *)decodeFromPercentEscapeString: (NSString *) input
+{
+    NSMutableString *outputStr = [NSMutableString stringWithString:input];
+    [outputStr replaceOccurrencesOfString:@"+"
+                               withString:@" "
+                                  options:NSLiteralSearch
+                                    range:NSMakeRange(0, [outputStr length])];
+    
+    return [outputStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
 
 @end
