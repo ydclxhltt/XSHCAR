@@ -7,6 +7,8 @@
 //
 
 #import "MessageManageViewController.h"
+#import "MessageDetailViewController.h"
+#import "PeaceInfomationViewController.h"
 
 @interface MessageManageViewController ()
 //@property(nonatomic, retain) NSArray *imageArray;
@@ -37,12 +39,14 @@
 //    self.dataArray = (NSMutableArray *)@[@"异常震动提醒",@"布防启动提示",@"碰撞报警",@"侧翻报警",@"电子围栏",@"平安亲人",@"保养提示"];
     //初始化UI
     //[self createUI];
+    //获取状态
+    [self getMessageStatus];
     // Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self getMessageStatus];
+    
 }
 
 
@@ -90,7 +94,6 @@
     if (!self.table)
     {
         [self addTableViewWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, 44.0 * [self.dataArray count]) tableType:UITableViewStylePlain tableDelegate:self];
-        self.table.scrollEnabled = NO;
         self.table.separatorInset = UIEdgeInsetsZero;
     }
     else
@@ -99,6 +102,87 @@
     }
 
 }
+
+#pragma mark 消息状态改变
+- (void)messageStatusChanged:(UISwitch *)switchView
+{
+    int tag = (int)switchView.tag;
+    NSDictionary *rowDic = [self.dataArray objectAtIndex:tag - 1];
+    if (rowDic)
+    {
+        int smsID = [[rowDic objectForKey:@"sms_id"] intValue];
+        int ussId = [[rowDic objectForKey:@"uss_id"] intValue];
+        [self switchViewStatusChange:switchView smsID:smsID ussId:ussId ussStatus:switchView.isOn];
+    }
+    else
+    {
+        [switchView setOn:!switchView.isOn];
+    }
+}
+
+#pragma mark 更新状态
+- (void)switchViewStatusChange:(UISwitch *)switchView  smsID:(int)sms_id  ussId:(int)uss_id ussStatus:(int)uss_status
+{
+    typeof(self) weakSelf = self;
+    [SVProgressHUD showWithStatus:@"正在保存..."];
+    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"sms_id":[NSNumber numberWithInt:sms_id],@"uss_id":[NSNumber numberWithInt:uss_id],@"uss_status":[NSNumber numberWithInt:uss_status]};
+    RequestTool *request = [[RequestTool alloc] init];
+    [request requestWithUrl1:MESSAGE_UPDATE_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
+               requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+     {
+         NSLog(@"messageStatusResponseDic===%@",responseDic);
+         if (!responseDic || [@"" isEqualToString:responseDic])
+         {
+             [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
+             //[CommonTool addAlertTipWithMessage:LOADING_WEBERROR_TIP];
+             [switchView setOn:!switchView.isOn];
+         }
+         else
+         {
+             if (uss_id != [responseDic intValue])
+             {
+                 [SVProgressHUD showErrorWithStatus:@"修改失败"];
+                 [switchView setOn:!switchView.isOn];
+             }
+             else
+             {
+                 [SVProgressHUD showSuccessWithStatus:@"设置成功"];
+                 if (switchView.isOn)
+                 {
+                     [weakSelf setPeaceAndFenceWithIndex:(int)switchView.tag - 1];
+                 }
+             }
+         }
+         
+     }
+                 requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+     {
+         [switchView setOn:!switchView.isOn];
+         NSLog(@"error===%@",error);
+     }];
+    
+}
+
+
+#pragma mark 设置平安亲人和电子围栏
+- (void)setPeaceAndFenceWithIndex:(int)index
+{
+    NSDictionary *rowDic = [self.dataArray objectAtIndex:index];
+    NSString *imageName = ([rowDic objectForKey:@"sms_filepath"]) ? [rowDic objectForKey:@"sms_filepath"] : @"";
+    if ([@"peace_family.png" isEqualToString:imageName])
+    {
+        PeaceInfomationViewController *infoViewController = [[PeaceInfomationViewController alloc] init];
+        infoViewController.smsID = [[rowDic objectForKey:@"sms_id"] intValue];
+        infoViewController.ussID = [[rowDic objectForKey:@"uss_id"] intValue];
+        infoViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:infoViewController animated:YES];
+    }
+    if ([@"electronic_fence.png" isEqualToString:imageName])
+    {
+        
+    }
+}
+
 
 #pragma mark - tableView代理
 
@@ -128,7 +212,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:homeCellID];
         cell.backgroundColor = [UIColor whiteColor];
         cell.imageView.transform = CGAffineTransformScale(cell.imageView.transform, 0.5, 0.5);
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     for (UIView *view in cell.contentView.subviews)
@@ -150,13 +234,22 @@
         nameString = ([rowDic objectForKey:@"sms_name"]) ? [rowDic objectForKey:@"sms_name"] : @"";
     }
     
-    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60 , (cell.frame.size.height - 30)/2, 60, 30)];
-    [switchView setOn:flag];
-    switchView.tag = indexPath.row + 1;
-    [switchView addTarget:self action:@selector(messageStatusChanged:) forControlEvents:UIControlEventValueChanged];
-    switchView.onTintColor = RGB(28.0, 130.0, 202.0);
-    switchView.tintColor = RGB(189.0, 189.0, 189.0);
-    [cell.contentView addSubview:switchView];
+    if ([@"collision_warning.png" isEqualToString:imageName ] || [@"rollover_alarm.png" isEqualToString:imageName])
+    {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    else
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60 , (cell.frame.size.height - 30)/2, 60, 30)];
+        [switchView setOn:flag];
+        switchView.tag = indexPath.row + 1;
+        [switchView addTarget:self action:@selector(messageStatusChanged:) forControlEvents:UIControlEventValueChanged];
+        switchView.onTintColor = RGB(28.0, 130.0, 202.0);
+        switchView.tintColor = RGB(189.0, 189.0, 189.0);
+        [cell.contentView addSubview:switchView];
+    }
+    
     
     cell.textLabel.text = nameString;
     cell.textLabel.font = FONT(16.0);
@@ -172,69 +265,33 @@
     NSMutableDictionary *rowDic = [self.dataArray objectAtIndex:indexPath.row];
     if (rowDic)
     {
-        NSString *remarkString = [rowDic objectForKey:@"sms_remark"];
-        if (remarkString && ![@"" isEqualToString:remarkString])
+        NSString * imageName = ([rowDic objectForKey:@"sms_filepath"]) ? [rowDic objectForKey:@"sms_filepath"] : @"";
+        if ([@"collision_warning.png" isEqualToString:imageName ])
         {
-            [CommonTool addAlertTipWithMessage:remarkString];
+            MessageDetailViewController *detailViewController = [[MessageDetailViewController alloc] init];
+            detailViewController.title = @"碰撞报警说明";
+            detailViewController.hidesBottomBarWhenPushed = YES;
+            detailViewController.detailText = COLLISION_WARNING_TIP;
+            [self.navigationController pushViewController:detailViewController animated:YES];
         }
-    }
-}
-
-#pragma mark 消息状态改变
-- (void)messageStatusChanged:(UISwitch *)switchView
-{
-    int tag = (int)switchView.tag;
-    NSDictionary *rowDic = [self.dataArray objectAtIndex:tag - 1];
-    if (rowDic)
-    {
-        int smsID = [[rowDic objectForKey:@"sms_id"] intValue];
-        int ussId = [[rowDic objectForKey:@"uss_id"] intValue];
-        [self switchViewStatusChange:switchView smsID:smsID ussId:ussId ussStatus:switchView.isOn];
-    }
-    else
-    {
-        [switchView setOn:!switchView.isOn];
-    }
-}
-
-#pragma mark 更新状态
-- (void)switchViewStatusChange:(UISwitch *)switchView  smsID:(int)sms_id  ussId:(int)uss_id ussStatus:(int)uss_status
-{
-    [SVProgressHUD showWithStatus:@"正在保存..."];
-    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"sms_id":[NSNumber numberWithInt:sms_id],@"uss_id":[NSNumber numberWithInt:uss_id],@"uss_status":[NSNumber numberWithInt:uss_status]};
-    RequestTool *request = [[RequestTool alloc] init];
-    [request requestWithUrl1:MESSAGE_UPDATE_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
-    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
-    {
-         NSLog(@"messageStatusResponseDic===%@",responseDic);
-        if (!responseDic || [@"" isEqualToString:responseDic])
+        else if ([@"rollover_alarm.png" isEqualToString:imageName])
         {
-            [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
-            //[CommonTool addAlertTipWithMessage:LOADING_WEBERROR_TIP];
-            [switchView setOn:!switchView.isOn];
+            MessageDetailViewController *detailViewController = [[MessageDetailViewController alloc] init];
+            detailViewController.title = @"侧翻报警说明";
+            detailViewController.hidesBottomBarWhenPushed = YES;
+            detailViewController.detailText = ROLLOVER_ALARM_TIP;
+            [self.navigationController pushViewController:detailViewController animated:YES];
         }
         else
         {
-            if (uss_id != [responseDic intValue])
+            NSString *remarkString = [rowDic objectForKey:@"sms_remark"];
+            if (remarkString && ![@"" isEqualToString:remarkString])
             {
-                [SVProgressHUD showErrorWithStatus:@"修改失败"];
-                [switchView setOn:!switchView.isOn];
-            }
-            else
-            {
-                [SVProgressHUD showSuccessWithStatus:@"修改成功"];
+                [CommonTool addAlertTipWithMessage:remarkString];
             }
         }
-
     }
-    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
-    {
-        [switchView setOn:!switchView.isOn];
-         NSLog(@"error===%@",error);
-    }];
-
 }
-
 
 
 - (void)didReceiveMemoryWarning
