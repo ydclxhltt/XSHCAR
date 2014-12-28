@@ -11,7 +11,7 @@
 #import "MessageManageViewController.h"
 #import "SettingViewController.h"
 #import "MineViewController.h"
-
+#import "LoginViewController.h"
 
 
 @interface AppDelegate()
@@ -28,8 +28,13 @@
     [self.window makeKeyAndVisible];
     
     //设置tabbar字颜色
+    //[[UITabBar appearance] setBarTintColor:[UIColor lightGrayColor]];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:11],NSForegroundColorAttributeName : RGB(113.0, 113.0, 113.0)} forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:11],NSForegroundColorAttributeName : APP_MAIN_COLOR} forState:UIControlStateSelected];
+    
+    
+    //添加登录视图
+    //[self addLoginView];
     
     //添加主视图
     [self addMainView];
@@ -52,7 +57,15 @@
     return YES;
 }
 
+#pragma mark 添加登录界面
+- (void)addLoginView
+{
+    LoginViewController *loginViewController = [[LoginViewController  alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+    self.window.rootViewController = nav;
+}
 
+#pragma mark 添加主界面
 //添加主界面
 - (void)addMainView
 {
@@ -72,7 +85,9 @@
      UINavigationController *messageManageNavViewController = [[UINavigationController alloc]initWithRootViewController:messageManageViewController];
      UINavigationController *settingNavViewController = [[UINavigationController alloc]initWithRootViewController:settingViewController];
      UINavigationController *mineNavViewController = [[UINavigationController alloc]initWithRootViewController:mineViewController];
-     UITabBarItem *homeTabBarItem = [[UITabBarItem alloc]initWithTitle:@"首页" image:[UIImage imageNamed:@"tabbar_home1"] selectedImage:[UIImage imageNamed:@"tabbar_home1"]];
+    UIImage *image1 = [UIImage imageNamed:@"tabbar_home1"];
+    //image1 = [image1 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+     UITabBarItem *homeTabBarItem = [[UITabBarItem alloc]initWithTitle:@"首页" image:image1 selectedImage:[UIImage imageNamed:@"tabbar_home1"]];
      UITabBarItem *messageManageTabBarItem = [[UITabBarItem alloc]initWithTitle:@"消息管理" image:[UIImage imageNamed:@"tabbar_message1"] selectedImage:[UIImage imageNamed:@"tabbar_message1"]];
     UITabBarItem *settingTabBarItem = [[UITabBarItem alloc]initWithTitle:@"设置" image:[UIImage imageNamed:@"tabbar_setting1"] selectedImage:[UIImage imageNamed:@"tabbar_setting1"]];
      UITabBarItem *mineTabBarItem = [[UITabBarItem alloc]initWithTitle:@"我" image:[UIImage imageNamed:@"tabbar_mine1"] selectedImage:[UIImage imageNamed:@"tabbar_mine1"]];
