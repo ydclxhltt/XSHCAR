@@ -9,10 +9,7 @@
 #import "CityListViewController.h"
 
 @interface CityListViewController ()
-{
-    UITableView *table;
-}
-@property(nonatomic,retain)NSArray *dataArray;
+
 @end
 
 @implementation CityListViewController
@@ -35,14 +32,22 @@
     //添加返回item
     [self addBackItem];
 
-    NSArray *array = [[XSH_Application shareXshApplication] cityArray];
+    NSArray *array = (self.cityScource == CityScourceFromThird) ? [[XSH_Application shareXshApplication] cityArray] : [[XSH_Application shareXshApplication] xshCityArray];
+    
     if (array)
     {
-        self.dataArray = array;
+        self.dataArray = (NSMutableArray *)array;
     }
     else
     {
-        [self getCityData];
+        if (self.cityScource == CityScourceFromThird)
+        {
+            [self getCityData];
+        }
+        else if (self.cityScource == CityScourceFromXSH)
+        {
+            [self getXSHCityData];
+        }
     }
     //初始化UI
     [self createUI];
@@ -114,12 +119,58 @@
     }];
 }
 
+- (void)getXSHCityData
+{
+    typeof(self) weakSelf = self;
+    [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
+    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"sms_id":[NSNumber numberWithInt:weakSelf.smsID],@"uss_id":[NSNumber numberWithInt:weakSelf.ussID]};
+    RequestTool *request = [[RequestTool alloc] init];
+    [request requestWithUrl:PEACE_INFO_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
+    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+     {
+         NSLog(@"peaceInfoResponseDic===%@",responseDic);
+         if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
+         {
+             [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+             NSMutableArray *array = [NSMutableArray arrayWithArray:[responseDic objectForKey:@"cityBeanList"]];
+             [[XSH_Application shareXshApplication] setSisID:[[responseDic objectForKey:@"sis_id"] intValue]];
+             if (array && [array count] > 0)
+             {
+                 for (int i = 0; i < [array count]; i ++)
+                 {
+                     NSMutableDictionary *dic = [NSMutableDictionary  dictionaryWithDictionary:array[i]];
+                     NSMutableArray *cityArray = [NSMutableArray arrayWithArray:[dic objectForKey:@"citys"]];
+                     if (cityArray && [cityArray count] == 0)
+                     {
+                         NSDictionary *cityDic = @{@"cityName":[dic objectForKey:@"province"],@"cityParentId":[dic objectForKey:@"p_id"],@"cityStatus":@"1",@"cityId":[dic objectForKey:@"p_id"]};
+                         [cityArray addObject:cityDic];
+                     }
+                     [dic setObject:cityArray forKey:@"citys"];
+                     [array replaceObjectAtIndex:i withObject:dic];
+                 }
+                 [[XSH_Application shareXshApplication] setXshCityArray:array];
+                 self.dataArray = [NSMutableArray arrayWithArray:array];
+                 [self.table reloadData];
+             }
+         }
+         else
+         {
+             [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
+         }
+         
+     }
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+     {
+         
+         NSLog(@"error===%@",error);
+     }];
+}
 
 #pragma mark tableDelegate
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSDictionary *dic = [self.dataArray objectAtIndex:section];
-    NSString *headerStr = [NSString stringWithFormat:@"%@-%@",[dic objectForKey:@"province_short_name"],[dic objectForKey:@"province_name"]];
+    NSString *headerStr = (self.cityScource == CityScourceFromThird) ? [NSString stringWithFormat:@"%@-%@",[dic objectForKey:@"province_short_name"],[dic objectForKey:@"province_name"]] : [dic objectForKey:@"province"];
     return headerStr;
 }
 
@@ -142,7 +193,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellID = @"cellID";
-    UITableViewCell *cell = [table dequeueReusableCellWithIdentifier:cellID];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
@@ -153,8 +204,8 @@
     if (array && [array count] > 0)
     {
         NSDictionary *cityDic = [array objectAtIndex:indexPath.row];
-        NSString *carHeader = [cityDic objectForKey:@"car_head"];
-        NSString *cityName = [cityDic objectForKey:@"city_name"];
+        NSString *carHeader = (self.cityScource == CityScourceFromThird) ? [cityDic objectForKey:@"car_head"] : @"";
+        NSString *cityName = (self.cityScource == CityScourceFromThird) ?[cityDic objectForKey:@"city_name"] : [cityDic objectForKey:@"cityName"];
         NSString *textString = [NSString stringWithFormat:@"%@     %@",carHeader,cityName];
         if (!carHeader || [@"" isEqualToString:carHeader])
         {
@@ -173,9 +224,20 @@
     if (array && [array count] > 0)
     {
         NSDictionary *cityDic = [array objectAtIndex:indexPath.row];
-        [[XSH_Application  shareXshApplication] setCarCity:[NSNumber numberWithInt:[[cityDic objectForKey:@"city_id"] intValue]]];
-        [[XSH_Application shareXshApplication] setShortName:[dic objectForKey:@"province_short_name"]];
-        [[XSH_Application shareXshApplication] setCarHeader:[cityDic objectForKey:@"car_head"]];
+        if (self.cityScource == CityScourceFromThird)
+        {
+            [[XSH_Application  shareXshApplication] setCarCity:[NSNumber numberWithInt:[[cityDic objectForKey:@"city_id"] intValue]]];
+            [[XSH_Application shareXshApplication] setShortName:[dic objectForKey:@"province_short_name"]];
+            [[XSH_Application shareXshApplication] setCarHeader:[cityDic objectForKey:@"car_head"]];
+        }
+        else if (self.cityScource == CityScourceFromXSH)
+        {
+            NSString *province = [dic objectForKey:@"province"];
+            NSString *cityName = [cityDic objectForKey:@"cityName"];
+            NSString *totleString = [NSString stringWithFormat:@"%@-%@",province,cityName];
+            [[XSH_Application shareXshApplication] setCityString:([province isEqualToString:cityName]) ? province : totleString];
+            [[XSH_Application shareXshApplication] setXshCityID:[[cityDic objectForKey:@"cityId"] intValue]];
+        }
         [self backButtonPressed:nil];
     }
    

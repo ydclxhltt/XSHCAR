@@ -37,6 +37,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:YES];
     self.navigationController.navigationBar.translucent = NO;
     //初始化车牌
     [self initCarInfo];
@@ -80,9 +81,13 @@
 {
     NSString *proString = [[XSH_Application shareXshApplication] shortName];
     NSString *city = [[XSH_Application shareXshApplication] carHeader];
-    if (proString && ![@"" isEqualToString:proString])
+    if (city && ![@"" isEqualToString:city])
     {
         [cityButton setTitle:city forState:UIControlStateNormal];
+    }
+    else if (proString && ![@"" isEqualToString:proString])
+    {
+        [cityButton setTitle:proString forState:UIControlStateNormal];
     }
 //    UITextField *textfield = (UITextField *)[selectView viewWithTag:1];
 //    if (![city isEqualToString:@""])
@@ -206,6 +211,7 @@
 {
     CityListViewController *cityListViewController = [[CityListViewController alloc]init];
     UINavigationController  *nav = [[UINavigationController alloc] initWithRootViewController:cityListViewController];
+    cityListViewController.cityScource = CityScourceFromThird;
     [self presentViewController:nav animated:YES completion:Nil];
 }
 
@@ -267,7 +273,7 @@
     else
     {
         int cityID = [cityNumber intValue];
-        [NSString stringWithFormat:@"%d",cityID];
+        cityStr = [NSString stringWithFormat:@"%d",cityID];
     }
     
     NSString *appKey = APP_KEY;
@@ -292,7 +298,7 @@
     typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
     RequestTool *request = [[RequestTool alloc] init];
-    [request requestWithUrl:urlStr requestParamas:nil requestType:RequestTypeAsynchronous
+    [request requestWithUrl1:urlStr requestParamas:nil requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
          NSLog(@"breakListResponseDic===%@",responseDic);
