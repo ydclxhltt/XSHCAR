@@ -28,7 +28,7 @@ static XSH_Application *xsh = nil;
     self = [super init];
     if (self)
     {
-        
+        self.xshCityID = 0;
     }
     return self;
 }

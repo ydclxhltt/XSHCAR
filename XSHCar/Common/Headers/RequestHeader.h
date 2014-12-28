@@ -48,4 +48,25 @@
 //违章查询
 #define BREAK_SELECT_URL        @"http://www.cheshouye.com/api/weizhang/query_task?"
 
+//平安亲人信息
+#define PEACE_INFO_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/smsInfor!safeInformation"]
+
+//提交平安亲人信息
+#define PEACE_INFO_COMMIT_URL   [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/smsInfor!safeInformationSubmit"]
+
+//定位开关
+#define LOCATION_SWITCH_URL     [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/smsInfor!addAndUpdateSms"]
+
+//矫正信息
+#define CORRECT_TIP_INFO_URL    [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/cartrackrecording!userDefinedMaintenanceTips"]
+
+//提交矫正信息
+#define COMMIT_CORRECT_INFO_URL [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/cartrackrecording!userDefinedMaintenanceTipsSet"]
+
+//通讯设置
+#define COMMUNICATION_INFO_URL  [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/cartrackrecording!communicationMode"]
+
+//提交通讯设置信息
+#define COMMIT_COMMUNICATION_URL [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/cartrackrecording!communicationModeSet"]
+
 #endif
