@@ -92,7 +92,7 @@
 {
     //typeof(self) weakSelf = self;
     request = [[RequestTool alloc] init];
-    [request requestWithUrl:CAR_CHECK_URL requestParamas:@{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"car_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] carID]]} requestType:RequestTypeSynchronous
+    [request requestWithUrl:CAR_CHECK_URL requestParamas:@{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"car_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] carID]]} requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
          NSLog(@"carCheckResponseDic===%@",responseDic);
