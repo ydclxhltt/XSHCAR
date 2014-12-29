@@ -194,14 +194,18 @@
 #pragma mark actionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+   
     NSArray *array = @[@"5",@"10",@"15",@"30",@"60"];
-    NSString *selcetString = [array[buttonIndex] stringByAppendingString:@"秒"];
-    NSString *defaultString = self.dataArray[actionSheet.tag];
-    if (![selcetString isEqualToString:defaultString])
+    if (buttonIndex < [array count])
     {
-        [self.dataArray replaceObjectAtIndex:actionSheet.tag withObject:array[buttonIndex]];
-        [self.table reloadData];
-        [self commitCommunicationInfo];
+        NSString *selcetString = [array[buttonIndex] stringByAppendingString:@"秒"];
+        NSString *defaultString = self.dataArray[actionSheet.tag];
+        if (![selcetString isEqualToString:defaultString])
+        {
+            [self.dataArray replaceObjectAtIndex:actionSheet.tag withObject:array[buttonIndex]];
+            [self.table reloadData];
+            [self commitCommunicationInfo];
+        }
     }
 }
 
