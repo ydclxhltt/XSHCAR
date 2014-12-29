@@ -149,6 +149,11 @@
 		CEB3A81D1A49BA2100F8B0C6 /* pic_default.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB3A81C1A49BA2100F8B0C6 /* pic_default.png */; };
 		CEB3A8201A49BB3E00F8B0C6 /* ExcitingListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB3A81F1A49BB3E00F8B0C6 /* ExcitingListCell.m */; };
 		CEB3A8241A49CED200F8B0C6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB3A8231A49CED200F8B0C6 /* LoginViewController.m */; };
+		CECF29BC1A5185FF00FBDAF4 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF29BB1A5185FF00FBDAF4 /* RegisterViewController.m */; };
+		CECF29BF1A51861600FBDAF4 /* FindPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF29BE1A51861600FBDAF4 /* FindPasswordViewController.m */; };
+		CECF29C21A51862700FBDAF4 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF29C11A51862700FBDAF4 /* ChangePasswordViewController.m */; };
+		CECF29C51A5186B400FBDAF4 /* MineCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF29C41A5186B400FBDAF4 /* MineCenterViewController.m */; };
+		CECF29C81A5186C400FBDAF4 /* AboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF29C71A5186C400FBDAF4 /* AboutMeViewController.m */; };
 		CEF3EF811A43001C004262E2 /* deployment_of_the_bootprompt.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF7F1A43001C004262E2 /* deployment_of_the_bootprompt.png */; };
 		CEF3EF831A4300CB004262E2 /* abnormalvibration_alert.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF821A4300CB004262E2 /* abnormalvibration_alert.png */; };
 		CEF3EF881A431ACA004262E2 /* background_monitor.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF841A431ACA004262E2 /* background_monitor.png */; };
@@ -400,6 +405,16 @@
 		CEB3A81F1A49BB3E00F8B0C6 /* ExcitingListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExcitingListCell.m; sourceTree = "<group>"; };
 		CEB3A8221A49CED200F8B0C6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		CEB3A8231A49CED200F8B0C6 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		CECF29BA1A5185FF00FBDAF4 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		CECF29BB1A5185FF00FBDAF4 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		CECF29BD1A51861600FBDAF4 /* FindPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindPasswordViewController.h; sourceTree = "<group>"; };
+		CECF29BE1A51861600FBDAF4 /* FindPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPasswordViewController.m; sourceTree = "<group>"; };
+		CECF29C01A51862700FBDAF4 /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
+		CECF29C11A51862700FBDAF4 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
+		CECF29C31A5186B400FBDAF4 /* MineCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineCenterViewController.h; sourceTree = "<group>"; };
+		CECF29C41A5186B400FBDAF4 /* MineCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineCenterViewController.m; sourceTree = "<group>"; };
+		CECF29C61A5186C400FBDAF4 /* AboutMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutMeViewController.h; sourceTree = "<group>"; };
+		CECF29C71A5186C400FBDAF4 /* AboutMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutMeViewController.m; sourceTree = "<group>"; };
 		CEF3EF7F1A43001C004262E2 /* deployment_of_the_bootprompt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deployment_of_the_bootprompt.png; sourceTree = "<group>"; };
 		CEF3EF821A4300CB004262E2 /* abnormalvibration_alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = abnormalvibration_alert.png; sourceTree = "<group>"; };
 		CEF3EF841A431ACA004262E2 /* background_monitor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_monitor.png; sourceTree = "<group>"; };
@@ -762,6 +777,10 @@
 			children = (
 				7789E0D41A42800400B4CD09 /* MineViewController.h */,
 				7789E0D51A42800400B4CD09 /* MineViewController.m */,
+				CECF29C31A5186B400FBDAF4 /* MineCenterViewController.h */,
+				CECF29C41A5186B400FBDAF4 /* MineCenterViewController.m */,
+				CECF29C61A5186C400FBDAF4 /* AboutMeViewController.h */,
+				CECF29C71A5186C400FBDAF4 /* AboutMeViewController.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -1072,6 +1091,12 @@
 			children = (
 				CEB3A8221A49CED200F8B0C6 /* LoginViewController.h */,
 				CEB3A8231A49CED200F8B0C6 /* LoginViewController.m */,
+				CECF29BA1A5185FF00FBDAF4 /* RegisterViewController.h */,
+				CECF29BB1A5185FF00FBDAF4 /* RegisterViewController.m */,
+				CECF29BD1A51861600FBDAF4 /* FindPasswordViewController.h */,
+				CECF29BE1A51861600FBDAF4 /* FindPasswordViewController.m */,
+				CECF29C01A51862700FBDAF4 /* ChangePasswordViewController.h */,
+				CECF29C11A51862700FBDAF4 /* ChangePasswordViewController.m */,
 			);
 			path = "Login&Register";
 			sourceTree = "<group>";
@@ -1232,6 +1257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CECF29C81A5186C400FBDAF4 /* AboutMeViewController.m in Sources */,
 				7789E07C1A427CD900B4CD09 /* NSData+ImageContentType.m in Sources */,
 				7789E0821A427CD900B4CD09 /* SDWebImageManager.m in Sources */,
 				7704258C1A48253A00E6E470 /* AdvView.m in Sources */,
@@ -1255,17 +1281,20 @@
 				770425751A47E4D200E6E470 /* ExcitingActivitiesViewController.m in Sources */,
 				7789E0C81A427D2100B4CD09 /* CreateViewTool.m in Sources */,
 				7789E0C71A427D2100B4CD09 /* CommonTool.m in Sources */,
+				CECF29BC1A5185FF00FBDAF4 /* RegisterViewController.m in Sources */,
 				7786E3F81A4AB22B000E450E /* ExcitingActivityDetailViewController.m in Sources */,
 				77DA08921A43C97E00BA72D1 /* XSH_Application.m in Sources */,
 				770425761A47E4D200E6E470 /* MobileStoreViewController.m in Sources */,
 				770425951A4826BA00E6E470 /* CarCheckViewController.m in Sources */,
 				770425A11A48274000E6E470 /* LocationServiceViewController.m in Sources */,
+				CECF29C51A5186B400FBDAF4 /* MineCenterViewController.m in Sources */,
 				CE90C0B81A4EA8500080F5B8 /* PeaceInfomationViewController.m in Sources */,
 				CE90C0B51A4EA2650080F5B8 /* MessageDetailViewController.m in Sources */,
 				CE0E2C6F1A4C629E00364124 /* CityListViewController.m in Sources */,
 				7789E00F1A42796500B4CD09 /* main.m in Sources */,
 				CE0E2C631A4C572900364124 /* CLTreeView_LEVEL0_Model.m in Sources */,
 				774A7B7F1A4911B600D5B2CB /* CheckUpdateTool.m in Sources */,
+				CECF29BF1A51861600FBDAF4 /* FindPasswordViewController.m in Sources */,
 				7789E0BD1A427CEF00B4CD09 /* UIImageView+AFNetworking.m in Sources */,
 				CE29CAB01A4FC8F00096C08C /* CommunicationModeViewController.m in Sources */,
 				7789E07F1A427CD900B4CD09 /* SDWebImageDecoder.m in Sources */,
@@ -1291,6 +1320,7 @@
 				7789E0B61A427CEF00B4CD09 /* AFURLRequestSerialization.m in Sources */,
 				CE0E2C621A4C572900364124 /* CLTreeView_LEVEL0_Cell.m in Sources */,
 				7789E0B81A427CEF00B4CD09 /* AFURLSessionManager.m in Sources */,
+				CECF29C21A51862700FBDAF4 /* ChangePasswordViewController.m in Sources */,
 				7789E0B71A427CEF00B4CD09 /* AFURLResponseSerialization.m in Sources */,
 				7789E0BF1A427CEF00B4CD09 /* UIRefreshControl+AFNetworking.m in Sources */,
 				7772FE381A4D2CD200A992FC /* BreakCell.m in Sources */,
