@@ -29,6 +29,7 @@ static XSH_Application *xsh = nil;
     if (self)
     {
         self.xshCityID = 0;
+        self.isExited = NO;
     }
     return self;
 }

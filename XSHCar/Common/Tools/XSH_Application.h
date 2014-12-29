@@ -22,6 +22,7 @@
 @property(nonatomic, strong) NSString *cityString;
 @property(nonatomic, assign) int xshCityID;
 @property(nonatomic, assign) int sisID;
+@property(nonatomic, assign) BOOL isExited;
 
 /*
  *  初始化
