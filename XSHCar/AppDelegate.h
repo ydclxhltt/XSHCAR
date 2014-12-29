@@ -12,4 +12,11 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+/*
+ *  添加登录界面视图
+ *
+ *  @pram isAnimation 是否有动画
+ */
+- (void)addLoginViewWithAnimation:(BOOL)isAnimation;
+
 @end
