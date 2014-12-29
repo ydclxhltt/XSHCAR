@@ -7,6 +7,7 @@
 //
 
 #import "MineViewController.h"
+#import "AboutMeViewController.h"
 
 @interface MineViewController ()
 @property(nonatomic, retain) NSArray *imageArray;
@@ -104,7 +105,50 @@
 {
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0)
+    {
+        //账户信息
+    }
+    if (indexPath.section == 1)
+    {
+        switch (indexPath.row)
+        {
+            case 0:
+                break;
+            case 1:
+                [self gotoAboutMeView];
+                break;
+            case 2:
+                [self exit];
+                break;
+                
+            default:
+                break;
+        }
+    }
 }
+
+#pragma mark 帮助页面
+- (void) gotoAboutMeView
+{
+    AboutMeViewController *aboutMeViewController = [[AboutMeViewController alloc] init];
+    aboutMeViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:aboutMeViewController animated:YES];
+}
+
+#pragma mark 退出
+- (void)exit
+{
+    [[XSH_Application shareXshApplication] setIsExited:YES];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:@"0" forKey:@"IsAutoLogin"];
+    [userDefaults setValue:@"0" forKey:@"IsSavePwd"];
+    [userDefaults setValue:@"" forKey:@"UserName"];
+    [userDefaults setValue:@"" forKey:@"PassWord"];
+    AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [app addLoginViewWithAnimation:YES];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
