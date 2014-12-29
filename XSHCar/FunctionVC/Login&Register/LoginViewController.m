@@ -28,21 +28,8 @@
     isSavePwd = [[userDefault objectForKey:@"IsSavePwd"] intValue];
     //初始化UI
     [self createUI];
-    
     //是否需要自动登录
-    BOOL isExited = [[XSH_Application shareXshApplication] isExited];
-    NSString *userName = (![userDefault objectForKey:@"UserName"]) ? @"" : [userDefault objectForKey:@"UserName"];
-    NSString *pwdString = (![userDefault objectForKey:@"PassWord"]) ? @"" : [userDefault objectForKey:@"PassWord"];
-    userNameTextField.text = (!isExited) ? userName : @"";
-    passwordTextField.text = (!isExited) ? pwdString : @"";
-    
-    if (!isExited)
-    {
-        if (isAutoLogin)
-        {
-            [self login];
-        }
-    }
+    [self setData];
     // Do any additional setup after loading the view.
 }
 
@@ -220,6 +207,26 @@
     [bgImageView addSubview:lineImageView];
 }
 
+#pragma mark 设置数据
+- (void)setData
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL isExited = [[XSH_Application shareXshApplication] isExited];
+    NSString *userName = (![userDefaults objectForKey:@"UserName"]) ? @"" : [userDefaults objectForKey:@"UserName"];
+    NSString *pwdString = (![userDefaults objectForKey:@"PassWord"]) ? @"" : [userDefaults objectForKey:@"PassWord"];
+    userNameTextField.text = (!isExited) ? userName : @"";
+    passwordTextField.text = (!isExited) ? pwdString : @"";
+    
+    if (!isExited)
+    {
+        if (isAutoLogin)
+        {
+            [self login];
+        }
+    }
+}
+
+
 #pragma mark UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -338,8 +345,8 @@
             NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
             [userDefault setValue:[NSString stringWithFormat:@"%d",isAutoLogin] forKey:@"IsAutoLogin"];
             [userDefault setValue:[NSString stringWithFormat:@"%d",isSavePwd] forKey:@"IsSavePwd"];
-            [userDefault setValue:userNameTextField.text forKey:@"UserName"];
-            [userDefault setValue:passwordTextField.text forKey:@"PassWord"];
+            [userDefault setValue:(!isAutoLogin && !isSavePwd) ? @"" : userNameTextField.text forKey:@"UserName"];
+            [userDefault setValue:(!isAutoLogin && !isSavePwd) ? @"" : passwordTextField.text forKey:@"PassWord"];
             [SVProgressHUD showSuccessWithStatus:@"登录成功"];
             [self dismissViewControllerAnimated:YES completion:Nil];
         }
