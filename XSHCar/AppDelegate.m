@@ -15,7 +15,9 @@
 
 
 @interface AppDelegate()
-
+{
+    UITabBarController *mainTabbarViewController;
+}
 @end
 
 @implementation AppDelegate
@@ -33,36 +35,21 @@
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:11],NSForegroundColorAttributeName : APP_MAIN_COLOR} forState:UIControlStateSelected];
     
     
-    //添加登录视图
-    //[self addLoginView];
-    
     //添加主视图
     [self addMainView];
     
-
-    RequestTool *request = [[RequestTool alloc] init];
-    [request requestWithUrl:LOGIN_URL requestParamas:@{@"s_name":@"tom",@"s_password":[CommonTool md5:@"123456"]} requestType:RequestTypeSynchronous
-    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
-    {
-        NSLog(@"loginResponseDic===%@",responseDic);
-        [[XSH_Application shareXshApplication] setLoginDic:responseDic];
-        [[XSH_Application shareXshApplication] setShopID:[[responseDic objectForKey:@"shop_id"] intValue]];
-        [[XSH_Application shareXshApplication] setUserID:[[responseDic objectForKey:@"user_id"] intValue]];
-        [[XSH_Application shareXshApplication] setCarID:[[responseDic objectForKey:@"car_id"] intValue]];
-    }
-    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
-    {
-        NSLog(@"error===%@",error);
-    }];
+    //添加登录视图
+    [self addLoginViewWithAnimation:NO];
+    
     return YES;
 }
 
 #pragma mark 添加登录界面
-- (void)addLoginView
+- (void)addLoginViewWithAnimation:(BOOL)isAnimation
 {
     LoginViewController *loginViewController = [[LoginViewController  alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-    self.window.rootViewController = nav;
+    [mainTabbarViewController presentViewController:nav animated:isAnimation completion:Nil];
 }
 
 #pragma mark 添加主界面
@@ -74,7 +61,7 @@
      *  1⃣️ [mianTabbarViewController.tabBar setClipsToBounds:YES];
      *  2⃣️ [mainTabbarViewController.tabBar setShadowImage:[[UIImage alloc]init]];
      */
-     UITabBarController *mainTabbarViewController =[[UITabBarController alloc]init];
+     mainTabbarViewController =[[UITabBarController alloc]init];
      //[mainTabbarViewController.tabBar setClipsToBounds:YES];
     
      MineViewController *mineViewController = [[MineViewController alloc]init];
