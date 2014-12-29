@@ -69,4 +69,7 @@
 //提交通讯设置信息
 #define COMMIT_COMMUNICATION_URL [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/cartrackrecording!communicationModeSet"]
 
+//帮组地址
+#define HELP_URL                 @"http://mp.weixin.qq.com/s?__biz=MjM5NDI2NTg3Ng==&mid=200251428&idx=1&sn=287fe13a6b417b0c0c70a9ceca3e71ef&scene=1&from=singlemessage&isappinstalled=0#rd"
+
 #endif
