@@ -11,7 +11,8 @@
 #import "CommunicationModeViewController.h"
 
 @interface SettingViewController ()
-@property(nonatomic, retain) NSArray *imageArray;
+@property(nonatomic, strong) NSArray *imageArray;
+@property(nonatomic, strong) NSArray *settingArray;
 @end
 
 @implementation SettingViewController
@@ -35,6 +36,8 @@
     //初始化数据
     self.dataArray = (NSMutableArray *)@[@[@"通讯模式设置",@"保养矫正提示"],@[@"后台监听",@"定位开关"]];
     self.imageArray = @[@[@"communication_mode_setting",@"maintenance_prompt_correction"],@[@"background_monitor",@"position_switch"]];
+    //获取设置信息
+    [self getSettingInfo];
     // Do any additional setup after loading the view.
 }
 
@@ -48,6 +51,46 @@
 {
     [self addTableViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44.0 *  4 + 15 * 2 + NAV_HEIGHT) tableType:UITableViewStylePlain tableDelegate:self];
     self.table.scrollEnabled = NO;
+}
+
+#pragma mark 获取设置信息
+- (void)getSettingInfo
+{
+    [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
+    __weak __typeof(self) weakSelf = self;
+    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]]};
+    RequestTool *request = [[RequestTool alloc] init];
+    [request requestWithUrl1:SETTING_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
+    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+    {
+         NSLog(@"messageStatusResponseDic===%@",responseDic);
+         if (responseDic && ![@"" isEqualToString:responseDic])
+         {
+             NSArray *array = [responseDic componentsSeparatedByString:@","];
+             if (array && [array count] == 3)
+             {
+                 [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+                 weakSelf.settingArray = [NSMutableArray arrayWithArray:array];
+                 [weakSelf.table reloadData];
+             }
+             else
+             {
+                 [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
+             }
+         }
+         else
+         {
+             //服务器异常
+             [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
+             //[CommonTool addAlertTipWithMessage:LOADING_WEBERROR_TIP];
+         }
+    }
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+    {
+         [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
+         NSLog(@"error===%@",error);
+    }];
+    
 }
 
 #pragma mark - tableView代理
@@ -109,7 +152,7 @@
     
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSString *isAcceptNews = ([userDefault objectForKey:@"AcceptNews"]) ? [userDefault objectForKey:@"AcceptNews"] : @"1";
-    NSString *isOpenLocation = ([userDefault objectForKey:@"OpenLocation"]) ? [userDefault objectForKey:@"OpenLocation"] : @"1";
+    NSString *isOpenLocation = (self.settingArray) ? [NSString stringWithFormat:@"%@",self.settingArray[0]] : @"1";
     if (indexPath.section == 1)
     {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -172,8 +215,10 @@
 {
     [SVProgressHUD showWithStatus:@"正在保存..."];
     RequestTool *request = [[RequestTool alloc] init];
-    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"sms_id":[NSNumber numberWithInt:10]};
-    [request requestWithUrl1:LOCATION_SWITCH_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
+    int smsID = (self.settingArray) ? [self.settingArray[2] intValue] : 10;
+    int ussID = (self.settingArray) ? [self.settingArray[1] intValue] : 28;
+    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"sms_id":[NSNumber numberWithInt:smsID],@"uss_status":[NSNumber numberWithInt:switchView.on],@"uss_id":[NSNumber numberWithInt:ussID]};
+    [request requestWithUrl1:MESSAGE_UPDATE_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
         NSLog(@"======%@",responseDic);
@@ -183,7 +228,8 @@
     requestFail:^(AFHTTPRequestOperation *operation, NSError *errror)
     {
         NSLog(@"error====%@",errror);
-        [SVProgressHUD showErrorWithStatus:@"修改失败"];
+        [switchView setOn:!switchView.on];
+        [SVProgressHUD showErrorWithStatus:@"设置失败"];
     }];
 }
 
