@@ -114,7 +114,6 @@
 		7792DFAB1A42C64C008F43A6 /* icon10.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DF9F1A42C64C008F43A6 /* icon10.png */; };
 		7792DFAC1A42C64C008F43A6 /* icon11.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DFA01A42C64C008F43A6 /* icon11.png */; };
 		7792DFAD1A42C64C008F43A6 /* icon12.png in Resources */ = {isa = PBXBuildFile; fileRef = 7792DFA11A42C64C008F43A6 /* icon12.png */; };
-		7792DFB21A42D17A008F43A6 /* CustomSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 7792DFB11A42D17A008F43A6 /* CustomSwitch.m */; };
 		77957C161A526D0600EEC088 /* drivingHabit_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 77957C0D1A526D0500EEC088 /* drivingHabit_1.png */; };
 		77957C171A526D0600EEC088 /* drivingHabit_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 77957C0E1A526D0500EEC088 /* drivingHabit_2.png */; };
 		77957C181A526D0600EEC088 /* drivingHabit_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 77957C0F1A526D0500EEC088 /* drivingHabit_3.png */; };
@@ -357,8 +356,6 @@
 		7792DF9F1A42C64C008F43A6 /* icon10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon10.png; sourceTree = "<group>"; };
 		7792DFA01A42C64C008F43A6 /* icon11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon11.png; sourceTree = "<group>"; };
 		7792DFA11A42C64C008F43A6 /* icon12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon12.png; sourceTree = "<group>"; };
-		7792DFB01A42D17A008F43A6 /* CustomSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSwitch.h; sourceTree = "<group>"; };
-		7792DFB11A42D17A008F43A6 /* CustomSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSwitch.m; sourceTree = "<group>"; };
 		77957C0D1A526D0500EEC088 /* drivingHabit_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drivingHabit_1.png; sourceTree = "<group>"; };
 		77957C0E1A526D0500EEC088 /* drivingHabit_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drivingHabit_2.png; sourceTree = "<group>"; };
 		77957C0F1A526D0500EEC088 /* drivingHabit_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drivingHabit_3.png; sourceTree = "<group>"; };
@@ -1036,18 +1033,8 @@
 				774A7B801A49170900D5B2CB /* PickView */,
 				774A7B811A49170900D5B2CB /* SVProgressHUD */,
 				770425891A48253A00E6E470 /* advView */,
-				7792DFAF1A42D16C008F43A6 /* customSwitch */,
 			);
 			path = commonViews;
-			sourceTree = "<group>";
-		};
-		7792DFAF1A42D16C008F43A6 /* customSwitch */ = {
-			isa = PBXGroup;
-			children = (
-				7792DFB01A42D17A008F43A6 /* CustomSwitch.h */,
-				7792DFB11A42D17A008F43A6 /* CustomSwitch.m */,
-			);
-			path = customSwitch;
 			sourceTree = "<group>";
 		};
 		77957C0C1A52686700EEC088 /* drivingHabits_images */ = {
@@ -1386,7 +1373,6 @@
 				7789E0B31A427CEF00B4CD09 /* AFNetworkReachabilityManager.m in Sources */,
 				7789E07B1A427CD900B4CD09 /* NSData+GIF.m in Sources */,
 				7789E0D01A427FDC00B4CD09 /* HomeViewController.m in Sources */,
-				7792DFB21A42D17A008F43A6 /* CustomSwitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
