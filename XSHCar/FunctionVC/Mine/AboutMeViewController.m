@@ -23,15 +23,15 @@
     self.title = @"帮助";
     //添加返回item
     [self addBackItem];
-    //初始化UI
-    [self createUI];
+
     // Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-    [self loadWebView];
+    //初始化UI
+    [self createUI];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -52,15 +52,11 @@
     webwiew.scrollView.bounces = NO;
     webwiew.scalesPageToFit = YES;
     webwiew.delegate = self;
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:HELP_URL]];
+    [webwiew loadRequest:request];
     [self.view addSubview:webwiew];
 }
 
-#pragma mark 加载网页
-- (void)loadWebView
-{
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:HELP_URL]];
-    [webwiew loadRequest:request];
-}
 
 #pragma mark webViewDelegate
 - (void)webViewDidStartLoad:(UIWebView *)webView
