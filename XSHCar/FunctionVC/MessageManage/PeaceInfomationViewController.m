@@ -115,7 +115,7 @@
 #pragma mark  设置平安亲人请求
 - (void)addPeaceInfoWithPhone:(NSString *)phone
 {
-    typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:@"正在提交..."];
     RequestTool *request = [[RequestTool alloc] init];
     NSDictionary *requestDic = @{@"city_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] xshCityID]],@"sis_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] sisID]],@"uss_id":[NSNumber numberWithInt:weakSelf.ussID],@"mobile_phone":phone};

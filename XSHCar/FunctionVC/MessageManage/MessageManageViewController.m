@@ -44,21 +44,16 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    
-}
-
 
 #pragma mark 获取消息状态
 - (void)getMessageStatus
 {
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]]};
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl:MESSAGE_MANAGE_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
-              requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
      {
          NSLog(@"messageStatusResponseDic===%@",responseDic);
          if ([responseDic isKindOfClass:[NSArray class]] || [NSMutableArray isKindOfClass:[NSMutableArray class]])
@@ -123,7 +118,7 @@
 #pragma mark 更新状态
 - (void)switchViewStatusChange:(UISwitch *)switchView  smsID:(int)sms_id  ussId:(int)uss_id ussStatus:(int)uss_status
 {
-    typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:@"正在保存..."];
     NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"sms_id":[NSNumber numberWithInt:sms_id],@"uss_id":[NSNumber numberWithInt:uss_id],@"uss_status":[NSNumber numberWithInt:uss_status]};
     RequestTool *request = [[RequestTool alloc] init];
