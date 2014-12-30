@@ -13,6 +13,8 @@
 #import "BugsTipViewController.h"
 #import "CarCheckViewController.h"
 #import "BreakSelectViewController.h"
+#import "DrivingHabitsViewController.h"
+
 #import "AdvView.h"
 
 @interface HomeViewController ()
@@ -156,7 +158,7 @@
             
             break;
         case 6:
-            
+            viewController = [[DrivingHabitsViewController alloc] init];
             break;
         case 7:
             viewController = [[BugsTipViewController alloc] init];

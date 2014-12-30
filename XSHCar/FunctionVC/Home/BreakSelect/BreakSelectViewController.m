@@ -295,7 +295,7 @@
 #pragma mark 获取违章数据
 - (void)getBreakListWith:(NSString *)urlStr
 {
-    typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl1:urlStr requestParamas:nil requestType:RequestTypeAsynchronous

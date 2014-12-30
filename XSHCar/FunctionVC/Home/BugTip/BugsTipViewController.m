@@ -52,7 +52,7 @@
 #pragma mark 获取故障提示
 - (void)getBugListData
 {
-    typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl:TROUBLE_TIPS_URL requestParamas:@{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"currentPage":[NSNumber numberWithInt:currentPage],@"pageNum":[NSNumber numberWithInt:100]} requestType:RequestTypeAsynchronous

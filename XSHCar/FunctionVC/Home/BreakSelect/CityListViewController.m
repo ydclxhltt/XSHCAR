@@ -84,7 +84,7 @@
 #pragma mark 获取城市列表
 - (void)getCityData
 {
-    typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl:CITY_LIST_URL requestParamas:nil requestType:RequestTypeAsynchronous
@@ -121,7 +121,7 @@
 
 - (void)getXSHCityData
 {
-    typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
     NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"sms_id":[NSNumber numberWithInt:weakSelf.smsID],@"uss_id":[NSNumber numberWithInt:weakSelf.ussID]};
     RequestTool *request = [[RequestTool alloc] init];

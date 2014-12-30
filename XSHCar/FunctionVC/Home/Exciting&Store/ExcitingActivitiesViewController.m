@@ -60,7 +60,7 @@
 #pragma mark 获取数据
 - (void)getDataList
 {
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     moreButton.enabled = NO;
     if (currentPage == 1)
     {

@@ -130,7 +130,7 @@
 - (void)getBookingInfo
 {
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]]};
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl:BOOKING_PERSONAL_URL requestParamas:requestDic requestType:RequestTypeAsynchronous

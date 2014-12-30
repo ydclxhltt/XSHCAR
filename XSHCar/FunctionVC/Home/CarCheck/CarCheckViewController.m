@@ -17,6 +17,7 @@
     UITextView *textView;
     RequestTool *request;
 }
+@property(nonatomic, strong) NSString *textString;
 @end
 
 @implementation CarCheckViewController
@@ -77,9 +78,10 @@
 {
     float textHeight = [CommonTool labelHeightWithText:CAR_CHECK_TIP textFont:FONT(15.0) labelWidth:SCREEN_WIDTH - 10 * 2];
     textView = [[UITextView alloc]initWithFrame:CGRectMake(10, height, SCREEN_WIDTH - 10 * 2, textHeight)];
-//    [CommonTool setViewLayer:textView withLayerColor:[UIColor grayColor] bordWidth:.5];
-//    [CommonTool clipView:textView withCornerRadius:5.0];
+    textView.backgroundColor = [UIColor clearColor];
     textView.editable = NO;
+    [CommonTool setViewLayer:textView withLayerColor:[UIColor grayColor] bordWidth:.5];
+    [CommonTool clipView:textView withCornerRadius:5.0];
     textView.textAlignment = NSTextAlignmentLeft;
     textView.text = CAR_CHECK_TIP;
     textView.font = FONT(15.0);
@@ -90,15 +92,41 @@
 #pragma mark  获取体检数据
 - (void)getCarCheckData
 {
-    //typeof(self) weakSelf = self;
+    //__weak __typeof(self) weakSelf = self;
     request = [[RequestTool alloc] init];
     [request requestWithUrl:CAR_CHECK_URL requestParamas:@{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"car_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] carID]]} requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
          NSLog(@"carCheckResponseDic===%@",responseDic);
-         //if ([responseDic isKindOfClass:[NSArray class]] || [responseDic isKindOfClass:[NSMutableArray class]])
+         if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
          {
-             
+             self.textString = @"";
+             NSArray *array = [responseDic objectForKey:@"faultInfoList"];
+             if (array || [array count] == 0)
+             {
+                 self.textString = @"车辆状况良好!\n\n没有任何故障,请继续保持...";
+             }
+             else
+             {
+                 for (NSDictionary *dic in array)
+                 {
+                     if (dic)
+                     {
+                         NSString *codeString = [dic objectForKey:@"smsinforCode"];
+                         NSString *contentString = [dic objectForKey:@"odbChdefinition"];
+                         if (codeString && ![@"" isEqualToString:codeString])
+                         {
+                             self.textString = [self.textString stringByAppendingString:[NSString stringWithFormat:@"故障码:%@\n",codeString]];
+                         }
+                         if (contentString && ![@"" isEqualToString:contentString])
+                         {
+                              self.textString = [self.textString stringByAppendingString:[NSString stringWithFormat:@"%@\n\n",contentString]];
+                         }
+                         
+                     }
+                 }
+
+             }
          }
          
     }
@@ -146,7 +174,8 @@
     {
         if (progress == 1.0)
         {
-            
+            textView.contentOffset = CGPointMake(0, 0);
+            textView.text = self.textString;
         }
         [self stopTimer];
     }
@@ -163,9 +192,9 @@
     if (progress < 0.2) {
         textString = @"开始扫描";
     } else if (progress > 0.4 && progress < 0.6) {
-        textString = @"About halfway";
+        textString = @"ABS检查";
     } else if (progress > 0.75 && progress < 1.0) {
-        textString = @"Nearly there";
+        textString = @"发动机检查";
     } else if (progress >= 1.0) {
         textString = @"检查完成";
     }

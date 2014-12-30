@@ -32,7 +32,7 @@
 #pragma mark 获取移动商城列表
 - (void)getMobileStoreListWithCatagory:(int)catagoryID
 {
-    //__weak typeof(self) weakSelf = self;
+    //__weak __typeof(self) weakSelf = self;
     if (currentPage == 1)
     {
         [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
@@ -45,7 +45,6 @@
     [request requestWithUrl:MOBILE_STORE_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
-         NSLog(@"storeResponseDic===%@",responseDic);
         NSLog(@"storeResponseDic===%@",operation.responseString);
          if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
          {
