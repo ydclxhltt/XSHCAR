@@ -45,6 +45,9 @@
 //城市列表
 #define CITY_LIST_URL           @"http://www.cheshouye.com/api/weizhang/get_all_config"
 
+//驾驶习惯
+#define DRIVING_HABITS_URL       [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/cartrackrecording!myDrivingHabits"]
+
 //违章查询
 #define BREAK_SELECT_URL        @"http://www.cheshouye.com/api/weizhang/query_task?"
 
@@ -54,8 +57,9 @@
 //提交平安亲人信息
 #define PEACE_INFO_COMMIT_URL   [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/smsInfor!safeInformationSubmit"]
 
-//定位开关
-#define LOCATION_SWITCH_URL     [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/smsInfor!addAndUpdateSms"]
+//定位信息
+#define SETTING_URL             [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/smsInfor!SetCenter"]
+
 
 //矫正信息
 #define CORRECT_TIP_INFO_URL    [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/cartrackrecording!userDefinedMaintenanceTips"]
@@ -71,5 +75,7 @@
 
 //帮组地址
 #define HELP_URL                 @"http://mp.weixin.qq.com/s?__biz=MjM5NDI2NTg3Ng==&mid=200251428&idx=1&sn=287fe13a6b417b0c0c70a9ceca3e71ef&scene=1&from=singlemessage&isappinstalled=0#rd"
+
+
 
 #endif

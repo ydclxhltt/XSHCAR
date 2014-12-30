@@ -19,11 +19,6 @@ typedef enum : NSUInteger
     PushTypeFindPassWord = 1 << 1,
 } PushType;
 
-typedef enum : NSUInteger
-{
-    HouseScourceFromRental,
-    HouseScourceFromSecondHand,
-} HouseScource;
 
 #import <UIKit/UIKit.h>
 #import "CommonHeader.h"
@@ -37,8 +32,8 @@ typedef enum : NSUInteger
 {
     float startHeight;
 }
-@property(nonatomic,retain) NSMutableArray *dataArray;
-@property(nonatomic,retain) UITableView *table;
+@property(nonatomic, strong) NSMutableArray *dataArray;
+@property(nonatomic, strong) UITableView *table;
 
 /*
  *  设置导航条Item
