@@ -17,6 +17,10 @@
 #define APP_KEY                     @"21dce05b4cee5accc6c2b197910a306d"
 #define APP_ID                      @"63"
 
+//百度地图
+#define BAIDU_MAP_KEY               @"ID2yQ5Gfhwb5DortOZQ5zNcY"
+#define DISTABCEFILTER              16.0
+
 //导航条高度
 #define NAV_HEIGHT                  64.0
 
