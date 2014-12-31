@@ -58,9 +58,9 @@
 - (void)setNavBarItemWithTitle:(NSString *)title navItemType:(NavItemType)type selectorName:(NSString *)selName
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0, 0, 60, 30);
+    button.frame = CGRectMake(0, 0, 70, 30);
     //button.showsTouchWhenHighlighted = YES;
-    button.titleLabel.font = FONT(17.0);
+    button.titleLabel.font = FONT(16.0);
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
     if (selName && ![@"" isEqualToString:selName])
