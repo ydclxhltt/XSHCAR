@@ -121,7 +121,7 @@
         }
         if (!self.dataArray)
         {
-            self.dataArray = dataArray;
+            self.dataArray = [NSMutableArray arrayWithArray:dataArray];
         }
         else
         {
@@ -133,8 +133,7 @@
     if (countPage == currentPage)
     {
         //最后一页
-        [moreButton setTitle:@"已是最后一页" forState:UIControlStateNormal];
-        moreButton.enabled = NO;
+        [self.table setTableFooterView:nil];
     }
     else
     {

@@ -14,12 +14,14 @@
 #import "CarCheckViewController.h"
 #import "BreakSelectViewController.h"
 #import "DrivingHabitsViewController.h"
+#import "LocationServiceViewController.h"
 
 #import "AdvView.h"
 
 @interface HomeViewController ()
 {
     float height;
+    AdvView *advView;
 }
 @end
 
@@ -52,8 +54,9 @@
 {
     [super viewWillAppear:YES];
     self.navigationController.navigationBar.translucent = YES;
+    [self setAdvData];
+ 
 }
-
 
 #pragma mark 初始化UI
 - (void)createUI
@@ -72,22 +75,8 @@
         advHeight = (SCREEN_WIDTH/320.0) * ADV_HEIGHT;
     }
     
-    //设置广告数据
-    NSDictionary *loginDic = [[XSH_Application  shareXshApplication] loginDic];
-    NSArray *imageUrlArray = nil;
-    if (loginDic)
-    {
-        imageUrlArray = [loginDic objectForKey:@""];
-    }
-    
-    if (!imageUrlArray || [imageUrlArray count] == 0)
-    {
-        imageUrlArray = @[@""];
-    }
-    
     //初始化广告视图
-    AdvView *advView = [[AdvView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, advHeight)];
-    [advView setAdvData:imageUrlArray];
+    advView = [[AdvView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, advHeight)];
     [self.view addSubview:advView];
     
     height += advView.frame.size.height;
@@ -134,6 +123,23 @@
     }
 }
 
+#pragma mark 设置广告数据
+- (void)setAdvData
+{
+    //设置广告数据
+    NSDictionary *loginDic = [[XSH_Application  shareXshApplication] loginDic];
+    NSArray *imageUrlArray = nil;
+    if (loginDic)
+    {
+        imageUrlArray = [loginDic objectForKey:@"bannerList"];
+    }
+    
+    if (!imageUrlArray || [imageUrlArray count] == 0)
+    {
+        imageUrlArray = @[@""];
+    }
+    [advView setAdvData:imageUrlArray];
+}
 
 #pragma mark 按钮响应时间
 - (void)buttonPressed:(UIButton *)button
@@ -173,7 +179,7 @@
             
             break;
         case 11:
-            
+            viewController = [[LocationServiceViewController alloc] init];
             break;
         case 12:
             
