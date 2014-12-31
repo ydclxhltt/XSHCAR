@@ -90,6 +90,8 @@
     for (int i = 0; i < 3; i++)
     {
         NSString *url = [curImages objectAtIndex:i];
+        url = [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,url];
+        NSLog(@"IMAGE_SERVER_URL===%@",url);
         UIImageView *imageView = [CreateViewTool createImageViewWithFrame:CGRectMake(advscrollview.frame.size.width*i, 0, advscrollview.frame.size.width, advscrollview.frame.size.height) placeholderImage:nil];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         [imageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"car1.png"]];
