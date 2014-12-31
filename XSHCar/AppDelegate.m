@@ -12,11 +12,12 @@
 #import "SettingViewController.h"
 #import "MineViewController.h"
 #import "LoginViewController.h"
+#import "BMapKit.h"
 
-
-@interface AppDelegate()
+@interface AppDelegate()<BMKGeneralDelegate>
 {
     UITabBarController *mainTabbarViewController;
+    BMKMapManager *mapManager;
 }
 @end
 
@@ -28,6 +29,11 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    
+    //
+    mapManager = [[BMKMapManager alloc] init];
+    [mapManager start:BAIDU_MAP_KEY generalDelegate:self];
     
     //设置tabbar字颜色
     //[[UITabBar appearance] setBarTintColor:[UIColor lightGrayColor]];
@@ -89,6 +95,33 @@
 }
 
 
+#pragma mark 百度SDK启动地图认证Delegate
+- (void)onGetNetworkState:(int)iError
+{
+    if (0 == iError)
+    {
+        NSLog(@"联网成功");
+    }
+    else
+    {
+        NSLog(@"onGetNetworkState %d",iError);
+    }
+    
+}
+
+- (void)onGetPermissionState:(int)iError
+{
+    if (0 == iError)
+    {
+        NSLog(@"授权成功");
+    }
+    else
+    {
+        NSLog(@"onGetPermissionState %d",iError);
+    }
+}
+
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -113,6 +146,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [mapManager stop];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
