@@ -14,7 +14,6 @@
 		7704257D1A47EDC700E6E470 /* back_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 7704257C1A47EDC700E6E470 /* back_up.png */; };
 		770425881A48089F00E6E470 /* BugsTipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 770425871A48089F00E6E470 /* BugsTipViewController.m */; };
 		7704258C1A48253A00E6E470 /* AdvView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7704258B1A48253A00E6E470 /* AdvView.m */; };
-		7704258F1A48269000E6E470 /* 4SServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7704258E1A48269000E6E470 /* 4SServiceViewController.m */; };
 		770425921A4826A900E6E470 /* BreakSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 770425911A4826A900E6E470 /* BreakSelectViewController.m */; };
 		770425951A4826BA00E6E470 /* CarCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 770425941A4826BA00E6E470 /* CarCheckViewController.m */; };
 		770425981A4826EE00E6E470 /* BearingClockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 770425971A4826EE00E6E470 /* BearingClockViewController.m */; };
@@ -168,6 +167,15 @@
 		CECF29C21A51862700FBDAF4 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF29C11A51862700FBDAF4 /* ChangePasswordViewController.m */; };
 		CECF29C51A5186B400FBDAF4 /* MineCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF29C41A5186B400FBDAF4 /* MineCenterViewController.m */; };
 		CECF29C81A5186C400FBDAF4 /* AboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF29C71A5186C400FBDAF4 /* AboutMeViewController.m */; };
+		CEE6B14A1A54EDAD0087364A /* nav_end.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE6B1461A54EDAD0087364A /* nav_end.png */; };
+		CEE6B14B1A54EDAD0087364A /* nav_end@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE6B1471A54EDAD0087364A /* nav_end@2x.png */; };
+		CEE6B14C1A54EDAD0087364A /* nav_start.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE6B1481A54EDAD0087364A /* nav_start.png */; };
+		CEE6B14D1A54EDAD0087364A /* nav_start@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE6B1491A54EDAD0087364A /* nav_start@2x.png */; };
+		CEE6B1501A5507260087364A /* SetFenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6B14F1A5507260087364A /* SetFenceViewController.m */; };
+		CEE6B1531A55416F0087364A /* MobileStoreSortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6B1521A55416F0087364A /* MobileStoreSortViewController.m */; };
+		CEE6B1561A554A120087364A /* MobileStoreListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6B1551A554A120087364A /* MobileStoreListViewController.m */; };
+		CEE6B1591A554E1E0087364A /* MobileStoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6B1581A554E1E0087364A /* MobileStoreCell.m */; };
+		CEE6B15C1A5558A30087364A /* FourSServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6B15B1A5558A30087364A /* FourSServiceViewController.m */; };
 		CEF3EF811A43001C004262E2 /* deployment_of_the_bootprompt.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF7F1A43001C004262E2 /* deployment_of_the_bootprompt.png */; };
 		CEF3EF831A4300CB004262E2 /* abnormalvibration_alert.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF821A4300CB004262E2 /* abnormalvibration_alert.png */; };
 		CEF3EF881A431ACA004262E2 /* background_monitor.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF841A431ACA004262E2 /* background_monitor.png */; };
@@ -199,8 +207,6 @@
 		770425871A48089F00E6E470 /* BugsTipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BugsTipViewController.m; sourceTree = "<group>"; };
 		7704258A1A48253A00E6E470 /* AdvView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvView.h; sourceTree = "<group>"; };
 		7704258B1A48253A00E6E470 /* AdvView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvView.m; sourceTree = "<group>"; };
-		7704258D1A48269000E6E470 /* 4SServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 4SServiceViewController.h; sourceTree = "<group>"; };
-		7704258E1A48269000E6E470 /* 4SServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = 4SServiceViewController.m; sourceTree = "<group>"; };
 		770425901A4826A900E6E470 /* BreakSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreakSelectViewController.h; sourceTree = "<group>"; };
 		770425911A4826A900E6E470 /* BreakSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreakSelectViewController.m; sourceTree = "<group>"; };
 		770425931A4826BA00E6E470 /* CarCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarCheckViewController.h; sourceTree = "<group>"; };
@@ -510,6 +516,20 @@
 		CECF29C41A5186B400FBDAF4 /* MineCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineCenterViewController.m; sourceTree = "<group>"; };
 		CECF29C61A5186C400FBDAF4 /* AboutMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutMeViewController.h; sourceTree = "<group>"; };
 		CECF29C71A5186C400FBDAF4 /* AboutMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutMeViewController.m; sourceTree = "<group>"; };
+		CEE6B1461A54EDAD0087364A /* nav_end.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_end.png; sourceTree = "<group>"; };
+		CEE6B1471A54EDAD0087364A /* nav_end@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_end@2x.png"; sourceTree = "<group>"; };
+		CEE6B1481A54EDAD0087364A /* nav_start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_start.png; sourceTree = "<group>"; };
+		CEE6B1491A54EDAD0087364A /* nav_start@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_start@2x.png"; sourceTree = "<group>"; };
+		CEE6B14E1A5507260087364A /* SetFenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetFenceViewController.h; sourceTree = "<group>"; };
+		CEE6B14F1A5507260087364A /* SetFenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetFenceViewController.m; sourceTree = "<group>"; };
+		CEE6B1511A55416F0087364A /* MobileStoreSortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileStoreSortViewController.h; sourceTree = "<group>"; };
+		CEE6B1521A55416F0087364A /* MobileStoreSortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileStoreSortViewController.m; sourceTree = "<group>"; };
+		CEE6B1541A554A120087364A /* MobileStoreListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileStoreListViewController.h; sourceTree = "<group>"; };
+		CEE6B1551A554A120087364A /* MobileStoreListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileStoreListViewController.m; sourceTree = "<group>"; };
+		CEE6B1571A554E1E0087364A /* MobileStoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileStoreCell.h; sourceTree = "<group>"; };
+		CEE6B1581A554E1E0087364A /* MobileStoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileStoreCell.m; sourceTree = "<group>"; };
+		CEE6B15A1A5558A30087364A /* FourSServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourSServiceViewController.h; sourceTree = "<group>"; };
+		CEE6B15B1A5558A30087364A /* FourSServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourSServiceViewController.m; sourceTree = "<group>"; };
 		CEF3EF7F1A43001C004262E2 /* deployment_of_the_bootprompt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deployment_of_the_bootprompt.png; sourceTree = "<group>"; };
 		CEF3EF821A4300CB004262E2 /* abnormalvibration_alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = abnormalvibration_alert.png; sourceTree = "<group>"; };
 		CEF3EF841A431ACA004262E2 /* background_monitor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_monitor.png; sourceTree = "<group>"; };
@@ -565,6 +585,12 @@
 				770425741A47E4D200E6E470 /* MobileStoreViewController.m */,
 				7786E3F61A4AB22B000E450E /* ExcitingActivityDetailViewController.h */,
 				7786E3F71A4AB22B000E450E /* ExcitingActivityDetailViewController.m */,
+				CEE6B1511A55416F0087364A /* MobileStoreSortViewController.h */,
+				CEE6B1521A55416F0087364A /* MobileStoreSortViewController.m */,
+				CEE6B1541A554A120087364A /* MobileStoreListViewController.h */,
+				CEE6B1551A554A120087364A /* MobileStoreListViewController.m */,
+				CEE6B1571A554E1E0087364A /* MobileStoreCell.h */,
+				CEE6B1581A554E1E0087364A /* MobileStoreCell.m */,
 			);
 			path = "Exciting&Store";
 			sourceTree = "<group>";
@@ -572,8 +598,8 @@
 		7704257E1A48087A00E6E470 /* 4SService */ = {
 			isa = PBXGroup;
 			children = (
-				7704258D1A48269000E6E470 /* 4SServiceViewController.h */,
-				7704258E1A48269000E6E470 /* 4SServiceViewController.m */,
+				CEE6B15A1A5558A30087364A /* FourSServiceViewController.h */,
+				CEE6B15B1A5558A30087364A /* FourSServiceViewController.m */,
 			);
 			path = 4SService;
 			sourceTree = "<group>";
@@ -878,6 +904,8 @@
 				CE90C0B41A4EA2650080F5B8 /* MessageDetailViewController.m */,
 				CE90C0B61A4EA8500080F5B8 /* PeaceInfomationViewController.h */,
 				CE90C0B71A4EA8500080F5B8 /* PeaceInfomationViewController.m */,
+				CEE6B14E1A5507260087364A /* SetFenceViewController.h */,
+				CEE6B14F1A5507260087364A /* SetFenceViewController.m */,
 			);
 			path = MessageManage;
 			sourceTree = "<group>";
@@ -954,6 +982,10 @@
 				CEB3A81C1A49BA2100F8B0C6 /* pic_default.png */,
 				77A145271A4BFB8F005717B3 /* arrow.png */,
 				77A145281A4BFB8F005717B3 /* btn_bg.png */,
+				CEE6B1461A54EDAD0087364A /* nav_end.png */,
+				CEE6B1471A54EDAD0087364A /* nav_end@2x.png */,
+				CEE6B1481A54EDAD0087364A /* nav_start.png */,
+				CEE6B1491A54EDAD0087364A /* nav_start@2x.png */,
 			);
 			path = home_images;
 			sourceTree = "<group>";
@@ -1423,6 +1455,7 @@
 				CEF3EF891A431ACA004262E2 /* communication_mode_setting.png in Resources */,
 				7792DFA91A42C64C008F43A6 /* icon8.png in Resources */,
 				CE0E2C6B1A4C572900364124 /* Level1_Cell.xib in Resources */,
+				CEE6B14A1A54EDAD0087364A /* nav_end.png in Resources */,
 				CEF3EF8A1A431ACA004262E2 /* maintenance_prompt_correction.png in Resources */,
 				7792DFAD1A42C64C008F43A6 /* icon12.png in Resources */,
 				CE29CABC1A4FFE390096C08C /* login_password.png in Resources */,
@@ -1438,16 +1471,19 @@
 				774A7B6E1A4907C000D5B2CB /* car1.png in Resources */,
 				7792DF881A42A40F008F43A6 /* exit.png in Resources */,
 				7786E3FA1A4AC590000E450E /* login_logo.png in Resources */,
+				CEE6B14D1A54EDAD0087364A /* nav_start@2x.png in Resources */,
 				7792DF891A42A40F008F43A6 /* help.png in Resources */,
 				77957C181A526D0600EEC088 /* drivingHabit_3.png in Resources */,
 				CE8444541A4672DE00F500B9 /* tabbar_home1@2x.png in Resources */,
 				CE0E2C6C1A4C572900364124 /* Level2_Cell.xib in Resources */,
 				7792DFAB1A42C64C008F43A6 /* icon10.png in Resources */,
+				CEE6B14B1A54EDAD0087364A /* nav_end@2x.png in Resources */,
 				CEF3EF831A4300CB004262E2 /* abnormalvibration_alert.png in Resources */,
 				7792DF7C1A42A1F5008F43A6 /* rollover_alarm.png in Resources */,
 				7792DF941A42AA82008F43A6 /* tabbar_setting1@2x.png in Resources */,
 				CEF3EF8B1A431ACA004262E2 /* position_switch.png in Resources */,
 				7792DF8A1A42A40F008F43A6 /* sms_recharge.png in Resources */,
+				CEE6B14C1A54EDAD0087364A /* nav_start.png in Resources */,
 				CE29CABA1A4FFE390096C08C /* login_background_btn.png in Resources */,
 				7792DF861A42A40F008F43A6 /* account_information.png in Resources */,
 				7792DF801A42A3E2008F43A6 /* open_btn.png in Resources */,
@@ -1497,6 +1533,7 @@
 				CECF29BC1A5185FF00FBDAF4 /* RegisterViewController.m in Sources */,
 				7786E3F81A4AB22B000E450E /* ExcitingActivityDetailViewController.m in Sources */,
 				77DA08921A43C97E00BA72D1 /* XSH_Application.m in Sources */,
+				CEE6B15C1A5558A30087364A /* FourSServiceViewController.m in Sources */,
 				770425761A47E4D200E6E470 /* MobileStoreViewController.m in Sources */,
 				770425951A4826BA00E6E470 /* CarCheckViewController.m in Sources */,
 				770425A11A48274000E6E470 /* LocationServiceViewController.m in Sources */,
@@ -1504,6 +1541,7 @@
 				CE90C0B81A4EA8500080F5B8 /* PeaceInfomationViewController.m in Sources */,
 				CE90C0B51A4EA2650080F5B8 /* MessageDetailViewController.m in Sources */,
 				CE0E2C6F1A4C629E00364124 /* CityListViewController.m in Sources */,
+				CEE6B1531A55416F0087364A /* MobileStoreSortViewController.m in Sources */,
 				7789E00F1A42796500B4CD09 /* main.m in Sources */,
 				CE0E2C631A4C572900364124 /* CLTreeView_LEVEL0_Model.m in Sources */,
 				774A7B7F1A4911B600D5B2CB /* CheckUpdateTool.m in Sources */,
@@ -1522,12 +1560,12 @@
 				770425791A47E4FC00E6E470 /* BookingViewController.m in Sources */,
 				CE0E2C671A4C572900364124 /* CLTreeView_LEVEL2_Model.m in Sources */,
 				CEA0F97D1A4B16AA00711AB4 /* BugTipListCell.m in Sources */,
+				CEE6B1591A554E1E0087364A /* MobileStoreCell.m in Sources */,
 				770425881A48089F00E6E470 /* BugsTipViewController.m in Sources */,
 				7789E0B21A427CEF00B4CD09 /* AFHTTPSessionManager.m in Sources */,
 				CEB3A8201A49BB3E00F8B0C6 /* ExcitingListCell.m in Sources */,
 				7789E0581A427CCD00B4CD09 /* BasicViewController.m in Sources */,
 				CE0E2C681A4C572900364124 /* CLTreeViewController.m in Sources */,
-				7704258F1A48269000E6E470 /* 4SServiceViewController.m in Sources */,
 				7789E0891A427CD900B4CD09 /* UIImageView+LK.m in Sources */,
 				7789E0B51A427CEF00B4CD09 /* AFURLConnectionOperation.m in Sources */,
 				7789E0B61A427CEF00B4CD09 /* AFURLRequestSerialization.m in Sources */,
@@ -1555,8 +1593,10 @@
 				7789E0D61A42800400B4CD09 /* MineViewController.m in Sources */,
 				7704259B1A48270800E6E470 /* DrivingHabitsViewController.m in Sources */,
 				7789E0B31A427CEF00B4CD09 /* AFNetworkReachabilityManager.m in Sources */,
+				CEE6B1561A554A120087364A /* MobileStoreListViewController.m in Sources */,
 				7789E07B1A427CD900B4CD09 /* NSData+GIF.m in Sources */,
 				7789E0D01A427FDC00B4CD09 /* HomeViewController.m in Sources */,
+				CEE6B1501A5507260087364A /* SetFenceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
