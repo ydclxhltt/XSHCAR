@@ -86,4 +86,10 @@
 //行程轨迹详情
 #define HISTORY_DETAIL_URL      [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/cartrackrecording!getDetailCarRunningTrack"]
 
+//获取围栏信息
+#define GET_FENCE_DATA_URL      [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/smsInfor!electronicFenceSet"]
+
+//4s服务消息
+#define GET_4S_DATA_URL         [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getAllMessage"]
+
 #endif
