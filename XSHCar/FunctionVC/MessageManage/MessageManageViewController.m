@@ -9,6 +9,7 @@
 #import "MessageManageViewController.h"
 #import "MessageDetailViewController.h"
 #import "PeaceInfomationViewController.h"
+#import "SetFenceViewController.h"
 
 @interface MessageManageViewController ()
 //@property(nonatomic, retain) NSArray *imageArray;
@@ -174,7 +175,11 @@
     }
     if ([@"electronic_fence.png" isEqualToString:imageName])
     {
-        
+        SetFenceViewController *fenceViewController = [[SetFenceViewController alloc] init];
+        fenceViewController.smsID = [[rowDic objectForKey:@"sms_id"] intValue];
+        fenceViewController.ussID = [[rowDic objectForKey:@"uss_id"] intValue];
+        fenceViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:fenceViewController animated:YES];
     }
 }
 

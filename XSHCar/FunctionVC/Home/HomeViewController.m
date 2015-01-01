@@ -15,6 +15,8 @@
 #import "BreakSelectViewController.h"
 #import "DrivingHabitsViewController.h"
 #import "LocationServiceViewController.h"
+#import "FourSServiceViewController.h"
+#import "FuleMileageViewController.h"
 
 #import "AdvView.h"
 
@@ -79,7 +81,7 @@
     advView = [[AdvView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, advHeight)];
     [self.view addSubview:advView];
     
-    height += advView.frame.size.height;
+    height += advView.frame.size.height + 5.0;
 }
 
 - (void)addFunctionsView
@@ -176,13 +178,13 @@
             viewController = [[BreakSelectViewController alloc]init];
             break;
         case 10:
-            
+            viewController = [[FuleMileageViewController alloc] init];
             break;
         case 11:
             viewController = [[LocationServiceViewController alloc] init];
             break;
         case 12:
-            
+            viewController = [[FourSServiceViewController alloc] init];
             break;
         default:
             break;
@@ -245,8 +247,8 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+    // Get the new view controller using [segue destinationViewController].    // Pass the selected object to the new view controller.
 }
 */
 

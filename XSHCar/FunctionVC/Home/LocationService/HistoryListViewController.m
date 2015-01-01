@@ -88,7 +88,7 @@
          if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
          {
              if (currentPage == 1)
-                 [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+            [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
              [weakSelf reloadDataWithDic:responseDic];
          }
          else

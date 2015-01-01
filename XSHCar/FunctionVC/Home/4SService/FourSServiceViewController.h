@@ -8,6 +8,6 @@
 
 #import "BasicViewController.h"
 
-@interface _SServiceViewController : BasicViewController
+@interface FourSServiceViewController : BasicViewController
 
 @end
