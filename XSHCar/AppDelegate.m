@@ -30,6 +30,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exit) name:@"Exit" object:nil];
     
     //
     mapManager = [[BMKMapManager alloc] init];
@@ -50,12 +51,19 @@
     return YES;
 }
 
+#pragma mark 退出后响应事件
+- (void)exit
+{
+    [self addLoginViewWithAnimation:YES];
+}
+
+
 #pragma mark 添加登录界面
 - (void)addLoginViewWithAnimation:(BOOL)isAnimation
 {
     LoginViewController *loginViewController = [[LoginViewController  alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-    [mainTabbarViewController presentViewController:nav animated:isAnimation completion:Nil];
+    [mainTabbarViewController presentViewController:nav animated:isAnimation completion:^{if(isAnimation)[self selectedIndex:0];}];
 }
 
 #pragma mark 添加主界面
@@ -92,6 +100,11 @@
      mainTabbarViewController.viewControllers = [NSArray arrayWithObjects:homeNavViewController,messageManageNavViewController,settingNavViewController,mineNavViewController,nil];
     self.window.rootViewController = mainTabbarViewController;
     
+}
+
+- (void)selectedIndex:(int)index
+{
+    mainTabbarViewController.selectedIndex = index;
 }
 
 

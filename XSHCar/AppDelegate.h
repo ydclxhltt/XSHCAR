@@ -19,4 +19,11 @@
  */
 - (void)addLoginViewWithAnimation:(BOOL)isAnimation;
 
+/*
+ *  选择功能模块
+ *
+ *  @pram index  序号
+ */
+- (void)selectedIndex:(int)index;
+
 @end
