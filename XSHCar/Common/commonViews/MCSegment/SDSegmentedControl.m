@@ -262,9 +262,9 @@
         }
         pos += CGRectGetWidth(item.bounds) + interItemSpace;
     }];
-    for (UIView *item in self._items)
-    {
-    }
+//    for (UIView *item in self._items)
+//    {
+//    }
 
     if (self.selectedSegmentIndex == -1)
     {

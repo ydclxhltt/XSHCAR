@@ -36,6 +36,7 @@ typedef void (^CancelBlock) ();
     self = [self initWithFrame:frame];
     if (self)
     {
+        self.backgroundColor = [UIColor whiteColor];
         self.pickerType = type;
         self.cancelBlock = cancel;
         self.sureBlock = sure;
@@ -68,7 +69,6 @@ typedef void (^CancelBlock) ();
     {
         datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, toolBar.frame.size.height,self.frame.size.width, self.frame.size.height - toolBar.frame.size.height)];
         datePicker.datePickerMode = UIDatePickerModeDate;
-        datePicker.minimumDate = [NSDate date];
         [self addSubview:datePicker];
     }
     else if (PickerViewTypeCustom == type)
@@ -78,6 +78,16 @@ typedef void (^CancelBlock) ();
         pickerView.dataSource = self;
         [self addSubview:pickerView];
     }
+}
+
+- (void)setPickViewMaxDate
+{
+    datePicker.maximumDate = [NSDate date];
+}
+
+- (void)setPickViewMinDate
+{
+    datePicker.minimumDate = [NSDate date];
 }
 
 #pragma mark pickerViewDelegate
