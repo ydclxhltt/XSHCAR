@@ -10,4 +10,11 @@
 
 @interface CheckUpdateTool : NSObject
 
+/*
+ *  检查更新
+ *
+ *  @pram isTip 是否显示loading提示
+ */
++ (void)checkUpdateWithTip:(BOOL)isTip;
+
 @end
