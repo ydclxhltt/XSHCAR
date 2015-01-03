@@ -10,13 +10,13 @@
 #define SmallPig_ProductInfoHeader_h
 
 //产品名
-#define PRODUCT_NAME @""
+#define PRODUCT_NAME            @""
 
 //产品版本号
-#define PRODUCT_VERSION @"1.00"
+#define PRODUCT_VERSION         @"1.00"
 
-//平台
-#define APPLICATION_PLATFORM  @"IOS"
+//平台//@"IOS"
+#define APPLICATION_PLATFORM    1
 
 
 

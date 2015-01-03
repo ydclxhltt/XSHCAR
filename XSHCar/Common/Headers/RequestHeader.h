@@ -10,14 +10,23 @@
 #define SmallPig_RequestHeader_h
 
 //服务器地址
-#define WEB_SERVER_URL          @"http://pcnew.xshcar.com:9988/"
+#define WEB_SERVER_URL           @"http://pcnew.xshcar.com:9988/"
 
 //图片地址
-#define IMAGE_SERVER_URL        @"http://pcnew.xshcar.com:9988/carcloud/image/icon/"
+#define IMAGE_SERVER_URL         @"http://pcnew.xshcar.com:9988/carcloud/image/icon/"
 //#define IMAGE_SERVER_URL1       @"http://pcnew.xshcar.com:9988/carcloud/image/icon"
 
 //登陆地址
 #define LOGIN_URL               [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!login"]
+
+//获取验证码
+#define GET_CODE_URL            [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getValidateCode"]
+
+//忘记密码
+#define COMMIT_PASSWORD_URL     [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!updatePwd"]
+
+//更新地址
+#define CHECK_UPDATE_URL        [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getVersion"]
 
 //一键救援地址
 #define KEY_RESCUE_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!keyRescue"]
@@ -89,7 +98,23 @@
 //获取围栏信息
 #define GET_FENCE_DATA_URL      [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/smsInfor!electronicFenceSet"]
 
+//提交围栏信息
+#define COMMIT_FENCE_URL        [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/smsInfor!electronicFenceSetSubmit"]
+
 //4s服务消息
 #define GET_4S_DATA_URL         [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getAllMessage"]
+
+//油耗获取
+#define FULEMILEAGE_URL         [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/cartrackrecording!gettotalCarTrackRecord"]
+
+//获取仪表盘数据
+#define GET_CLOCK_URL           [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/cartrackrecording!getCarTrackRecording"]
+
+//仪表盘获取驾驶习惯
+#define CLOCK_DRIVING_HABITS    [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/cartrackrecording!drivingHabits"]
+
+//汽车行驶轨迹
+#define CAR_TRACK_URL           [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/cartrackrecording!getCarRunningTrack"]
+
 
 #endif
