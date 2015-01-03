@@ -10,11 +10,15 @@
 #import "CLPickerView.h"
 #import "HistoryDetailViewController.h"
 
+
 @interface HistoryListViewController ()
 {
     UIButton *moreButton;
     BOOL isEndDate;
     int currentPage;
+    BOOL isLeft;
+    UIButton *leftButton,*rightButton;
+    CLPickerView *pickView;
 }
 @end
 
@@ -40,11 +44,89 @@
 - (void)createUI
 {
     [self addTableView];
+    [self addTableViewHeader];
 }
 
 - (void)addTableView
 {
     [self addTableViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) tableType:UITableViewStylePlain tableDelegate:self];
+}
+
+
+- (void)addTableViewHeader
+{
+    UIImageView *imageView = [CreateViewTool createImageViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 43) placeholderImage:nil];
+    imageView.userInteractionEnabled = YES;
+    [self.table setTableHeaderView:imageView];
+    
+    startHeight = 0.0;
+    float label_width = 20.0;
+    float left_x = (SCREEN_WIDTH - label_width)/2;
+    float label_heigh = 35.0;
+    UILabel *label = [CreateViewTool createLabelWithFrame:CGRectMake(left_x, startHeight, label_width, label_heigh) textString:@"至" textColor:[UIColor blackColor] textFont:FONT(15.0)];
+    label.textAlignment = NSTextAlignmentCenter;
+    [imageView addSubview:label];
+    
+    float buttonWidth = 140.0;
+    float leftButton_left_x = left_x - buttonWidth;
+    float add_y = 5.0;
+    float left_y = startHeight + add_y;
+    NSDate *nowDate = [NSDate date];
+    NSDate *lastDate = [NSDate dateWithTimeInterval:- 30 * 24 * 60 * 60 sinceDate:nowDate];
+    leftButton = [CreateViewTool createButtonWithFrame:CGRectMake(leftButton_left_x, left_y, buttonWidth, label_heigh - add_y) buttonTitle:[CommonTool getStringFromDate:lastDate formatterString:@"yyyy-MM-dd"] titleColor:APP_MAIN_COLOR normalBackgroundColor:nil highlightedBackgroundColor:nil selectorName:@"dateButtonPressed:" tagDelegate:self];
+    [CommonTool setViewLayer:leftButton withLayerColor:APP_MAIN_COLOR bordWidth:.5];
+    [CommonTool clipView:leftButton withCornerRadius:5.0];
+    [imageView addSubview:leftButton];
+    
+    float rightButton_left_x = left_x + label_width;
+    rightButton = [CreateViewTool createButtonWithFrame:CGRectMake(rightButton_left_x, left_y, buttonWidth, label_heigh - add_y) buttonTitle:[CommonTool getStringFromDate:nowDate formatterString:@"yyyy-MM-dd"] titleColor:APP_MAIN_COLOR normalBackgroundColor:nil highlightedBackgroundColor:nil selectorName:@"dateButtonPressed:" tagDelegate:self];
+    [CommonTool setViewLayer:rightButton withLayerColor:APP_MAIN_COLOR bordWidth:.5];
+    [CommonTool clipView:rightButton withCornerRadius:5.0];
+    [imageView addSubview:rightButton];
+    
+    UIImageView *lineView = [CreateViewTool createImageViewWithFrame:CGRectMake(0, imageView.frame.size.height - 1, SCREEN_WIDTH, .5) placeholderImage:nil];
+    lineView.backgroundColor  = [UIColor lightGrayColor];
+    [imageView addSubview:lineView];
+}
+
+- (void)addPickView
+{
+    if (pickView)
+    {
+        [UIView animateWithDuration:.3 animations:^{pickView.frame = CGRectMake(0, SCREEN_HEIGHT - 240.0, SCREEN_WIDTH, 240.0);}];
+        return;
+    }
+    pickView =  [[CLPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 240.0, SCREEN_WIDTH, 240.0) pickerViewType:PickerViewTypeDate sureBlock:^(UIDatePicker *datePicker,NSDate *date)
+                 {
+                     NSDate *rightDate;
+                     NSDate *leftDate;
+                     if (isLeft)
+                     {
+                         rightDate = [date dateByAddingTimeInterval:30 * 24 * 60 * 60];
+                         if ([rightDate compare:[NSDate date]] != NSOrderedAscending)
+                         {
+                             rightDate = [NSDate date];
+                         }
+                         leftDate =date;
+                     }
+                     else
+                     {
+                         leftDate = [date dateByAddingTimeInterval:- 30 * 24 * 60 * 60];
+                         rightDate = date;
+                         
+                     }
+                     [leftButton setTitle:[CommonTool getStringFromDate:leftDate formatterString:@"yyyy-MM-dd"] forState:UIControlStateNormal];
+                     [rightButton setTitle:[CommonTool getStringFromDate:rightDate formatterString:@"yyyy-MM-dd"] forState:UIControlStateNormal];
+                     [UIView animateWithDuration:.3 animations:^{pickView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 240.0);}];
+                     currentPage = 1;
+                     [self getHistoryList];
+                 }
+                cancelBlock:^
+                 {
+                     [UIView animateWithDuration:.3 animations:^{pickView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 240.0);}];
+                 }];
+    [pickView setPickViewMaxDate];
+    [self.view addSubview:pickView];
 }
 
 
@@ -79,7 +161,7 @@
          [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
     }
     __weak __typeof(self) weakSelf = self;
-    NSDictionary *requestDic = @{@"cId":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] carID]],@"beginDate":@"2014-12-01",@"endDate":@"2014-12-31",@"currentPage":[NSNumber numberWithInt:currentPage]};
+    NSDictionary *requestDic = @{@"cId":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] carID]],@"beginDate":[leftButton titleForState:UIControlStateNormal],@"endDate":[rightButton titleForState:UIControlStateNormal],@"currentPage":[NSNumber numberWithInt:currentPage]};
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl:HISTORY_LIST_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
               requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
@@ -163,6 +245,14 @@
         moreButton.enabled = YES;
     }
     [self.table reloadData];
+}
+
+
+#pragma mark date按钮响应事件
+- (void)dateButtonPressed:(UIButton *)sender
+{
+    isLeft = (sender == leftButton) ? YES : NO;
+    [self addPickView];
 }
 
 

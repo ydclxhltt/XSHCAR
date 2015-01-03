@@ -11,6 +11,9 @@
 #import "CommunicationModeViewController.h"
 
 @interface SettingViewController ()
+{
+    BOOL isNeedLoad;
+}
 @property(nonatomic, strong) NSArray *imageArray;
 @property(nonatomic, strong) NSArray *settingArray;
 @end
@@ -36,9 +39,23 @@
     //初始化数据
     self.dataArray = (NSMutableArray *)@[@[@"通讯模式设置",@"保养矫正提示"],@[@"后台监听",@"定位开关"]];
     self.imageArray = @[@[@"communication_mode_setting",@"maintenance_prompt_correction"],@[@"background_monitor",@"position_switch"]];
-    //获取设置信息
-    [self getSettingInfo];
+    isNeedLoad = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exit) name:@"Exit" object:nil];
     // Do any additional setup after loading the view.
+}
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (isNeedLoad)
+        //获取设置信息
+        [self getSettingInfo];
+}
+
+#pragma mark 退出登录响应事件
+- (void)exit
+{
+    isNeedLoad = YES;
 }
 
 #pragma mark 初始化UI
@@ -71,6 +88,7 @@
              {
                  [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
                  weakSelf.settingArray = [NSMutableArray arrayWithArray:array];
+                 isNeedLoad = NO;
                  [weakSelf.table reloadData];
              }
              else
@@ -231,6 +249,11 @@
         [switchView setOn:!switchView.on];
         [SVProgressHUD showErrorWithStatus:@"设置失败"];
     }];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning

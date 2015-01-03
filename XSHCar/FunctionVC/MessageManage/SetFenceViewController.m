@@ -13,8 +13,10 @@
 {
     BMKMapView *_mapView;
     BMKCircle* circle;
+    BMKPolygon *polygon;
     BMKLocationService *locationService;
     BMKPointAnnotation *pointAnnotation;
+    int efsID;
 }
 @end
 
@@ -110,10 +112,86 @@
     [request requestWithUrl1:GET_FENCE_DATA_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
      {
-         NSLog(@"peaceResponseDic===%@",responseDic);
+         NSLog(@"fenceResponseDic===%@",responseDic);
          if (responseDic && ![@"" isEqualToString:responseDic])
          {
+             if ([@"0" isEqualToString:[NSString stringWithFormat:@"%@",responseDic]])
+             {
+                 return;
+             }
+             else
+             {
+                 NSDictionary *jsonDic = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:[responseDic dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+                 efsID = [[jsonDic objectForKey:@"efsId"] intValue];
+                 NSString *string = [jsonDic objectForKey:@"efsLocation"];
+                 NSArray *array = [string componentsSeparatedByString:@";"];
+                 if (array)
+                 {
+                     weakSelf.dataArray = [NSMutableArray arrayWithArray:array];
+                     if ([array count] > 0)
+                     {
+                         NSArray *locationArray = [array[0] componentsSeparatedByString:@","];
+                         if (locationArray && [locationArray count] == 2)
+                         {
+                             [_mapView setCenterCoordinate:CLLocationCoordinate2DMake([locationArray[0] floatValue], [locationArray[1] floatValue]) animated:YES];
+                         }
+                     }
+                     if ([array count] > 3)
+                     {
+                         //画区域
+                         [self addPolygonView];
+                     }
+                 }
+             }
+             
+         }
+         else
+         {
+             [SVProgressHUD showSuccessWithStatus:LOADING_WEBERROR_TIP];
+         }
+         
+     }
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+     {
+         [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
+         NSLog(@"error===%@",error);
+     }];
+    
+}
 
+#pragma mark 提交围栏数据
+- (void)commitFenceData
+{
+    [SVProgressHUD showWithStatus:@"正在保存..."];
+    NSString *locationString = @"";
+    for (int i = 1; i < [self.dataArray count]; i++)
+    {
+        NSString *locationstr = self.dataArray[i];
+        if (i != [self.dataArray count] - 1)
+        {
+            locationstr = [locationstr stringByAppendingString:@";"];
+        }
+        locationString = [NSString stringWithFormat:@"%@%@",locationString,locationstr];
+    }
+    __weak __typeof(self) weakSelf = self;
+    RequestTool *request = [[RequestTool alloc] init];
+    NSDictionary *requestDic = @{@"efs_id":[NSNumber numberWithInt:efsID],@"efs_location":locationString,@"uss_id":[NSNumber numberWithInt:weakSelf.ussID]};
+    NSLog(@"-0-0-=%@",requestDic);
+    [request requestWithUrl1:COMMIT_FENCE_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
+    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+     {
+         NSLog(@"fenceResponseDic===%@",responseDic);
+         if (responseDic && ![@"" isEqualToString:responseDic])
+         {
+             if ([@"8888" isEqualToString:[NSString stringWithFormat:@"%@",responseDic]])
+             {
+                 [SVProgressHUD showSuccessWithStatus:@"设置成功"];
+             }
+             else
+             {
+                 [SVProgressHUD showErrorWithStatus:@"设置失败"];
+             }
+             
          }
          else
          {
@@ -129,40 +207,31 @@
 
 }
 
-#pragma mark 提交围栏数据
-- (void)commitFenceData
-{
-    
-}
-
 #pragma mark 地图添加层
-- (void)addOverLaysWithLocation:(CLLocationCoordinate2D)location
-{
-    [self addPointViewWithLocation:location];
-    [self addCycleViewWithLocation:location];
-}
 
-- (void)addPointViewWithLocation:(CLLocationCoordinate2D)location
-{
-    if (!pointAnnotation)
-    {
-        pointAnnotation = [[BMKPointAnnotation alloc]init];
-        pointAnnotation.coordinate = location;
-        pointAnnotation.title = @"拖拽设置围栏";
-    }
-    [_mapView addAnnotation:pointAnnotation];
-}
-
-- (void)addCycleViewWithLocation:(CLLocationCoordinate2D)location
+- (void)addPolygonView
 {
     [_mapView removeOverlays:_mapView.overlays];
-    if (circle)
+    if (polygon)
     {
-        circle = nil;
+        polygon = nil;
     }
-    // 添加圆形覆盖物
-    circle = [BMKCircle circleWithCenterCoordinate:location radius:500];
-    [_mapView addOverlay:circle];
+    int count = [self.dataArray count];
+    CLLocationCoordinate2D locationArray[count];
+    for (int i = 0; i < [self.dataArray count];i++)
+    {
+        NSString *string = self.dataArray[i];
+        NSArray *array = [string componentsSeparatedByString:@","];
+        if ([array count] == 2)
+        {
+            CLLocationCoordinate2D location =  CLLocationCoordinate2DMake([array[0] floatValue], [array[1] floatValue]);
+            locationArray[i] = location;
+        }
+    }
+    NSLog(@"locationArray===%@========%d",[NSString stringWithFormat:@"%f,%f",locationArray[0].latitude,locationArray[0].longitude],count);
+    polygon = [BMKPolygon polygonWithCoordinates:locationArray count:count];
+    [_mapView addOverlay:polygon];
+
 }
 
 #pragma mark locationManageDelegate
@@ -198,9 +267,11 @@
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
     NSLog(@"userLocation====%@",[userLocation.location description]);
-    [_mapView setCenterCoordinate:userLocation.location.coordinate animated:YES];
+    if (!self.dataArray || [self.dataArray count] == 0)
+    {
+        [_mapView setCenterCoordinate:userLocation.location.coordinate animated:YES];
+    }
     [self stopLocation];
-    [self addOverLaysWithLocation:userLocation.location.coordinate];
 }
 
 /**
@@ -239,30 +310,30 @@
 //根据overlay生成对应的View
 - (BMKOverlayView *)mapView:(BMKMapView *)mapView viewForOverlay:(id <BMKOverlay>)overlay
 {
-    BMKCircleView* circleView;
-    if ([overlay isKindOfClass:[BMKCircle class]])
+    
+    if ([overlay isKindOfClass:[BMKPolygon class]])
     {
-        circleView = [[BMKCircleView alloc] initWithOverlay:overlay];
-        circleView.fillColor = [APP_MAIN_COLOR colorWithAlphaComponent:0.5];
-        circleView.strokeColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
-        circleView.lineWidth = 1.0;
+        BMKPolygonView *polygonView = [[BMKPolygonView alloc] initWithOverlay:overlay];
+        polygonView.fillColor = [APP_MAIN_COLOR colorWithAlphaComponent:0.5];
+        polygonView.strokeColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
+        polygonView.lineDash = (overlay == polygon);
+        polygonView.lineWidth = 1.0;
+        return polygonView;
     }
-     return circleView;
+    return nil;
 }
 
 
-- (void)mapView:(BMKMapView *)mapView annotationView:(BMKAnnotationView *)view didChangeDragState:(BMKAnnotationViewDragState)newState
-   fromOldState:(BMKAnnotationViewDragState)oldState
+- (void)mapView:(BMKMapView *)mapView onClickedMapBlank:(CLLocationCoordinate2D)coordinate
 {
-    NSLog(@"=======%d=====%d",newState,oldState);
-//    if (newState == BMKAnnotationViewDragStateStarting)
-//    {
-//        [_mapView removeOverlays:_mapView.overlays];
-//    }
-//    if (newState == BMKAnnotationViewDragStateDragging)
+    if (!self.dataArray)
     {
-        [self addCycleViewWithLocation:view.annotation.coordinate];
+        self.dataArray = [NSMutableArray array];
     }
+    NSString *locationString = [NSString stringWithFormat:@"%f,%f",coordinate.latitude,coordinate.longitude];
+    [self.dataArray addObject:locationString];
+    NSLog(@"self.dataArray ===%@",self.dataArray);
+    [self addPolygonView];
 }
 
 

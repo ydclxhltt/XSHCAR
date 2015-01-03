@@ -124,7 +124,7 @@
     NSString *jinjiString = [responseDic objectForKey:@"jinjidefen"];
     NSString *perString = [responseDic objectForKey:@"pingjunhotcar"];
     [self.dataArray replaceObjectAtIndex:0 withObject:(jinjiString) ? [NSString stringWithFormat:@"%d分",[jinjiString intValue]] : @"0分"];
-    [self.dataArray replaceObjectAtIndex:1 withObject:(perString) ? [NSString stringWithFormat:@"%f分",[perString floatValue]] : @"0分"];
+    [self.dataArray replaceObjectAtIndex:1 withObject:(perString) ? [NSString stringWithFormat:@"%f秒",[perString floatValue]] : @"0秒"];
     NSArray *array = [responseDic objectForKey:@"allHabit"];
     if (array)
     {
@@ -137,7 +137,7 @@
                 if ([string isEqualToString:[dic objectForKey:@"da_name"]])
                 {
                     NSString *textString = [dic objectForKey:@"DHR_Value"];
-                    [self.dataArray replaceObjectAtIndex:j withObject:(textString) ? [NSString stringWithFormat:@"%d分",[textString intValue]] : @"0分"];
+                    [self.dataArray replaceObjectAtIndex:j withObject:(textString) ? [NSString stringWithFormat:@"%d次",[textString intValue]] : @"0次"];
                 }
              }
         }
@@ -194,7 +194,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.imageView.transform = CGAffineTransformScale(cell.imageView.transform, 0.5, 0.5);
         
-        label = [CreateViewTool createLabelWithFrame:CGRectMake(SCREEN_WIDTH - 120.0 - 20.0, 0, 120.0, cell.frame.size.height) textString:@"" textColor:[UIColor grayColor] textFont:FONT(15.0)];
+        label = [CreateViewTool createLabelWithFrame:CGRectMake(SCREEN_WIDTH - 120.0 - 10.0, 0, 120.0, cell.frame.size.height) textString:@"" textColor:[UIColor grayColor] textFont:FONT(15.0)];
         label.textAlignment = NSTextAlignmentRight;
         label.tag = 100;
         [cell.contentView addSubview:label];

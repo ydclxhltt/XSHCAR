@@ -8,6 +8,7 @@
 
 #import "MineViewController.h"
 #import "AboutMeViewController.h"
+#import "CheckUpdateTool.h"
 
 @interface MineViewController ()
 @property(nonatomic, retain) NSArray *imageArray;
@@ -92,11 +93,26 @@
         cell.imageView.transform = CGAffineTransformScale(cell.imageView.transform, 0.5, 0.5);
     }
     
+    for (UIView *view in cell.contentView.subviews)
+    {
+        if ([view isKindOfClass:[UILabel class]])
+        {
+            [view removeFromSuperview];
+        }
+    }
+    
     NSArray *array = self.dataArray[indexPath.section];
     cell.textLabel.text = array[indexPath.row];
     cell.textLabel.font = FONT(16.0);
     cell.imageView.image = [UIImage imageNamed:[[self.imageArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+    
+    if (indexPath.row == 0 && indexPath.section == 1)
+    {
+        UILabel *label = [CreateViewTool createLabelWithFrame:CGRectMake(SCREEN_WIDTH - 20.0 - 100.0, 0, 100.0, cell.frame.size.height) textString:PRODUCT_VERSION textColor:[UIColor grayColor] textFont:FONT(15.0)];
+        label.textAlignment = NSTextAlignmentRight;
+        [cell.contentView addSubview:label];
+    }
     
     return cell;
 }
@@ -114,6 +130,7 @@
         switch (indexPath.row)
         {
             case 0:
+                [CheckUpdateTool checkUpdateWithTip:YES];
                 break;
             case 1:
                 [self gotoAboutMeView];
@@ -139,14 +156,13 @@
 #pragma mark 退出
 - (void)exit
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Exit" object:nil];
     [[XSH_Application shareXshApplication] setIsExited:YES];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setValue:@"0" forKey:@"IsAutoLogin"];
     [userDefaults setValue:@"0" forKey:@"IsSavePwd"];
     [userDefaults setValue:@"" forKey:@"UserName"];
     [userDefaults setValue:@"" forKey:@"PassWord"];
-    AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [app addLoginViewWithAnimation:YES];
 }
 
 

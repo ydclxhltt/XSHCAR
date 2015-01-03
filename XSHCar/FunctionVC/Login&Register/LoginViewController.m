@@ -7,6 +7,9 @@
 //
 
 #import "LoginViewController.h"
+#import "CheckUpdateTool.h"
+#import "FindPasswordViewController.h"
+#import "RegisterViewController.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 {
@@ -317,13 +320,17 @@
 
 - (void)registerButtonPressed:(UIButton *)sender
 {
-    
+    RegisterViewController *registerViewController = [[RegisterViewController alloc] init];
+    registerViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:registerViewController animated:YES];
 }
 
 #pragma mark 找回密码响应事件
 - (void)findPasswordButtonPressed:(UIButton *)sender
 {
-    
+    FindPasswordViewController *findPasswordViewController = [[FindPasswordViewController alloc] init];
+    findPasswordViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:findPasswordViewController animated:YES];
 }
 
 
@@ -348,7 +355,9 @@
             [userDefault setValue:(!isAutoLogin && !isSavePwd) ? @"" : userNameTextField.text forKey:@"UserName"];
             [userDefault setValue:(!isAutoLogin && !isSavePwd) ? @"" : passwordTextField.text forKey:@"PassWord"];
             [SVProgressHUD showSuccessWithStatus:@"登录成功"];
+            [CheckUpdateTool checkUpdateWithTip:NO];
             [self dismissViewControllerAnimated:YES completion:Nil];
+
         }
         else
         {

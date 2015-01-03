@@ -78,6 +78,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    webwiew.delegate = nil;
+    webwiew = nil;
+}
 /*
 #pragma mark - Navigation
 

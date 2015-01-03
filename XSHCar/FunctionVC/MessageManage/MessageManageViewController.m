@@ -12,6 +12,9 @@
 #import "SetFenceViewController.h"
 
 @interface MessageManageViewController ()
+{
+    BOOL isNeedLoad;
+}
 //@property(nonatomic, retain) NSArray *imageArray;
 //@property(nonatomic, retain) NSArray *messageArray;
 @end
@@ -36,15 +39,29 @@
     //
     self.automaticallyAdjustsScrollViewInsets = NO;
     //初始化数据
+    isNeedLoad = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exit) name:@"Exit" object:nil];
 //    self.imageArray = @[@"abnormalvibration_alert",@"deployment_of_the_bootprompt",@"collision_warning",@"rollover_alarm",@"electronic_fence",@"peace_family",@"maintenance_tips"];
 //    self.dataArray = (NSMutableArray *)@[@"异常震动提醒",@"布防启动提示",@"碰撞报警",@"侧翻报警",@"电子围栏",@"平安亲人",@"保养提示"];
     //初始化UI
     //[self createUI];
-    //获取状态
-    [self getMessageStatus];
+
     // Do any additional setup after loading the view.
 }
 
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (isNeedLoad)
+        //获取状态
+        [self getMessageStatus];
+}
+
+#pragma mark 退出登录响应事件
+- (void)exit
+{
+    isNeedLoad = YES;
+}
 
 #pragma mark 获取消息状态
 - (void)getMessageStatus
@@ -61,6 +78,7 @@
          {
              [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
              weakSelf.dataArray = (NSMutableArray *)responseDic;
+             isNeedLoad = NO;
              [self createUI];
          }
          else
@@ -206,13 +224,19 @@
 {
     static NSString *homeCellID = @"messageCellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:homeCellID];
-    
+    UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:100];
+    UILabel *label = (UILabel *)[cell.contentView viewWithTag:101];
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:homeCellID];
         cell.backgroundColor = [UIColor whiteColor];
-        cell.imageView.transform = CGAffineTransformScale(cell.imageView.transform, 0.5, 0.5);
-        //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        imageView = [CreateViewTool createImageViewWithFrame:CGRectMake(10.0, (cell.frame.size.height - 35.0)/2, 35.0, 35.0) placeholderImage:[UIImage imageNamed:@"pic_default"]];
+        imageView.tag = 100;
+        [cell.contentView addSubview:imageView];
+        label = [CreateViewTool createLabelWithFrame:CGRectMake(imageView.frame.size.width + imageView.frame.origin.x + 15.0, 0, 140.0, cell.frame.size.height) textString:@"" textColor:[UIColor blackColor] textFont:FONT(16.0)];
+        label.tag = 101;
+        [cell.contentView addSubview:label];
+        
     }
     
     for (UIView *view in cell.contentView.subviews)
@@ -234,7 +258,7 @@
         nameString = ([rowDic objectForKey:@"sms_name"]) ? [rowDic objectForKey:@"sms_name"] : @"";
     }
     
-    if ([@"collision_warning.png" isEqualToString:imageName ] || [@"rollover_alarm.png" isEqualToString:imageName])
+    if ([@"碰撞报警" isEqualToString:nameString ] || [@"侧翻报警" isEqualToString:nameString])
     {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
@@ -251,10 +275,13 @@
     }
     
     
-    cell.textLabel.text = nameString;
-    cell.textLabel.font = FONT(16.0);
-    cell.imageView.image = [UIImage imageNamed:imageName];
-    
+    label.text = nameString;
+
+    UIImage *image = [UIImage imageNamed:imageName];
+    if (image)
+        imageView.image = [UIImage imageNamed:imageName];
+    else
+        [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",IMAGE_SERVER_URL,imageName]] placeholderImage:[UIImage imageNamed:@"pic_default"]];
     return cell;
 }
 
@@ -299,6 +326,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 /*
 #pragma mark - Navigation

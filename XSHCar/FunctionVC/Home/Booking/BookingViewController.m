@@ -88,7 +88,9 @@
         }
         if (i == 5)
         {
-            textField.inputView = [[CLPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240.0) pickerViewType:PickerViewTypeDate sureBlock:^(UIDatePicker *datePicker,NSDate *date){textField.text = [CommonTool getStringFromDate:date formatterString:@"YYYY-MM-dd"];self.timeStr = textField.text; [textField resignFirstResponder];} cancelBlock:^{[textField resignFirstResponder];}];
+            CLPickerView *picker = [[CLPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240.0) pickerViewType:PickerViewTypeDate sureBlock:^(UIDatePicker *datePicker,NSDate *date){textField.text = [CommonTool getStringFromDate:date formatterString:@"YYYY-MM-dd"];self.timeStr = textField.text; [textField resignFirstResponder];} cancelBlock:^{[textField resignFirstResponder];}];
+            [picker setPickViewMinDate];
+            textField.inputView = picker;
         }
         textField.borderStyle = UITextBorderStyleRoundedRect;
         textField.text = self.bookingInfoArray[i];
@@ -137,7 +139,7 @@
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
         NSLog(@"bookingResponseDic===%@",responseDic);
-        if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableArray class]])
+        if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
         {
             [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
             NSString *phone = ([responseDic objectForKey:@"AM_Telphone"]) ? [responseDic objectForKey:@"AM_Telphone"] : @"";

@@ -17,6 +17,7 @@
 #import "LocationServiceViewController.h"
 #import "FourSServiceViewController.h"
 #import "FuleMileageViewController.h"
+#import "BearingClockViewController.h"
 
 #import "AdvView.h"
 
@@ -163,7 +164,7 @@
             viewController = [[MobileStoreViewController alloc] init];
             break;
         case 5:
-            
+            viewController = [[BearingClockViewController alloc] init];
             break;
         case 6:
             viewController = [[DrivingHabitsViewController alloc] init];
