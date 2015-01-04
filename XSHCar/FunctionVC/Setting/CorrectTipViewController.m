@@ -37,21 +37,15 @@
     requestSucess:^(AFHTTPRequestOperation *operation, id responseDic)
     {
         NSLog(@"correctInfoResponse===%@",responseDic);
-        if ([responseDic isKindOfClass:[NSString class]])
+        if (responseDic && ![@"" isEqualToString:responseDic] && ![@"null" isEqualToString:responseDic])
         {
-            if (responseDic && ![@"" isEqualToString:responseDic])
+            
+            NSArray *array = [responseDic componentsSeparatedByString:@","];
+            if (array && [array count] == 4)
             {
-                NSArray *array = [responseDic componentsSeparatedByString:@","];
-                if (array && [array count] == 4)
-                {
-                    [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
-                    weakSelf.dataArray = [NSMutableArray arrayWithArray:array];
-                    [weakSelf createUI];
-                }
-                else
-                {
-                    [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
-                }
+                [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+                weakSelf.dataArray = [NSMutableArray arrayWithArray:array];
+                [weakSelf createUI];
             }
             else
             {
@@ -177,22 +171,15 @@
     requestSucess:^(AFHTTPRequestOperation *operation, id responseDic)
      {
          NSLog(@"commitCorrectInfoResponse===%@",responseDic);
-         if ([responseDic isKindOfClass:[NSString class]])
+         if (responseDic && ![@"" isEqualToString:responseDic] && ![@"null" isEqualToString:responseDic])
          {
-             if (responseDic && ![@"" isEqualToString:responseDic])
+             if ([@"8888" isEqualToString:responseDic])
              {
-                 if ([@"8888" isEqualToString:responseDic])
-                 {
-                     [SVProgressHUD showSuccessWithStatus:@"设置成功"];
-                 }
-                 else
-                 {
-                     [SVProgressHUD showErrorWithStatus:@"修改失败"];
-                 }
+                 [SVProgressHUD showSuccessWithStatus:@"设置成功"];
              }
              else
              {
-                 [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
+                 [SVProgressHUD showErrorWithStatus:@"修改失败"];
              }
          }
          else

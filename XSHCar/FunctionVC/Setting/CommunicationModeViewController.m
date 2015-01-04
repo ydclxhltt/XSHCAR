@@ -41,21 +41,14 @@
                requestSucess:^(AFHTTPRequestOperation *operation, id responseDic)
      {
          NSLog(@"communicationInfoResponse===%@",responseDic);
-         if ([responseDic isKindOfClass:[NSString class]])
+         if (responseDic && ![@"" isEqualToString:responseDic] && ![@"null" isEqualToString:responseDic])
          {
-             if (responseDic && ![@"" isEqualToString:responseDic])
+            NSArray *array = [responseDic componentsSeparatedByString:@","];
+             if (array && [array count] == 4)
              {
-                 NSArray *array = [responseDic componentsSeparatedByString:@","];
-                 if (array && [array count] == 4)
-                 {
-                     [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
-                     weakSelf.dataArray = [NSMutableArray arrayWithArray:array];
-                     [weakSelf createUI];
-                 }
-                 else
-                 {
-                     [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
-                 }
+                 [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+                 weakSelf.dataArray = [NSMutableArray arrayWithArray:array];
+                 [weakSelf createUI];
              }
              else
              {
@@ -219,7 +212,7 @@
                requestSucess:^(AFHTTPRequestOperation *operation, id responseDic)
      {
          NSLog(@"commitCommunicationInfoResponse===%@",responseDic);
-         if ([responseDic isKindOfClass:[NSString class]])
+         if (responseDic && ![@"" isEqualToString:responseDic] && ![@"null" isEqualToString:responseDic])
          {
              if ([@"8888" isEqualToString:responseDic])
              {
