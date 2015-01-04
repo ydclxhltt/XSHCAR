@@ -76,7 +76,14 @@
 }
 
 
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if ([@"立即升级" isEqualToString:title])
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/xi-sheng-heng-qi-che/id912066247?mt=8"]];
+    }
+}
 
 
 @end

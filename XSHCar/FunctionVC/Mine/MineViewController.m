@@ -11,6 +11,9 @@
 #import "CheckUpdateTool.h"
 
 @interface MineViewController ()
+{
+    CheckUpdateTool *tool;
+}
 @property(nonatomic, retain) NSArray *imageArray;
 @end
 
@@ -127,7 +130,8 @@
     }
     if (indexPath.section == 1)
     {
-        CheckUpdateTool *tool = [[CheckUpdateTool alloc] init];
+        if (!tool)
+            tool = [[CheckUpdateTool alloc] init];
         switch (indexPath.row)
         {
             case 0:

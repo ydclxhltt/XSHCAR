@@ -19,6 +19,7 @@
 {
     UITabBarController *mainTabbarViewController;
     BMKMapManager *mapManager;
+    CheckUpdateTool *tool;
 }
 @end
 
@@ -114,7 +115,8 @@
 #pragma mark 检查更新
 - (void)checkUpdate
 {
-    [[[CheckUpdateTool alloc] init] checkUpdateWithTip:NO];
+    tool = [[CheckUpdateTool alloc] init];
+    [tool checkUpdateWithTip:NO];
 }
 
 
@@ -144,7 +146,6 @@
         NSLog(@"onGetPermissionState %d",iError);
     }
 }
-
 
 
 - (void)applicationWillResignActive:(UIApplication *)application
