@@ -9,15 +9,18 @@
 #import "CLPickerView.h"
 
 typedef void (^SureBlock) (UIDatePicker *datePicker, NSDate *date);
+typedef void (^CustomSureBlock) (UIPickerView *datePicker, int index);
 typedef void (^CancelBlock) ();
 
 @interface CLPickerView()<UIPickerViewDataSource,UIPickerViewDelegate>
 {
     UIDatePicker *datePicker;
+    UIPickerView *pickerView;
 }
 @property(nonatomic, assign) PickerViewType pickerType;
 @property(nonatomic, copy) SureBlock sureBlock;
 @property(nonatomic, copy) CancelBlock cancelBlock;
+@property(nonatomic, copy) CustomSureBlock custonSureBlock;
 @end
 
 @implementation CLPickerView
@@ -40,6 +43,22 @@ typedef void (^CancelBlock) ();
         self.pickerType = type;
         self.cancelBlock = cancel;
         self.sureBlock = sure;
+        [self createUIWithPickerViewType:type];
+    }
+    return self;
+}
+
+
+- (instancetype)initWithFrame:(CGRect)frame pickerViewType:(PickerViewType)type customSureBlock:(void (^)(UIPickerView *pickView, int index))customSure cancelBlock:(void (^)())customCancel pickerData:(NSArray *)array
+{
+    self = [self initWithFrame:frame];
+    if (self)
+    {
+        self.backgroundColor = [UIColor whiteColor];
+        self.pickerType = type;
+        self.cancelBlock = customCancel;
+        self.custonSureBlock = customSure;
+        self.dataArray = array;
         [self createUIWithPickerViewType:type];
     }
     return self;
@@ -73,7 +92,7 @@ typedef void (^CancelBlock) ();
     }
     else if (PickerViewTypeCustom == type)
     {
-        UIPickerView *pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, toolBar.frame.size.height,self.frame.size.width, self.frame.size.height - toolBar.frame.size.height)];
+        pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, toolBar.frame.size.height,self.frame.size.width, self.frame.size.height - toolBar.frame.size.height)];
         pickerView.delegate = self;
         pickerView.dataSource = self;
         [self addSubview:pickerView];
@@ -94,19 +113,19 @@ typedef void (^CancelBlock) ();
 // returns the number of 'columns' to display.
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    return [self.dataArray count];
+    return 1;
 }
 
 // returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
 {
-    return [self.dataArray[component] count];
+    return [self.dataArray count];
 }
 
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return @"";
+    return self.dataArray[row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
@@ -133,7 +152,22 @@ typedef void (^CancelBlock) ();
             self.sureBlock(datePicker,datePicker.date);
         }
     }
+    if (PickerViewTypeCustom == self.pickerType)
+    {
+        if (self.custonSureBlock)
+        {
+            self.custonSureBlock(pickerView,(int)[pickerView selectedRowInComponent:0]);
+        }
+    }
 }
+
+- (void)dealloc
+{
+    self.sureBlock = nil;
+    self.cancelBlock = nil;
+    self.custonSureBlock = nil;
+}
+
 
 
 @end
