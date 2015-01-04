@@ -7,11 +7,13 @@
 //
 
 #import "RegisterViewController.h"
+#import "CLPickerView.h"
 
 @interface RegisterViewController ()<UITextFieldDelegate>
 {
     UIButton *codeButton;
     UIImageView *bgImageView;
+    int shopID;
 }
 @property(nonatomic, strong)  NSString *phoneString;
 @property(nonatomic, strong)  NSString *userName;
@@ -32,8 +34,6 @@
     [self addBackItem];
     //初始化UI
     [self createUI];
-    //获取4Slist
-    [self get4SInfo];
     // Do any additional setup after loading the view.
 }
 
@@ -53,7 +53,7 @@
 
 - (void)addLabelAndTextField
 {
-    bgImageView = [CreateViewTool createImageViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH)placeholderImage:nil];
+    bgImageView = [CreateViewTool createImageViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)placeholderImage:nil];
     bgImageView.userInteractionEnabled = YES;
     [self.view addSubview:bgImageView];
     
@@ -85,7 +85,10 @@
         {
             textField.keyboardType = UIKeyboardTypeNumberPad;
         }
-        
+        if (i == 4)
+        {
+            textField.inputView = [CreateViewTool createImageViewWithFrame:CGRectMake(0, 0, 0, 0) placeholderImage:nil];
+        }
         UIImageView *lineImageView = [CreateViewTool createImageViewWithFrame:CGRectMake(0, textField.frame.origin.y + textField.frame.size.height + .5, SCREEN_WIDTH, .5) placeholderImage:nil];
         lineImageView.backgroundColor = [UIColor colorWithRed:.5 green:.5 blue:.5 alpha:.7];
         [bgImageView addSubview:lineImageView];
@@ -99,7 +102,7 @@
 
 - (void)addCommitButton
 {
-    UIButton *button = [CreateViewTool createButtonWithFrame:CGRectMake(20, startHeight, SCREEN_WIDTH - 20 * 2, 35) buttonTitle:@"提交" titleColor:[UIColor whiteColor] normalBackgroundColor:APP_MAIN_COLOR highlightedBackgroundColor:APP_MAIN_COLOR selectorName:@"commitButtonPressed:" tagDelegate:self];
+    UIButton *button = [CreateViewTool createButtonWithFrame:CGRectMake(20, startHeight, SCREEN_WIDTH - 20 * 2, 35) buttonTitle:@"提交" titleColor:[UIColor whiteColor] normalBackgroundColor:APP_MAIN_COLOR highlightedBackgroundColor:APP_MAIN_COLOR selectorName:@"commitButtonPressed" tagDelegate:self];
     //[button setBackgroundImage:image forState:UIControlStateNormal];
     button.showsTouchWhenHighlighted = YES;
     button.titleLabel.font = FONT(16.0);
@@ -114,7 +117,7 @@
 }
 
 #pragma mark 
-- (void)commitButtonPressed:(UIButton *)sender
+- (void)commitButtonPressed
 {
     if ([self isCanNextWithCount])
     {
@@ -175,7 +178,7 @@
         message = @"请输入现有车型";
     }
     
-    if ([@"" isEqualToString:message])
+    if (![@"" isEqualToString:message])
     {
         [CommonTool addAlertTipWithMessage:message];
         return NO;
@@ -201,6 +204,31 @@
          if ([responseDic isKindOfClass:[NSArray class]] || [responseDic isKindOfClass:[NSMutableArray class]])
          {
              weakSelf.dataArray = [NSMutableArray arrayWithArray:responseDic];
+             UITextField *textField = (UITextField *)[self.view viewWithTag:5];
+             NSMutableArray *array = [NSMutableArray array];
+             
+             for (NSDictionary *dic in weakSelf.dataArray)
+             {
+                 NSString *string = [dic objectForKey:@"shopName"];
+                 string = (string) ? string : @"";
+                 [array addObject:string];
+             }
+             textField.text = array[0];
+             shopID = [[self.dataArray[0] objectForKey:@"shop_id"] intValue];
+             CLPickerView *pickView = [[CLPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240.0) pickerViewType:PickerViewTypeCustom customSureBlock:^(UIPickerView *pickerView, int index)
+             {
+                 textField.text =  array[index];
+                 shopID = [[self.dataArray[index] objectForKey:@"shop_id"] intValue];
+                 [textField resignFirstResponder];
+                 
+             }
+            cancelBlock:^
+            {
+                [textField resignFirstResponder];
+            }
+            pickerData:array];
+             textField.inputView = pickView;
+             [textField becomeFirstResponder];
              [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
          }
          else
@@ -221,7 +249,7 @@
 - (void)registerRequest
 {
     [SVProgressHUD showWithStatus:@"正在注册..."];
-    NSDictionary *requestDic = @{@"username":self.userName,@"password":[CommonTool md5:self.passwordString],@"telephone":self.phoneString,@"cl_intentionmodel":self.wantCarString,@"cl_existingmodels":self.myCarString,@"shop_id":[NSNumber numberWithInt:67]};
+    NSDictionary *requestDic = @{@"username":self.userName,@"password":[CommonTool md5:self.passwordString],@"telephone":self.phoneString,@"cl_intentionmodel":self.wantCarString,@"cl_existingmodels":self.myCarString,@"shop_id":[NSNumber numberWithInt:shopID]};
     NSLog(@"requestDic===%@",requestDic);
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl1:REGISTER_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
@@ -254,6 +282,23 @@
      }];
 
 }
+
+#pragma mark  textFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    int tag = textField.tag;
+    if (tag == 5)
+    {
+        //获取4Slist
+        if (!self.dataArray)
+        {
+            [self get4SInfo];
+        }
+    }
+
+    return YES;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

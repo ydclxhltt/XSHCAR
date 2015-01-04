@@ -49,7 +49,7 @@
 
 - (void)addLabelAndTextField
 {
-    bgImageView = [CreateViewTool createImageViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH)placeholderImage:nil];
+    bgImageView = [CreateViewTool createImageViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)placeholderImage:nil];
     bgImageView.userInteractionEnabled = YES;
     [self.view addSubview:bgImageView];
     
