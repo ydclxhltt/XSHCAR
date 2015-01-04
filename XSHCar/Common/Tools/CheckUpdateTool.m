@@ -12,23 +12,48 @@
 #import "SVProgressHUD.h"
 #import "CommonTool.h"
 
+@interface CheckUpdateTool()<UIAlertViewDelegate>
+{
+    id delegate;
+}
+
+@end
+
 @implementation CheckUpdateTool
 
-+ (void)checkUpdateWithTip:(BOOL)isTip
+- (void)checkUpdateWithTip:(BOOL)isTip alertViewDelegate:(id)alertDelegate
 {
     if (isTip)
     {
         [SVProgressHUD showWithStatus:@"正在检查更新..."];
     }
+    delegate = alertDelegate;
     RequestTool *request = [[RequestTool alloc] init];
     NSDictionary *requestDic = @{@"flag":[NSNumber numberWithInt:APPLICATION_PLATFORM]};
-    [request requestWithUrl1:CHECK_UPDATE_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
+    [request requestWithUrl:CHECK_UPDATE_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
         requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
      {
          NSLog(@"updateResponseDic===%@",responseDic);
-         if (responseDic && ![@"" isEqualToString:responseDic] && ![@"null" isEqualToString:responseDic])
+         if ([responseDic  isKindOfClass:[NSDictionary class]] || [responseDic  isKindOfClass:[NSMutableDictionary class]])
          {
-             
+             if (isTip)
+                 [SVProgressHUD showSuccessWithStatus:@"检查成功" duration:.1];
+             NSString *serverVersion = [responseDic objectForKey:@"VVersionId"];
+             serverVersion  = (serverVersion) ? serverVersion : @"";
+             int version = [[serverVersion stringByReplacingOccurrencesOfString:@"." withString:@""] intValue];
+             int appVersion = INT_VERSION;
+             if (appVersion < version)
+             {
+                 //有更新
+                 NSString *message = [responseDic objectForKey:@"VVersioncontent"];
+                 message = (message) ? message : @"发现新版本";
+                 [self addAlertTip:message];
+             }
+             else
+             {
+                 [CommonTool addAlertTipWithMessage:@"已经是最新版本"];
+             }
+
          }
          else
          {
@@ -44,4 +69,15 @@
          NSLog(@"error===%@",error);
      }];
 }
+
+- (void)addAlertTip:(NSString *)tipText
+{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"升级提示" message:tipText delegate:delegate cancelButtonTitle:@"立即升级" otherButtonTitles:@"取消", nil];
+    [alertView show];
+}
+
+
+
+
+
 @end
