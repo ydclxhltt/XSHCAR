@@ -176,7 +176,7 @@
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
          NSLog(@"excitingResponseDic===%@",responseDic);
-         if ([responseDic isKindOfClass:[NSString class]])
+         if (responseDic && ![@"" isEqualToString:responseDic] && ![@"null" isEqualToString:responseDic])
          {
              if ([@"8888" isEqualToString:responseDic])
              {
