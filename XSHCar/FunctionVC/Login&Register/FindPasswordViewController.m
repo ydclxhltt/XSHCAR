@@ -25,7 +25,7 @@
 {
     [super viewDidLoad];
     //设置title
-    self.title = @"找回密码";
+    self.title = @"忘记密码";
     //添加返回item
     [self addBackItem];
     //初始化UI
@@ -205,12 +205,20 @@
     [SVProgressHUD showWithStatus:@"正在获取..."];
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl1:GET_CODE_URL requestParamas:@{@"username":self.userName,@"telephone":self.phoneString} requestType:RequestTypeAsynchronous
-              requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
      {
          NSLog(@"getCodeResponseDic===%@",responseDic);
          if (responseDic && ![@"" isEqualToString:responseDic] && ![@"null" isEqualToString:responseDic])
          {
-             [SVProgressHUD showSuccessWithStatus:@"获取成功"];
+             if ([@"1004" isEqualToString:responseDic])
+             {
+                 [SVProgressHUD showErrorWithStatus:@"发送失败" duration:.1];
+                 [CommonTool addAlertTipWithMessage:@"用户名和手机号不匹配"];
+             }
+             if ([@"8888" isEqualToString:responseDic])
+             {
+                 [SVProgressHUD showSuccessWithStatus:@"发送成功"];
+             }
          }
          else
          {

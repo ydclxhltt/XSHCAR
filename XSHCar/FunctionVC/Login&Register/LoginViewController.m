@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "CheckUpdateTool.h"
 #import "FindPasswordViewController.h"
 #import "RegisterViewController.h"
 
@@ -29,6 +28,7 @@
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     isAutoLogin = [[userDefault objectForKey:@"IsAutoLogin"] intValue];
     isSavePwd = [[userDefault objectForKey:@"IsSavePwd"] intValue];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerSucess:) name:@"RegisterSucess" object:nil];
     //初始化UI
     [self createUI];
     //是否需要自动登录
@@ -181,7 +181,7 @@
     loginButton.titleLabel.font = FONT(15.0);
     [imageView addSubview:loginButton];
     
-    UIButton *registerButton = [CreateViewTool createButtonWithFrame:CGRectMake(0.0 + loginButton.frame.size.width + add_x, 0.0, buttonWidth, imageView.frame.size.height) buttonTitle:@"体验登录" titleColor:[UIColor blackColor] normalBackgroundColor:nil highlightedBackgroundColor:nil selectorName:@"registerButtonPressed:" tagDelegate:self];
+    UIButton *registerButton = [CreateViewTool createButtonWithFrame:CGRectMake(0.0 + loginButton.frame.size.width + add_x, 0.0, buttonWidth, imageView.frame.size.height) buttonTitle:@"注册" titleColor:[UIColor blackColor] normalBackgroundColor:nil highlightedBackgroundColor:nil selectorName:@"registerButtonPressed:" tagDelegate:self];
     registerButton.showsTouchWhenHighlighted = YES;
     registerButton.titleLabel.font = FONT(15.0);
     [imageView addSubview:registerButton];
@@ -314,7 +314,6 @@
         [CommonTool addAlertTipWithMessage:message];
         return;
     }
-    
     [self login];
 }
 
@@ -355,9 +354,7 @@
             [userDefault setValue:(!isAutoLogin && !isSavePwd) ? @"" : userNameTextField.text forKey:@"UserName"];
             [userDefault setValue:(!isAutoLogin && !isSavePwd) ? @"" : passwordTextField.text forKey:@"PassWord"];
             [SVProgressHUD showSuccessWithStatus:@"登录成功"];
-            [CheckUpdateTool checkUpdateWithTip:NO];
             [self dismissViewControllerAnimated:YES completion:Nil];
-
         }
         else
         {
@@ -372,12 +369,27 @@
     }];
 }
 
+
+#pragma mark 注册成功后 自动登录
+- (void)registerSucess:(NSNotification *)notification
+{
+    NSArray *array = (NSArray *)notification.object;
+    userNameTextField.text = array[0];
+    passwordTextField.text = array[1];
+    [self login];
+}
+
+
 #pragma mark ======
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 /*
 #pragma mark - Navigation
