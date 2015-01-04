@@ -28,6 +28,12 @@
 //更新地址
 #define CHECK_UPDATE_URL        [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getVersion"]
 
+//注册
+#define REGISTER_URL            [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!userAdd"]
+
+//获取4S
+#define GET_4S_SHOP_URL         [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getCarShop"]
+
 //一键救援地址
 #define KEY_RESCUE_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!keyRescue"]
 
