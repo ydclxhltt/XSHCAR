@@ -14,8 +14,13 @@
 
 @implementation MineCenterViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+    //设置title
+    self.title = @"账户信息";
+    //添加返回Item
+    [self addBackItem];
     // Do any additional setup after loading the view.
 }
 
