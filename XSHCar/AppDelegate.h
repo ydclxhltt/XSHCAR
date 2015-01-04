@@ -12,18 +12,4 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-/*
- *  添加登录界面视图
- *
- *  @pram isAnimation 是否有动画
- */
-- (void)addLoginViewWithAnimation:(BOOL)isAnimation;
-
-/*
- *  选择功能模块
- *
- *  @pram index  序号
- */
-- (void)selectedIndex:(int)index;
-
 @end

@@ -13,6 +13,7 @@
 #import "MineViewController.h"
 #import "LoginViewController.h"
 #import "BMapKit.h"
+#import "CheckUpdateTool.h"
 
 @interface AppDelegate()<BMKGeneralDelegate>
 {
@@ -47,6 +48,9 @@
     
     //添加登录视图
     [self addLoginViewWithAnimation:NO];
+    
+    //检查更新
+    [self checkUpdate];
     
     return YES;
 }
@@ -107,6 +111,13 @@
     mainTabbarViewController.selectedIndex = index;
 }
 
+#pragma mark 检查更新
+- (void)checkUpdate
+{
+    [[[CheckUpdateTool alloc] init] checkUpdateWithTip:NO];
+}
+
+
 
 #pragma mark 百度SDK启动地图认证Delegate
 - (void)onGetNetworkState:(int)iError
@@ -133,6 +144,7 @@
         NSLog(@"onGetPermissionState %d",iError);
     }
 }
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application

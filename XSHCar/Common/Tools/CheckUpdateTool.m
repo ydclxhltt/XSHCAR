@@ -21,13 +21,12 @@
 
 @implementation CheckUpdateTool
 
-- (void)checkUpdateWithTip:(BOOL)isTip alertViewDelegate:(id)alertDelegate
+- (void)checkUpdateWithTip:(BOOL)isTip
 {
     if (isTip)
     {
         [SVProgressHUD showWithStatus:@"正在检查更新..."];
     }
-    delegate = alertDelegate;
     RequestTool *request = [[RequestTool alloc] init];
     NSDictionary *requestDic = @{@"flag":[NSNumber numberWithInt:APPLICATION_PLATFORM]};
     [request requestWithUrl:CHECK_UPDATE_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
@@ -72,7 +71,7 @@
 
 - (void)addAlertTip:(NSString *)tipText
 {
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"升级提示" message:tipText delegate:delegate cancelButtonTitle:@"立即升级" otherButtonTitles:@"取消", nil];
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"升级提示" message:tipText delegate:self cancelButtonTitle:@"立即升级" otherButtonTitles:@"取消", nil];
     [alertView show];
 }
 

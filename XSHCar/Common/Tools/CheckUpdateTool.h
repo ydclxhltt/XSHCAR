@@ -14,8 +14,7 @@
  *  检查更新
  *
  *  @pram isTip         是否显示loading提示
- *  @pram alertDelegate alertViewDelagete
  */
-- (void)checkUpdateWithTip:(BOOL)isTip alertViewDelegate:(id)alertDelegate;
+- (void)checkUpdateWithTip:(BOOL)isTip;
 
 @end

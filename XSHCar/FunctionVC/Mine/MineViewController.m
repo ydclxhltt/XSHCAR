@@ -131,7 +131,7 @@
         switch (indexPath.row)
         {
             case 0:
-               [tool checkUpdateWithTip:YES alertViewDelegate:self];
+               [tool checkUpdateWithTip:YES];
                 break;
             case 1:
                 [self gotoAboutMeView];
@@ -166,16 +166,6 @@
     [userDefaults setValue:@"" forKey:@"PassWord"];
 }
 
-
-#pragma mark alertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    if ([@"立即升级" isEqualToString:title])
-    {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/xi-sheng-heng-qi-che/id912066247?mt=8"]];
-    }
-}
 
 - (void)didReceiveMemoryWarning
 {
