@@ -151,8 +151,6 @@
 		CEACD7B31A564BFE000875ED /* LineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEACD7B21A564BFE000875ED /* LineView.m */; };
 		CEACD7B61A564C8F000875ED /* threeline.png in Resources */ = {isa = PBXBuildFile; fileRef = CEACD7B41A564C8F000875ED /* threeline.png */; };
 		CEACD7B71A564C8F000875ED /* towline.png in Resources */ = {isa = PBXBuildFile; fileRef = CEACD7B51A564C8F000875ED /* towline.png */; };
-		CEACD7BD1A565E35000875ED /* PNLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEACD7BA1A565E35000875ED /* PNLineChartView.m */; };
-		CEACD7BE1A565E35000875ED /* PNPlot.m in Sources */ = {isa = PBXBuildFile; fileRef = CEACD7BC1A565E35000875ED /* PNPlot.m */; };
 		CEB3A81D1A49BA2100F8B0C6 /* pic_default.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB3A81C1A49BA2100F8B0C6 /* pic_default.png */; };
 		CEB3A8201A49BB3E00F8B0C6 /* ExcitingListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB3A81F1A49BB3E00F8B0C6 /* ExcitingListCell.m */; };
 		CEB3A8241A49CED200F8B0C6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB3A8231A49CED200F8B0C6 /* LoginViewController.m */; };
@@ -479,10 +477,6 @@
 		CEACD7B21A564BFE000875ED /* LineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineView.m; sourceTree = "<group>"; };
 		CEACD7B41A564C8F000875ED /* threeline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = threeline.png; sourceTree = "<group>"; };
 		CEACD7B51A564C8F000875ED /* towline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = towline.png; sourceTree = "<group>"; };
-		CEACD7B91A565E35000875ED /* PNLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNLineChartView.h; sourceTree = "<group>"; };
-		CEACD7BA1A565E35000875ED /* PNLineChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNLineChartView.m; sourceTree = "<group>"; };
-		CEACD7BB1A565E35000875ED /* PNPlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNPlot.h; sourceTree = "<group>"; };
-		CEACD7BC1A565E35000875ED /* PNPlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNPlot.m; sourceTree = "<group>"; };
 		CEB3A81C1A49BA2100F8B0C6 /* pic_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_default.png; sourceTree = "<group>"; };
 		CEB3A81E1A49BB3E00F8B0C6 /* ExcitingListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExcitingListCell.h; sourceTree = "<group>"; };
 		CEB3A81F1A49BB3E00F8B0C6 /* ExcitingListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExcitingListCell.m; sourceTree = "<group>"; };
@@ -1224,7 +1218,6 @@
 		7792DFAE1A42D16C008F43A6 /* commonViews */ = {
 			isa = PBXGroup;
 			children = (
-				CEACD7B81A565E35000875ED /* PNLineChart */,
 				CEACD7B01A564BFE000875ED /* lineView */,
 				77A145181A4BE0A5005717B3 /* MCSegment */,
 				77A145101A4B9FDC005717B3 /* process */,
@@ -1286,17 +1279,6 @@
 				CEACD7B21A564BFE000875ED /* LineView.m */,
 			);
 			path = lineView;
-			sourceTree = "<group>";
-		};
-		CEACD7B81A565E35000875ED /* PNLineChart */ = {
-			isa = PBXGroup;
-			children = (
-				CEACD7B91A565E35000875ED /* PNLineChartView.h */,
-				CEACD7BA1A565E35000875ED /* PNLineChartView.m */,
-				CEACD7BB1A565E35000875ED /* PNPlot.h */,
-				CEACD7BC1A565E35000875ED /* PNPlot.m */,
-			);
-			path = PNLineChart;
 			sourceTree = "<group>";
 		};
 		CEB3A8211A49CEC200F8B0C6 /* Login&Register */ = {
@@ -1485,7 +1467,6 @@
 			files = (
 				CECF29C81A5186C400FBDAF4 /* AboutMeViewController.m in Sources */,
 				7789E07C1A427CD900B4CD09 /* NSData+ImageContentType.m in Sources */,
-				CEACD7BE1A565E35000875ED /* PNPlot.m in Sources */,
 				7789E0821A427CD900B4CD09 /* SDWebImageManager.m in Sources */,
 				7704258C1A48253A00E6E470 /* AdvView.m in Sources */,
 				7789E0B41A427CEF00B4CD09 /* AFSecurityPolicy.m in Sources */,
@@ -1563,7 +1544,6 @@
 				7789E0851A427CD900B4CD09 /* UIImage+GIF.m in Sources */,
 				7789E0D61A42800400B4CD09 /* MineViewController.m in Sources */,
 				7704259B1A48270800E6E470 /* DrivingHabitsViewController.m in Sources */,
-				CEACD7BD1A565E35000875ED /* PNLineChartView.m in Sources */,
 				7789E0B31A427CEF00B4CD09 /* AFNetworkReachabilityManager.m in Sources */,
 				CEE6B1561A554A120087364A /* MobileStoreListViewController.m in Sources */,
 				7789E07B1A427CD900B4CD09 /* NSData+GIF.m in Sources */,
