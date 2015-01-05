@@ -19,6 +19,7 @@
     UIScrollView *contentScrollView;
     UIView *selectView,*recordView,*dealView;
     UIButton *cityButton;
+    CityListViewController *tempListViewController;
 }
 @end
 
@@ -32,6 +33,8 @@
     [self addBackItem];
     //初始化UI
     [self createUI];
+    //获取车辆数据
+    [self getCarInfo];
     // Do any additional setup after loading the view.
 }
 
@@ -75,6 +78,45 @@
     [self.view addSubview:contentScrollView];
 }
 
+#pragma mark 获取车牌等信息
+- (void)getCarInfo
+{
+    //__weak __typeof(self) weakSelf = self;
+    [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
+    RequestTool *request = [[RequestTool alloc] init];
+    NSDictionary *requestDic = @{@"car_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] carID]]};
+    [request requestWithUrl1:BREAK_INFO_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
+    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+    {
+         NSLog(@"breakListResponseDic===%@",responseDic);
+         if (responseDic && ![@"" isEqualToString:responseDic]  && ![@"null" isEqualToString:responseDic])
+         {
+             [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+             NSArray *array = [responseDic componentsSeparatedByString:@","];
+             if ([array count] == 3)
+             {
+                [[XSH_Application shareXshApplication] setShortName:[array[0] substringToIndex:2]];
+                ((UITextField *)[selectView viewWithTag:1]).text = [array[0] substringWithRange:NSMakeRange(2,[array[0] length] - 2)];
+                ((UITextField *)[selectView viewWithTag:2]).text = array[1];
+                ((UITextField *)[selectView viewWithTag:3]).text = array[2];
+                [self  initCarInfo];
+                 tempListViewController = [[CityListViewController alloc]init];
+                 tempListViewController.cityScource = CityScourceFromThird;
+                 [tempListViewController viewDidLoad];
+             }
+         }
+         else
+         {
+             [SVProgressHUD showSuccessWithStatus:LOADING_WEBERROR_TIP];
+         }
+     }
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+     {
+         [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
+         NSLog(@"error===%@",error);
+     }];
+
+}
 
 #pragma mark 初始化车牌等信息
 - (void)initCarInfo
@@ -236,18 +278,18 @@
     NSString *carNo = ((UITextField *)[selectView viewWithTag:1]).text;
     NSString *classNo = ((UITextField *)[selectView viewWithTag:2]).text;
     NSString *engineNo = ((UITextField *)[selectView viewWithTag:3]).text;
-    NSLog(@"classNo===%@====engineNo====%@",classNo,engineNo);
+    NSLog(@"classNo===%@==classNo＝＝%@==engineNo====%@",classNo,classNo,engineNo);
     NSString *message = @"";
     NSString *carString = [[cityButton titleForState:UIControlStateNormal] stringByAppendingString:carNo];
     if (!carNo && [carNo isEqualToString:@""])
     {
         message = @"请输入车牌号";
     }
-    else if (!classNo && [classNo isEqualToString:@""])
+    else if (!classNo || [classNo isEqualToString:@""])
     {
         message = @"请输入车架号码";
     }
-    else if (!engineNo && [engineNo isEqualToString:@""])
+    else if (!engineNo || [engineNo isEqualToString:@""])
     {
         message = @"请输入发动机号";
     }
@@ -255,10 +297,10 @@
     {
         message = @"请输入正确的车牌号";
     }
-    else if (classNo.length != 6)
-    {
-        message = @"请输后6位车架号";
-    }
+//    else if (classNo.length != 6)
+//    {
+//        message = @"请输后6位车架号";
+//    }
     if (![message isEqualToString:@""])
     {
         [CommonTool addAlertTipWithMessage:message];
@@ -298,7 +340,7 @@
     __weak __typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
     RequestTool *request = [[RequestTool alloc] init];
-    [request requestWithUrl1:urlStr requestParamas:nil requestType:RequestTypeAsynchronous
+    [request requestWithUrl:urlStr requestParamas:nil requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
     {
          NSLog(@"breakListResponseDic===%@",responseDic);
@@ -311,16 +353,16 @@
                  NSArray *array = [responseDic objectForKey:@"historys"];
                  if (array && [array count] > 0)
                  {
-                     
+                     weakSelf.dataArray = [NSMutableArray array];
                      BreakListViewController *breakListVC = [[BreakListViewController alloc] init];
-                     breakListVC.dataArray = breakListVC.dataArray;
+                     breakListVC.dataArray = weakSelf.dataArray;
                      UINavigationController *nav = [[UINavigationController  alloc] initWithRootViewController:breakListVC];
                      [weakSelf presentViewController:nav animated:YES completion:Nil];
                  }
              }
              else if (status == 2000)
              {
-                 [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP duration:.5];
+                 [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP duration:.1];
                  [CommonTool addAlertTipWithMessage:@"暂无违章记录"];
              }
              else

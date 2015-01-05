@@ -77,6 +77,21 @@
 #pragma mark 保存城市列表数据
 - (void)saveCityArray
 {
+    for (NSDictionary *dic in self.dataArray)
+    {
+        NSArray *cityArray = [dic objectForKey:@"citys"];
+        for (NSDictionary *cityDic in  cityArray)
+        {
+            NSString *serverHeader = [[XSH_Application shareXshApplication] shortName];
+            NSString *carHeader = [cityDic objectForKey:@"car_head"];
+            NSLog(@"serverHeader====%@====carHeader===%@",serverHeader,carHeader);
+            if ([serverHeader isEqualToString:carHeader])
+            {
+                int cityID = [[cityDic objectForKey:@"city_id"] intValue];
+                [[XSH_Application shareXshApplication] setCarCity:[NSNumber numberWithInt:cityID]];
+            }
+        }
+    }
     [[XSH_Application shareXshApplication] setCityArray:self.dataArray];
 }
 
@@ -93,11 +108,11 @@
          NSLog(@"cityListResponseDic===%@",responseDic);
          if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
          {
-             NSMutableArray *array = (NSMutableArray *)[responseDic objectForKey:@"configs"];
-             if (array && [array count] > 0)
+             weakSelf.dataArray = [NSMutableArray arrayWithArray:[responseDic objectForKey:@"configs"]];
+             if (weakSelf.dataArray && [weakSelf.dataArray count] > 0)
              {
                  [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
-                 weakSelf.dataArray = array;
+                 NSLog(@"weakSelf.dataArray===%@",weakSelf.dataArray);
                  [weakSelf.table reloadData];
                  [weakSelf saveCityArray];
              }
