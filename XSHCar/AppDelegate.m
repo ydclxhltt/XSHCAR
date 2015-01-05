@@ -15,12 +15,14 @@
 #import "BMapKit.h"
 #import "CheckUpdateTool.h"
 
+
 @interface AppDelegate()<BMKGeneralDelegate>
 {
     UITabBarController *mainTabbarViewController;
     BMKMapManager *mapManager;
     CheckUpdateTool *tool;
 }
+@property(nonatomic, strong) NSString *tokenString;
 @end
 
 @implementation AppDelegate
@@ -34,6 +36,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exit) name:@"Exit" object:nil];
     
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge)];
     //
     mapManager = [[BMKMapManager alloc] init];
     [mapManager start:BAIDU_MAP_KEY generalDelegate:self];
@@ -147,6 +150,39 @@
     }
 }
 
+
+#pragma mark sendToken
+- (void)sendToken
+{
+    //SEND_TOKEN_URL
+    //NSNumber *userID = [];
+}
+
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    
+    self.tokenString = [[[[NSString stringWithFormat:@"%@",deviceToken]stringByReplacingOccurrencesOfString:@"<"withString:@""]
+                         stringByReplacingOccurrencesOfString:@">" withString:@""]stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"deviceToken: %@====tokenString=====%@", deviceToken,self.tokenString.description);
+}
+
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    application.applicationIconBadgeNumber = 0;
+ 
+    /*这里需要处理推送来的消息*/
+    //     NSLog(@"userInfo333====%@",userInfo);
+    ////    NSDictionary *auserInfo = [userInfo objectForKey:@"aps"];
+    ////    NSLog(@"userInfo====%@",auserInfo);
+}
+
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"error====%@",error);
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
