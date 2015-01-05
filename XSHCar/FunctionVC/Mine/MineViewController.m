@@ -9,6 +9,7 @@
 #import "MineViewController.h"
 #import "AboutMeViewController.h"
 #import "CheckUpdateTool.h"
+#import "MineCenterViewController.h"
 
 @interface MineViewController ()
 {
@@ -127,6 +128,9 @@
     if (indexPath.section == 0)
     {
         //账户信息
+        MineCenterViewController *centerViewController = [[MineCenterViewController  alloc] init];
+        centerViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:centerViewController animated:YES];
     }
     if (indexPath.section == 1)
     {
