@@ -50,7 +50,8 @@
              }
              else
              {
-                 [CommonTool addAlertTipWithMessage:@"已经是最新版本"];
+                 if (isTip)
+                     [CommonTool addAlertTipWithMessage:@"已经是最新版本"];
              }
 
          }
