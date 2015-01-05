@@ -14,7 +14,7 @@
 
 //产品版本号
 #define PRODUCT_VERSION         @"V2.0"
-#define INT_VERSION             100
+#define INT_VERSION             200
 
 //平台//@"IOS"
 #define APPLICATION_PLATFORM    2

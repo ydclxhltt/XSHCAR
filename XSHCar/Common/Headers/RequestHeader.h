@@ -10,11 +10,14 @@
 #define SmallPig_RequestHeader_h
 
 //服务器地址
-#define WEB_SERVER_URL           @"http://pcnew.xshcar.com:9988/"
+#define WEB_SERVER_URL          @"http://pcnew.xshcar.com:9988/"
 
 //图片地址
-#define IMAGE_SERVER_URL         @"http://pcnew.xshcar.com:9988/carcloud/image/icon/"
+#define IMAGE_SERVER_URL        @"http://pcnew.xshcar.com:9988/carcloud/image/icon/"
 //#define IMAGE_SERVER_URL1       @"http://pcnew.xshcar.com:9988/carcloud/image/icon"
+
+//token上报地址
+#define SEND_TOKEN_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@""]
 
 //登陆地址
 #define LOGIN_URL               [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!login"]
@@ -25,6 +28,9 @@
 //忘记密码
 #define COMMIT_PASSWORD_URL     [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!updatePwd"]
 
+//修改密码
+#define CHANGE_PWD_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!pwdChange"]
+
 //更新地址
 #define CHECK_UPDATE_URL        [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getVersion"]
 
@@ -33,6 +39,9 @@
 
 //获取4S
 #define GET_4S_SHOP_URL         [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getCarShop"]
+
+//账号信息
+#define GET_USER_INFO          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getUserInfo"]
 
 //一键救援地址
 #define KEY_RESCUE_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!keyRescue"]
@@ -65,10 +74,13 @@
 #define CITY_LIST_URL           @"http://www.cheshouye.com/api/weizhang/get_all_config"
 
 //驾驶习惯
-#define DRIVING_HABITS_URL       [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/cartrackrecording!myDrivingHabits"]
+#define DRIVING_HABITS_URL      [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/cartrackrecording!myDrivingHabits"]
 
 //违章查询
 #define BREAK_SELECT_URL        @"http://www.cheshouye.com/api/weizhang/query_task?"
+
+//用户违章查询信息
+#define BREAK_INFO_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/userlogin!getBreakRuleTbls"]
 
 //平安亲人信息
 #define PEACE_INFO_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/smsInfor!safeInformation"]
