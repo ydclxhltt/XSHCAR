@@ -156,7 +156,6 @@
          [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
          NSLog(@"error===%@",error);
      }];
-    
 }
 
 #pragma mark 提交围栏数据
