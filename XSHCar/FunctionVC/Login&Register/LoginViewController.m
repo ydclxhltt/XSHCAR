@@ -338,7 +338,7 @@
 {
     [SVProgressHUD showWithStatus:@"正在登录..."];
     RequestTool *request = [[RequestTool alloc] init];
-    NSDictionary *requestDic = @{@"s_name":userNameTextField.text,@"s_password":[CommonTool md5:passwordTextField.text]};
+    NSDictionary *requestDic = @{@"s_name":userNameTextField.text,@"s_password":[[CommonTool md5:passwordTextField.text] uppercaseString]};
     NSLog(@"requestDic===%@",requestDic);
     [request requestWithUrl:LOGIN_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
