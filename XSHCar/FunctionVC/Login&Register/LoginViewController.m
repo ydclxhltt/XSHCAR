@@ -15,6 +15,7 @@
     UITextField *userNameTextField,*passwordTextField;
     UIImageView *bgImageView;
     BOOL isAutoLogin,isSavePwd;
+    float left_x;
 }
 @end
 
@@ -29,6 +30,8 @@
     isAutoLogin = [[userDefault objectForKey:@"IsAutoLogin"] intValue];
     isSavePwd = [[userDefault objectForKey:@"IsSavePwd"] intValue];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerSucess:) name:@"RegisterSucess" object:nil];
+    UIImage *image = [UIImage imageNamed:@"login_background_btn"];
+    left_x = (SCREEN_WIDTH - image.size.width/2)/2;
     //初始化UI
     [self createUI];
     //是否需要自动登录
@@ -85,7 +88,6 @@
 //用户名，密码框
 - (void)addTextFields
 {
-    float left_x = 25.0;
     float add_y = 15.0;
     //输入框
     userNameTextField = [CreateViewTool createTextFieldWithFrame:CGRectMake(left_x, startHeight, SCREEN_WIDTH - left_x * 2, 35.0) textColor:[UIColor blackColor] textFont:FONT(15.0) placeholderText:@"请输入用户名"];
@@ -129,7 +131,6 @@
 //添加自动登录,记住密码
 - (void)addAutoLoginButtons
 {
-    float left_x = 25.0;
     float add_y = 25.0;
     
     float buttonHeight = 30.0;
@@ -166,7 +167,6 @@
 //添加登录注册按钮
 - (void)addLoginAndRegisterButtons
 {
-    float left_x = 25.0;
     float add_y = 50.0;
     float add_x = 10.0;
     float buttonWidth = 130.0;
@@ -195,9 +195,9 @@
 {
     float buttonHeight = 30.0;
     float buttonWidth = 70.0;
-    float left_x = (SCREEN_WIDTH - buttonWidth)/2;
+    float _left_x = (SCREEN_WIDTH - buttonWidth)/2;
     
-    UIButton *button = [CreateViewTool createButtonWithFrame:CGRectMake(left_x, startHeight, buttonWidth, buttonHeight) buttonTitle:@"忘记密码" titleColor:[UIColor whiteColor] normalBackgroundColor:nil highlightedBackgroundColor:nil selectorName:@"findPasswordButtonPressed:" tagDelegate:self];
+    UIButton *button = [CreateViewTool createButtonWithFrame:CGRectMake(_left_x, startHeight, buttonWidth, buttonHeight) buttonTitle:@"忘记密码" titleColor:[UIColor whiteColor] normalBackgroundColor:nil highlightedBackgroundColor:nil selectorName:@"findPasswordButtonPressed:" tagDelegate:self];
     button.titleLabel.font = FONT(15.0);
     button.titleEdgeInsets = UIEdgeInsetsMake(10, 0, 0, 0);
     button.showsTouchWhenHighlighted = YES;
@@ -205,7 +205,7 @@
     
     startHeight += buttonHeight;
     
-    UIImageView *lineImageView = [CreateViewTool  createImageViewWithFrame:CGRectMake(left_x, startHeight, buttonWidth, 1.0) placeholderImage:nil];
+    UIImageView *lineImageView = [CreateViewTool  createImageViewWithFrame:CGRectMake(_left_x, startHeight, buttonWidth, 1.0) placeholderImage:nil];
     lineImageView.backgroundColor = [UIColor whiteColor];
     [bgImageView addSubview:lineImageView];
 }
@@ -356,6 +356,7 @@
             [userDefault setValue:(!isAutoLogin && !isSavePwd) ? @"" : userNameTextField.text forKey:@"UserName"];
             [userDefault setValue:(!isAutoLogin && !isSavePwd) ? @"" : passwordTextField.text forKey:@"PassWord"];
             [SVProgressHUD showSuccessWithStatus:@"登录成功"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SendToken" object:nil];
             [self dismissViewControllerAnimated:YES completion:Nil];
         }
         else

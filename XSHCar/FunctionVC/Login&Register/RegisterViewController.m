@@ -114,6 +114,7 @@
 - (void)fieldExit:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    [self moveViewWithLevel:0];
 }
 
 #pragma mark 
@@ -295,10 +296,30 @@
             [self get4SInfo];
         }
     }
-
+    if (SCREEN_HEIGHT == 568.0 && tag == 7)
+    {
+        [self moveViewWithLevel:1];
+        return YES;
+    }
+    if (SCREEN_HEIGHT == 480.0 && tag > 4)
+    {
+        [self moveViewWithLevel:tag - 4];
+        return YES;
+    }
+    
+    [self moveViewWithLevel:0];
+    
     return YES;
 }
 
+#pragma mark 移动视图
+- (void)moveViewWithLevel:(int)level
+{
+    [UIView animateWithDuration:.3 animations:
+     ^{
+         bgImageView.transform = CGAffineTransformMakeTranslation(0, -level * 40.0);
+      }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
