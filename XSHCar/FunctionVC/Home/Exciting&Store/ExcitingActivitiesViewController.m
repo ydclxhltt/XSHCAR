@@ -177,7 +177,7 @@
     }
     NSDictionary *rowDataDic = self.dataArray[indexPath.row];
     NSString *imageUrl = [rowDataDic objectForKey:@"mdtTopimage"];
-    imageUrl = @"http://211.154.155.29:8086/epg30/selfadaimg.do?path=/pgicon/20141222/3066944/144209.jpg";
+    imageUrl = [IMAGE_SERVER_URL stringByAppendingString:imageUrl];
     [cell setCellDataWithImageUrl:imageUrl titleText:[rowDataDic objectForKey:@"mdtTitle"] contentText:[rowDataDic objectForKey:@"mdtContent"]];
     return cell;
 }

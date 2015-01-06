@@ -37,6 +37,10 @@
     if (array)
     {
         self.dataArray = (NSMutableArray *)array;
+        if (self.cityScource == CityScourceFromThird)
+        {
+            [self saveCityArray];
+        }
     }
     else
     {

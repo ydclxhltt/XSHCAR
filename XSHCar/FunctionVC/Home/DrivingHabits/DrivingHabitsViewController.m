@@ -47,38 +47,39 @@
 - (void)setTableHeaderView
 {
     float add_y = 15.0;
+    float scale = SCREEN_WIDTH/320.0;
     UIImage *image = [UIImage imageNamed:@"numberBg"];
     UIImageView *headerView = [CreateViewTool createImageViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, add_y + image.size.height/2 + add_y) placeholderImage:nil];
-    UIImageView *imageView = [CreateViewTool createImageViewWithFrame:CGRectMake((SCREEN_WIDTH - image.size.width/2)/2, add_y, image.size.width/2, image.size.height/2) placeholderImage:nil];
+    UIImageView *imageView = [CreateViewTool createImageViewWithFrame:CGRectMake((SCREEN_WIDTH - image.size.width/2 * scale)/2, add_y, image.size.width/2 * scale, image.size.height/2 * scale) placeholderImage:nil];
     imageView.image = image;
     imageView.backgroundColor = [UIColor clearColor];
     [headerView addSubview:imageView];
     
-    float left_x = 60.0;
-    float left_y = 40.0;
-    float lbl_width = 60.0;
+    float left_x = 22.0 * scale;
+    float left_y = 22.0 * scale;
+    float lbl_width = 60.0 * scale;
     
     scoreLabel = [CreateViewTool createLabelWithFrame:CGRectMake(left_x, left_y, lbl_width, 35.0) textString:@"" textColor:APP_MAIN_COLOR textFont:BOLD_FONT(30.0)];
     scoreLabel.textAlignment = NSTextAlignmentCenter;
-    [headerView  addSubview:scoreLabel];
+    [imageView  addSubview:scoreLabel];
     
     UILabel *label = [CreateViewTool createLabelWithFrame:CGRectMake(left_x, left_y + scoreLabel.frame.size.height, lbl_width, 20.0) textString:@"总得分" textColor:[UIColor blackColor] textFont:BOLD_FONT(17.0)];
     label.textAlignment = NSTextAlignmentCenter;
-    [headerView  addSubview:label];
+    [imageView  addSubview:label];
     
-    float add_x = 30.0;
-    float add_y1 = 4.0;
-    float lbl_width1 = 100.0;
-    float lbl_height = 25.0;
+    float add_x = 30.0 * scale;
+    float add_y1 = 4.0 * scale;
+    float lbl_width1 = 100.0 * scale;
+    float lbl_height = 25.0 * scale;
     left_x = left_x + add_x + scoreLabel.frame.size.width;
     
     enLable = [CreateViewTool createLabelWithFrame:CGRectMake(left_x, left_y, lbl_width1, lbl_height) textString:@"环保指数: " textColor:[UIColor blackColor] textFont:BOLD_FONT(16.0)];
     //enLable.backgroundColor = [UIColor redColor];
-    [headerView  addSubview:enLable];
+    [imageView  addSubview:enLable];
     
     safeLabel = [CreateViewTool createLabelWithFrame:CGRectMake(left_x, left_y + lbl_height + add_y1, lbl_width1, lbl_height) textString:@"安全指数: " textColor:[UIColor blackColor] textFont:BOLD_FONT(16.0)];
      //safeLabel.backgroundColor = [UIColor redColor];
-    [headerView  addSubview:safeLabel];
+    [imageView  addSubview:safeLabel];
     
     
     //attributedText

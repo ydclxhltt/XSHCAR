@@ -71,13 +71,8 @@
 - (void)addAdvView
 {
     //设置frame
-    float advHeight = ADV_HEIGHT;
-    
-    if (SCREEN_WIDTH > 320.0)
-    {
-        advHeight = (SCREEN_WIDTH/320.0) * ADV_HEIGHT;
-    }
-    
+    float advHeight = (SCREEN_WIDTH/320.0) * ADV_HEIGHT;
+
     //初始化广告视图
     advView = [[AdvView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, advHeight)];
     [self.view addSubview:advView];

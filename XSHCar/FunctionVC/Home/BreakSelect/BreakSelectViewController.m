@@ -12,14 +12,18 @@
 #import "SDSegmentedControl.h"
 #import "CityListViewController.h"
 #import "BreakListViewController.h"
+#import "BreakCell.h"
 
-@interface BreakSelectViewController ()<UIScrollViewDelegate>
+@interface BreakSelectViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     SDSegmentedControl *segmentView;
     UIScrollView *contentScrollView;
     UIView *selectView,*recordView,*dealView;
     UIButton *cityButton;
     CityListViewController *tempListViewController;
+    UITableView *recordTable,*dealTable;
+    int currentPage;
+    UIButton *moreButton;
 }
 @end
 
@@ -28,11 +32,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     //添加返回item
     [self addBackItem];
     //初始化UI
     [self createUI];
+    //初始化数据
+    currentPage = 1;
     //获取车辆数据
     [self getCarInfo];
     // Do any additional setup after loading the view.
@@ -50,9 +55,9 @@
 #pragma mark 初始化UI
 - (void)createUI
 {
-    [self addSegmentView];
     [self addScrollView];
     [self addContentViewWithIndex:0];
+    [self addSegmentView];
 }
 
 - (void)addSegmentView
@@ -67,8 +72,8 @@
 
 - (void)addScrollView
 {
-    float start_y = segmentView.frame.size.height + segmentView.frame.origin.y;
-    contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, start_y, SCREEN_WIDTH, SCREEN_HEIGHT - start_y)];
+    float start_y = SEGMENT_HEIGHT;
+    contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, start_y, SCREEN_WIDTH, SCREEN_HEIGHT - start_y - NAV_HEIGHT)];
     contentScrollView.backgroundColor = [UIColor clearColor];
     contentScrollView.pagingEnabled = YES;
     contentScrollView.delegate = self;
@@ -91,7 +96,6 @@
          NSLog(@"breakListResponseDic===%@",responseDic);
          if (responseDic && ![@"" isEqualToString:responseDic]  && ![@"null" isEqualToString:responseDic])
          {
-             [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
              NSArray *array = [responseDic componentsSeparatedByString:@","];
              if ([array count] == 3)
              {
@@ -99,10 +103,10 @@
                 ((UITextField *)[selectView viewWithTag:1]).text = [array[0] substringWithRange:NSMakeRange(2,[array[0] length] - 2)];
                 ((UITextField *)[selectView viewWithTag:2]).text = array[1];
                 ((UITextField *)[selectView viewWithTag:3]).text = array[2];
-                [self  initCarInfo];
-                 tempListViewController = [[CityListViewController alloc]init];
-                 tempListViewController.cityScource = CityScourceFromThird;
-                 [tempListViewController viewDidLoad];
+                [self initCarInfo];
+                tempListViewController = [[CityListViewController alloc]init];
+                tempListViewController.cityScource = CityScourceFromThird;
+                [tempListViewController viewDidLoad];
              }
          }
          else
@@ -148,15 +152,23 @@
 - (void)addContentViewWithIndex:(int)index
 {
     [contentScrollView setContentOffset:CGPointMake(index * SCREEN_WIDTH, 0)];
+    if (index != 0)
+    {
+        currentPage = 1;
+        moreButton.enabled = YES;
+        self.dataArray = nil;
+    }
     switch (index)
     {
         case 0:
             [self addSelectView];
             break;
         case 1:
+            [self getBreakDataWithType:1];
             [self addRecordView];
             break;
         case 2:
+            [self getBreakDataWithType:2];
             [self addDealView];
             break;
         default:
@@ -240,12 +252,38 @@
 
 - (void)addRecordView
 {
-    
+    if (!recordTable)
+    {
+        recordTable=[[UITableView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * 1, 0.0, SCREEN_WIDTH, contentScrollView.frame.size.height) style:UITableViewStylePlain];
+        recordTable.dataSource=self;
+        recordTable.delegate=self;
+        recordTable.backgroundColor = [UIColor clearColor];
+        [contentScrollView insertSubview:recordTable atIndex:0];
+    }
+
 }
 
 - (void)addDealView
 {
-    
+    if (!dealTable)
+    {
+        dealTable=[[UITableView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * 2, 0.0, SCREEN_WIDTH, contentScrollView.frame.size.height) style:UITableViewStylePlain];
+        dealTable.dataSource=self;
+        dealTable.delegate=self;
+        dealTable.backgroundColor = [UIColor clearColor];
+        [contentScrollView insertSubview:dealTable atIndex:0];
+    }
+}
+
+
+- (void)setFootViewForTable:(UITableView *)table
+{
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 35)];
+    footView.backgroundColor = [UIColor clearColor];
+    moreButton = [CreateViewTool createButtonWithFrame:CGRectMake(20, (footView.frame.size.height - 20)/2, SCREEN_WIDTH - 20 * 2, 20) buttonTitle:@"点击加载更多" titleColor:[UIColor grayColor] normalBackgroundColor:nil highlightedBackgroundColor:nil selectorName:@"getMoreData" tagDelegate:self];
+    moreButton.titleLabel.font = FONT(15.0);
+    [footView addSubview:moreButton];
+    table.tableFooterView = footView;
 }
 
 #pragma mark 城市列表
@@ -331,11 +369,11 @@
     NSString *requestUrlStr = [NSString stringWithFormat:@"%@car_info=%@&sign=%@&timestamp=%@&app_id=%@",urlStr,[CommonTool encodeToPercentEscapeString:car_info],sign,timeStr,appID];
     NSLog(@"requestUrlStr====%@",requestUrlStr);
 
-    [self getBreakListWith:requestUrlStr];
+    [self getBreakListWithUrl:requestUrlStr];
 }
 
 #pragma mark 获取违章数据
-- (void)getBreakListWith:(NSString *)urlStr
+- (void)getBreakListWithUrl:(NSString *)urlStr
 {
     __weak __typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
@@ -385,7 +423,6 @@
 
 #pragma mark scrollViewDelegate
 
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self returnKeyboard];
@@ -393,10 +430,219 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    int page = scrollView.contentOffset.x/SCREEN_WIDTH;
-    segmentView.selectedSegmentIndex = page;
-    [self addContentViewWithIndex:page];
+    if (scrollView == contentScrollView)
+    {
+        int page = scrollView.contentOffset.x/SCREEN_WIDTH;
+        
+        if (page == segmentView.selectedSegmentIndex)
+        {
+            return;
+        }
+        segmentView.selectedSegmentIndex = page;
+        [self addContentViewWithIndex:page];
+    }
 }
+
+
+#pragma mark 加载更多
+- (void)getMoreData
+{
+    currentPage++;
+    [self getBreakDataWithType:segmentView.selectedSegmentIndex];
+}
+
+
+#pragma mark 查询违章记录和处理纪录 1:normal 2:deal
+- (void)getBreakDataWithType:(int)type
+{
+    NSString *urlStr = nil;
+    if (type == 1)
+    {
+        urlStr = BREAK_LIST_URL;
+    }
+    else if (type == 2)
+    {
+        urlStr = DEAL_BREAK_URL;
+    }
+    __weak __typeof(self) weakSelf = self;
+    moreButton.enabled = NO;
+    if (currentPage == 1)
+    {
+        [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
+    }
+    NSDictionary *requestDic = @{@"uid":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"currentPage":[NSNumber numberWithInt:currentPage]};
+    RequestTool *request = [[RequestTool alloc] init];
+    [request requestWithUrl:urlStr requestParamas:requestDic requestType:RequestTypeAsynchronous
+    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+     {
+         NSLog(@"breakResponseDic===%@",responseDic);
+         if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
+         {
+             if (currentPage == 1)
+                 [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
+             [weakSelf loadBreakData:responseDic];
+         }
+         else
+         {
+             moreButton.enabled = YES;
+             //失败
+             if (currentPage == 1)
+             {
+                 [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
+             }
+             if (currentPage > 1)
+             {
+                 currentPage--;
+             }
+         }
+     }
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+     {
+         moreButton.enabled = YES;
+         if (currentPage > 1)
+         {
+             currentPage--;
+         }
+         [SVProgressHUD showErrorWithStatus:LOADING_FAIL_TIP];
+         NSLog(@"error===%@",error);
+     }];
+
+}
+
+
+#pragma mark 加载违章查询和处理违章数据
+- (void)loadBreakData:(NSDictionary *)responseDic
+{
+    NSMutableArray *dataArray = (NSMutableArray *)[responseDic objectForKey:@"list"];
+    UITableView *table = nil;
+    if (segmentView.selectedSegmentIndex == 1)
+    {
+        table = recordTable;
+    }
+    if (segmentView.selectedSegmentIndex == 2)
+    {
+        table = dealTable;
+    }
+    
+    if (([dataArray count] == 0 || !dataArray) && currentPage == 1)
+    {
+        //暂无数据
+        [CommonTool addAlertTipWithMessage:@"暂无数据"];
+    }
+    else if (dataArray)
+    {
+        if (currentPage == 1)
+        {
+            [self setFootViewForTable:table];
+        }
+        if (!self.dataArray)
+        {
+            self.dataArray = [NSMutableArray arrayWithArray:dataArray];
+        }
+        else
+        {
+            [self.dataArray addObjectsFromArray:dataArray];
+        }
+    }
+    
+    int countPage = [[responseDic objectForKey:@"countpage"] intValue];
+    if (countPage <= currentPage)
+    {
+        //最后一页
+        [table setTableFooterView:nil];
+    }
+    moreButton.enabled = YES;
+    [table reloadData];
+}
+
+#pragma mark 获取高度
+- (float)getHeightWithString:(NSString *)text
+{
+    CGSize size = [text sizeWithFont:FONT(16.0) constrainedToSize:CGSizeMake(230, 20000)];
+    NSLog(@"size.height===%.0f",size.height);
+    if (size.height + 10 > 40.0)
+        return  size.height + 10;
+    else
+        return 40.0;
+}
+
+#pragma mark tableDelegate
+- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.section];
+    if (indexPath.row == 1)
+    {
+        return [self getHeightWithString:[dic objectForKey:@"brAddress"]];
+    }
+    else if (indexPath.row == 5)
+    {
+        return [self getHeightWithString:[dic objectForKey:@"brReason"]];
+    }
+    return 40.0;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [NSString stringWithFormat:@"违章%d:",(int)section + 1];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [self.dataArray count];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 6;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellID = @"cellID";
+    BreakCell *cell = (BreakCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
+    if (!cell)
+    {
+        cell = [[BreakCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor = [UIColor whiteColor];
+    }
+    [cell setDescLabelFrame];
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.section];
+    cell.descLabel.textColor = [UIColor blackColor];
+    switch (indexPath.row)
+    {
+        case 0:
+            cell.titleLabel.text = @"违规时间:";
+            cell.descLabel.text = [dic objectForKey:@"brTimestr"];
+            break;
+        case 1:
+            cell.titleLabel.text = @"违规地点:";
+            cell.descLabel.text = [dic objectForKey:@"brAddress"];
+            break;
+        case 2:
+            cell.titleLabel.text = @"违规扣分:";
+            cell.descLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"brScore"]];
+            break;
+        case 3:
+            cell.titleLabel.text = @"违规罚款:";
+            cell.descLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"brFine"]];
+            break;
+        case 4:
+            cell.titleLabel.text = @"是否处理:";
+            cell.descLabel.textColor = [UIColor redColor];
+            cell.descLabel.text = [[dic objectForKey:@"brDealstatus"] isEqualToString:@"Y"] ? @"已处理":@"未处理";
+            break;
+        case 5:
+            cell.titleLabel.text = @"违规原因:";
+            cell.descLabel.text = [dic objectForKey:@"brReason"];
+            break;
+        default:
+            break;
+    }
+    return cell;
+}
+
+
 
 
 - (void)didReceiveMemoryWarning {

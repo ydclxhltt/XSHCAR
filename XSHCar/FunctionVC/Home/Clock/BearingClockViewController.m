@@ -493,7 +493,7 @@
     
     NSDictionary *rowDic = self.dataArray[indexPath.row];
     NSString *title = [rowDic objectForKey:@"daName"];
-    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",IMAGE_SERVER_URL,[rowDic objectForKey:@"daFilepath"]];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@%@%@",WEB_SERVER_URL,@"carcloud/image/yibiaopang/",[rowDic objectForKey:@"daFilepath"]];
     [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"pic_default"]];
     textLabel.text = (title) ? title : @"";
     
