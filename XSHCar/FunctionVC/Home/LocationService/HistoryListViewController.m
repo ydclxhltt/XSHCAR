@@ -216,6 +216,8 @@
     {
         //暂无数据
         [CommonTool addAlertTipWithMessage:@"暂无数据"];
+        self.dataArray = nil;
+        [self.table reloadData];
     }
     else if (dataArray)
     {
@@ -263,23 +265,18 @@
     UIImageView *sectionView = [CreateViewTool createImageViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 35.0) placeholderImage:nil];
     sectionView.backgroundColor = [UIColor whiteColor];
     UIColor *fontColor = [UIColor grayColor];
-    UILabel *ctrIdLabel = [CreateViewTool createLabelWithFrame:CGRectMake(0, 0, 60.0, sectionView.frame.size.height) textString:@"ID" textColor:fontColor textFont:FONT(16.0)];
-    ctrIdLabel.textAlignment = NSTextAlignmentCenter;
-    [sectionView addSubview:ctrIdLabel];
     
     UIButton *detailButton = [CreateViewTool createButtonWithFrame:CGRectMake(SCREEN_WIDTH - 60, 0, 60.0, sectionView.frame.size.height) buttonTitle:@"详情" titleColor:fontColor normalBackgroundColor:nil highlightedBackgroundColor:nil selectorName:@"detailButtonPressed:" tagDelegate:self];
     detailButton.titleLabel.font = FONT(15.0);
     [sectionView addSubview:detailButton];
     
-    float width = (SCREEN_WIDTH - ctrIdLabel.frame.size.width - detailButton.frame.size.width)/2;
+    float width = (SCREEN_WIDTH - detailButton.frame.size.width)/2;
     
-    UILabel *startLabel = [CreateViewTool createLabelWithFrame:CGRectMake(ctrIdLabel.frame.size.width, 0, width, sectionView.frame.size.height) textString:@"起始时间" textColor:fontColor textFont:FONT(16.0)];
-    startLabel.tag = 101;
+    UILabel *startLabel = [CreateViewTool createLabelWithFrame:CGRectMake(0, 0, width, sectionView.frame.size.height) textString:@"起始时间" textColor:fontColor textFont:FONT(16.0)];
     startLabel.textAlignment = NSTextAlignmentCenter;
     [sectionView addSubview:startLabel];
     
     UILabel *endLabel = [CreateViewTool createLabelWithFrame:CGRectMake(startLabel.frame.origin.x + width, 0, width, sectionView.frame.size.height) textString:@"结束时间" textColor:fontColor textFont:FONT(16.0)];
-    endLabel.tag = 102;
     endLabel.textAlignment = NSTextAlignmentCenter;
     [sectionView addSubview:endLabel];
     
@@ -319,7 +316,6 @@
     static NSString *cellID = @"historyCellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     
-    UILabel *ctrIdLabel = (UILabel *)[cell.contentView viewWithTag:100];
     UILabel *startLabel = (UILabel *)[cell.contentView viewWithTag:101];
     UILabel *endLabel = (UILabel *)[cell.contentView viewWithTag:102];
     UIButton *detailButton = (UIButton *)[cell.contentView viewWithTag:103 + indexPath.row];
@@ -332,12 +328,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UIColor *fontColor = [UIColor blackColor];
         UIColor *lineColor = [UIColor lightGrayColor];
-        
-        ctrIdLabel = [CreateViewTool createLabelWithFrame:CGRectMake(0, 0, 60.0, cell.frame.size.height) textString:@"1" textColor:fontColor textFont:FONT(15.0)];
-        ctrIdLabel.tag = 100;
-        ctrIdLabel.textAlignment = NSTextAlignmentCenter;
-        [CommonTool setViewLayer:ctrIdLabel withLayerColor:lineColor bordWidth:.5];
-        [cell.contentView addSubview:ctrIdLabel];
+    
         
         detailButton = [CreateViewTool createButtonWithFrame:CGRectMake(SCREEN_WIDTH - 60, 0, 60.0, cell.frame.size.height) buttonTitle:@"详情" titleColor:APP_MAIN_COLOR normalBackgroundColor:nil highlightedBackgroundColor:[UIColor lightGrayColor] selectorName:@"detailButtonPressed:" tagDelegate:self];
         detailButton.tag = 103 + indexPath.row;
@@ -345,9 +336,9 @@
         [CommonTool setViewLayer:detailButton withLayerColor:lineColor bordWidth:.5];
         [cell.contentView addSubview:detailButton];
         
-        float width = (SCREEN_WIDTH - ctrIdLabel.frame.size.width - detailButton.frame.size.width)/2;
+        float width = (SCREEN_WIDTH - detailButton.frame.size.width)/2;
         
-        startLabel = [CreateViewTool createLabelWithFrame:CGRectMake(ctrIdLabel.frame.size.width, 0, width, cell.frame.size.height) textString:@"" textColor:fontColor textFont:FONT(15.0)];
+        startLabel = [CreateViewTool createLabelWithFrame:CGRectMake(0, 0, width, cell.frame.size.height) textString:@"" textColor:fontColor textFont:FONT(15.0)];
         startLabel.tag = 101;
         startLabel.textAlignment = NSTextAlignmentCenter;
         [CommonTool setViewLayer:startLabel withLayerColor:lineColor bordWidth:.5];
@@ -362,7 +353,6 @@
     }
     
     NSDictionary *rowDic = self.dataArray[indexPath.row];
-    ctrIdLabel.text = [NSString stringWithFormat:@"%@",[rowDic objectForKey:@"ctrId"]];
     startLabel.text = ([@"" isEqualToString:[rowDic objectForKey:@"ctrStartdatetime"]]) ? @"未知" : [rowDic objectForKey:@"ctrStartdatetime"];
     endLabel.text = ([@"" isEqualToString:[rowDic objectForKey:@"ctrEnddatetime"]]) ? @"未知" : [rowDic objectForKey:@"ctrEnddatetime"];
     return cell;
