@@ -14,10 +14,10 @@
 
 //图片地址
 #define IMAGE_SERVER_URL        @"http://pcnew.xshcar.com:9988/carcloud/image/icon/"
-//#define IMAGE_SERVER_URL1       @"http://pcnew.xshcar.com:9988/carcloud/image/icon"
+
 
 //token上报地址
-#define SEND_TOKEN_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@""]
+#define SEND_TOKEN_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getToken"]
 
 //登陆地址
 #define LOGIN_URL               [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!login"]
@@ -80,7 +80,13 @@
 #define BREAK_SELECT_URL        @"http://www.cheshouye.com/api/weizhang/query_task?"
 
 //用户违章查询信息
-#define BREAK_INFO_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"/carcloud/userlogin!getBreakRuleTbls"]
+#define BREAK_INFO_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getBreakRuleTbls"]
+
+//违章处理
+#define DEAL_BREAK_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getDealBreakRules"]
+
+//违章记录
+#define BREAK_LIST_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getBreakRules"]
 
 //平安亲人信息
 #define PEACE_INFO_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/smsInfor!safeInformation"]

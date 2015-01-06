@@ -23,7 +23,6 @@ typedef enum : NSUInteger
 #import <UIKit/UIKit.h>
 #import "CommonHeader.h"
 #import "CreateViewTool.h"
-#import "AppDelegate.h"
 #import "XSH_Application.h"
 #import "RequestTool.h"
 #import "SVProgressHUD.h"
