@@ -90,6 +90,12 @@ typedef void (^CancelBlock) ();
         datePicker.datePickerMode = UIDatePickerModeDate;
         [self addSubview:datePicker];
     }
+    else if (PickerViewTypeTime == type)
+    {
+        datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, toolBar.frame.size.height,self.frame.size.width, self.frame.size.height - toolBar.frame.size.height)];
+        datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+        [self addSubview:datePicker];
+    }
     else if (PickerViewTypeCustom == type)
     {
         pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, toolBar.frame.size.height,self.frame.size.width, self.frame.size.height - toolBar.frame.size.height)];
@@ -144,7 +150,7 @@ typedef void (^CancelBlock) ();
 
 - (void)sure
 {
-    if (PickerViewTypeDate == self.pickerType)
+    if (PickerViewTypeDate == self.pickerType || PickerViewTypeTime == self.pickerType)
     {
         //datePicker.date;
         if (self.sureBlock)

@@ -11,6 +11,7 @@
 typedef enum : NSUInteger {
     PickerViewTypeDate,
     PickerViewTypeCustom,
+    PickerViewTypeTime,
 } PickerViewType;
 
 @interface CLPickerView : UIView
