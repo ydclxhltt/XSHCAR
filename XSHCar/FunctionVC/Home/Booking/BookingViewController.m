@@ -88,7 +88,7 @@
         }
         if (i == 5)
         {
-            CLPickerView *picker = [[CLPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240.0) pickerViewType:PickerViewTypeDate sureBlock:^(UIDatePicker *datePicker,NSDate *date){textField.text = [CommonTool getStringFromDate:date formatterString:@"YYYY-MM-dd"];self.timeStr = textField.text; [textField resignFirstResponder];} cancelBlock:^{[textField resignFirstResponder];}];
+            CLPickerView *picker = [[CLPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240.0) pickerViewType:PickerViewTypeTime sureBlock:^(UIDatePicker *datePicker,NSDate *date){textField.text = [CommonTool getStringFromDate:date formatterString:@"YYYY-MM-dd hh:mm"];self.timeStr = textField.text; [textField resignFirstResponder];} cancelBlock:^{[textField resignFirstResponder];}];
             [picker setPickViewMinDate];
             textField.inputView = picker;
         }
@@ -166,10 +166,10 @@
 
 
 #pragma mark 提交预约信息
-- (void)commitBookingWithPhone:(NSString *)phone acID:(NSString *)ac_id
+- (void)commitBookingWithPhone:(NSString *)phone acID:(NSString *)ac_id carNumber:(NSString *)carNO
 {
     [SVProgressHUD showWithStatus:@"正在提交..."];
-    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"AM_Telphone":phone,@"AM_AppointmentTime":self.timeStr,@"ac_id":ac_id,@"shop_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] shopID]]};
+    NSDictionary *requestDic = @{@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]],@"AM_Telphone":phone,@"AM_AppointmentTime":self.timeStr,@"ac_id":ac_id,@"shop_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] shopID]],@"chepai":carNO};
     NSLog(@"requestDic===%@",requestDic);
     RequestTool *request = [[RequestTool alloc] init];
     [request requestWithUrl1:BOOKING_COMMIT_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
@@ -205,7 +205,8 @@
 {
 
     NSString *phone = @"";
-     NSString *ac_id = @"";
+    NSString *ac_id = @"";
+    NSString *carNO = @"";
     for (int i = 0; i < [sortArray count]; i++)
     {
         if (i == 0)
@@ -226,7 +227,7 @@
             
             if (i == 0)
             {
-                if (![textField.text isEqualToString:@""] && ![CommonTool isEmailOrPhoneNumber:textField.text])
+                if ([textField.text isEqualToString:@""] || ![CommonTool isEmailOrPhoneNumber:textField.text])
                 {
                     [CommonTool addAlertTipWithMessage:@"请输入正确的手机号"];
                     return;
@@ -237,7 +238,19 @@
                 }
                 
             }
-            
+            if (i == 2)
+            {
+                if ([textField.text isEqualToString:@""])
+                {
+                    [CommonTool addAlertTipWithMessage:@"请输入车牌号号"];
+                    return;
+                }
+                else
+                {
+                    carNO = textField.text;
+                }
+
+            }
             if (i == [self.titleArray count] - 2)
             {
                 if ([@"" isEqualToString:textField.text])
@@ -258,7 +271,7 @@
         return;
     }
     
-    [self commitBookingWithPhone:phone acID:ac_id];
+    [self commitBookingWithPhone:phone acID:ac_id carNumber:carNO];
 }
 
 #pragma mark 预约类型响应时间
