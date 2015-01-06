@@ -12,6 +12,7 @@
 @interface PeaceInfomationViewController ()<UIAlertViewDelegate>
 {
     BOOL isCanAdd;
+    CityListViewController *cityViewController;
 }
 @property(nonatomic, strong) NSArray *headerArray;
 @end
@@ -27,10 +28,11 @@
     [self addBackItem];
     //初始化UI
     [self createUI];
+    //获取平安信息数据
+    cityViewController = [[CityListViewController alloc] init];
+    cityViewController.cityScource = CityScourceFromXSH;
+    [cityViewController viewDidLoad];
     //初始化数据
-    NSMutableArray *array1 = [NSMutableArray arrayWithObjects:@"设置省/市", nil];
-    NSMutableArray *array2 = [NSMutableArray arrayWithObjects:@"", nil];
-    self.dataArray = [NSMutableArray arrayWithObjects:array1,array2,nil];
     self.headerArray = @[@"设置车辆所在地",@"手机号码"];
     isCanAdd = YES;
     // Do any additional setup after loading the view.
