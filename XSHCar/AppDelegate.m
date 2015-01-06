@@ -34,10 +34,15 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exit) name:@"Exit" object:nil];
+    self.tokenString = @"";
     
+    //通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exit) name:@"Exit" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendToken) name:@"SendToken" object:nil];
+    //注册远程通知
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge)];
-    //
+    
+    //注册百度地图
     mapManager = [[BMKMapManager alloc] init];
     [mapManager start:BAIDU_MAP_KEY generalDelegate:self];
     
@@ -154,8 +159,20 @@
 #pragma mark sendToken
 - (void)sendToken
 {
-    //SEND_TOKEN_URL
-    //NSNumber *userID = [];
+    NSNumber *userID = [NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]];
+    RequestTool *request = [[RequestTool alloc] init];
+    NSDictionary *requestDic = @{@"user_id":userID,@"flag":[NSNumber numberWithInt:APPLICATION_PLATFORM],@"dervidetoken":self.tokenString};
+    NSLog(@"requestDic===%@",requestDic);
+    [request requestWithUrl1:SEND_TOKEN_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
+    requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+     {
+         NSLog(@"loginResponseDic===%@",responseDic);
+     }
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+     {
+         NSLog(@"error===%@",error);
+     }];
+
 }
 
 
@@ -173,9 +190,11 @@
     application.applicationIconBadgeNumber = 0;
  
     /*这里需要处理推送来的消息*/
-    //     NSLog(@"userInfo333====%@",userInfo);
-    ////    NSDictionary *auserInfo = [userInfo objectForKey:@"aps"];
-    ////    NSLog(@"userInfo====%@",auserInfo);
+    NSDictionary *auserInfo = [userInfo objectForKey:@"aps"];
+    NSLog(@"userInfo====%@",auserInfo);
+    NSString *message = [auserInfo objectForKey:@"alert"];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"推送" message:message delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 
