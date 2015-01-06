@@ -61,6 +61,13 @@
         NSLog(@"loginResponseDic===%@",responseDic);
         if ([responseDic isKindOfClass:[NSArray class]] || [responseDic isKindOfClass:[NSMutableArray class]])
         {
+            
+            if ([responseDic count] == 0)
+            {
+                [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP duration:.1];
+                [CommonTool addAlertTipWithMessage:@"暂无数据"];
+                return;
+            }
             [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
             weakSelf.dataArray = (NSMutableArray *)responseDic; 
             [weakSelf.table reloadData];
