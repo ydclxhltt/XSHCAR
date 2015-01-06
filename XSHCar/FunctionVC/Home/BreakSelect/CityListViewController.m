@@ -153,6 +153,8 @@
              [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
              NSMutableArray *array = [NSMutableArray arrayWithArray:[responseDic objectForKey:@"cityBeanList"]];
              [[XSH_Application shareXshApplication] setSisID:[[responseDic objectForKey:@"sis_id"] intValue]];
+             [[XSH_Application shareXshApplication] setPeaceCity:[responseDic objectForKey:@"Province"]];
+             [[XSH_Application shareXshApplication] setPeacePhone:[responseDic objectForKey:@"sis_Phone"]];
              if (array && [array count] > 0)
              {
                  for (int i = 0; i < [array count]; i ++)
