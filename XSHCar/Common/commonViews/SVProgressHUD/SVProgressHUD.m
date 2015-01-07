@@ -79,7 +79,7 @@
 }
 
 + (void)showSuccessWithStatus:(NSString *)string {
-    [SVProgressHUD showSuccessWithStatus:string duration:1];
+    [SVProgressHUD showSuccessWithStatus:string duration:.5];
 }
 
 + (void)showSuccessWithStatus:(NSString *)string duration:(NSTimeInterval)duration {
@@ -88,7 +88,7 @@
 }
 
 + (void)showErrorWithStatus:(NSString *)string {
-    [SVProgressHUD showErrorWithStatus:string duration:1];
+    [SVProgressHUD showErrorWithStatus:string duration:.5];
 }
 
 + (void)showErrorWithStatus:(NSString *)string duration:(NSTimeInterval)duration {

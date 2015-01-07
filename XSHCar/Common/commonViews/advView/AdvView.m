@@ -21,6 +21,7 @@
     int curPage;
     // 存放当前滚动的三张广告
     NSMutableArray *curImages;
+    NSTimer *timer;
 }
 
 @end
@@ -61,7 +62,7 @@
 //设置广告数据
 -(void)setAdvData:(id)advdata
 {
-    
+    [self createTimer];
     if (advdata)
     {
         self.advarray=(NSMutableArray *)advdata;
@@ -91,7 +92,7 @@
     {
         NSString *url = [curImages objectAtIndex:i];
         url = [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,url];
-        NSLog(@"IMAGE_SERVER_URL===%@",url);
+       // NSLog(@"IMAGE_SERVER_URL===%@",url);
         UIImageView *imageView = [CreateViewTool createImageViewWithFrame:CGRectMake(advscrollview.frame.size.width*i, 0, advscrollview.frame.size.width, advscrollview.frame.size.height) placeholderImage:nil];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         [imageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"car1.png"]];
@@ -127,28 +128,28 @@
 }
 
 
-////定时器移动scrollview
-//-(void)createTimer
-//{
-//    [self cancelTimer];
-//    timer=[NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(moveAdvscrollview) userInfo:nil repeats:YES];
-//}
-//
-////取消定时器
-//-(void)cancelTimer
-//{
-//    if ([timer isValid])
-//    {
-//        [timer invalidate];
-//        timer=nil;
-//    }
-//}
+//定时器移动scrollview
+-(void)createTimer
+{
+    [self cancelTimer];
+    timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(moveAdvscrollview) userInfo:nil repeats:YES];
+}
 
-////滚动scrollview
-//-(void)moveAdvscrollview
-//{
-//    [advscrollview setContentOffset:CGPointMake(advscrollview.contentOffset.x+SCREEN_WIDTH, 0) animated:YES];
-//}
+//取消定时器
+-(void)cancelTimer
+{
+    if ([timer isValid])
+    {
+        [timer invalidate];
+        timer = nil;
+    }
+}
+
+//滚动scrollview
+-(void)moveAdvscrollview
+{
+    [advscrollview setContentOffset:CGPointMake(advscrollview.contentOffset.x+SCREEN_WIDTH, 0) animated:YES];
+}
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView

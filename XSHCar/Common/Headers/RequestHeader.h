@@ -70,6 +70,9 @@
 //更新消息状态
 #define MESSAGE_UPDATE_URL      [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/smsInfor!addAndUpdateSms"]
 
+//消息详情
+#define MESSAGE_DETAIL_URL      [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/smsInfor!getAllAddecionMessage"]
+
 //城市列表
 #define CITY_LIST_URL           @"http://www.cheshouye.com/api/weizhang/get_all_config"
 
