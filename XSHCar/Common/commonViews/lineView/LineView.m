@@ -31,17 +31,17 @@
         start_X = 50.0;
         x_width = 60.0;
         // Initialization code
+        //titleHeight20.0
         
         if (scrollview == nil) {
-            scrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(start_X, self.bounds.origin.y , self.bounds.size.width - start_X - 10.0,self.bounds.size.height)];
+            scrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(start_X, 0 , self.bounds.size.width - start_X - 10.0,self.bounds.size.height - 20)];
+            scrollview.backgroundColor = [UIColor whiteColor];
             scrollview.showsHorizontalScrollIndicator = NO;
             scrollview.showsVerticalScrollIndicator = NO;
+            //scrollview.clipsToBounds = NO;
         }
         [self addSubview:scrollview];
-        
-        //self.backgroundColor = [UIColor  redColor];
-        
-        //scrollview.backgroundColor = [UIColor  blueColor ];
+  
     }
     return self;
 }
@@ -74,7 +74,7 @@
     [self setNeedsDisplay];
     if (flag == 0)
     {
-        scrollview.contentSize = CGSizeMake(x_width * [self.pointArrays count] + start_X, self.frame.size.height);
+        scrollview.contentSize = CGSizeMake(x_width * [self.pointArrays count] + start_X, scrollview.frame.size.height);
     }
     else
     {
@@ -182,6 +182,12 @@
                 pt1 = pt2;
 //                pt1x = pt1x!= x ? pt1x : pt1.x;
                 pt2 = CGPointMake(x, y);
+                NSLog(@"y===%f",y);
+                if (y <= 3)
+                {
+                    NSLog(@"y===%f",y);
+                    pt2 = CGPointMake(x, 4);
+                }
             }
             if(k >0){
                 [self makeLineLayer:scrollview.layer lineFromPointA:pt1 toPointB:pt2];
