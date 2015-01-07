@@ -48,10 +48,14 @@
         {
             [self getCityData];
         }
-        else if (self.cityScource == CityScourceFromXSH)
-        {
-            [self getXSHCityData];
-        }
+//        else if (self.cityScource == CityScourceFromXSH)
+//        {
+//            [self getXSHCityData];
+//        }
+    }
+    if (self.cityScource == CityScourceFromXSH)
+    {
+        [self getXSHCityData];
     }
     //初始化UI
     [self createUI];
@@ -153,8 +157,8 @@
              [SVProgressHUD showSuccessWithStatus:LOADING_SUCESS_TIP];
              NSMutableArray *array = [NSMutableArray arrayWithArray:[responseDic objectForKey:@"cityBeanList"]];
              [[XSH_Application shareXshApplication] setSisID:[[responseDic objectForKey:@"sis_id"] intValue]];
-             [[XSH_Application shareXshApplication] setPeaceCity:[responseDic objectForKey:@"Province"]];
              [[XSH_Application shareXshApplication] setPeacePhone:[responseDic objectForKey:@"sis_Phone"]];
+             [[XSH_Application shareXshApplication] setXshCityID:[[responseDic objectForKey:@"citysis_id"] intValue]];
              if (array && [array count] > 0)
              {
                  for (int i = 0; i < [array count]; i ++)
@@ -168,7 +172,16 @@
                      }
                      [dic setObject:cityArray forKey:@"citys"];
                      [array replaceObjectAtIndex:i withObject:dic];
+                     for (NSDictionary *cityDic in cityArray)
+                     {
+                         int cityID = [[cityDic objectForKey:@"cityId"] intValue];
+                         if (cityID == [[responseDic objectForKey:@"citysis_id"] intValue])
+                         {
+                             [[XSH_Application shareXshApplication] setPeaceCity:[NSString stringWithFormat:@"%@-%@",[dic objectForKey:@"province"],[cityDic objectForKey:@"cityName"]]];
+                         }
+                     }
                  }
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadData" object:nil];
                  [[XSH_Application shareXshApplication] setXshCityArray:array];
                  self.dataArray = [NSMutableArray arrayWithArray:array];
                  [self.table reloadData];
@@ -176,13 +189,14 @@
          }
          else
          {
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadData" object:self];
              [SVProgressHUD showErrorWithStatus:LOADING_WEBERROR_TIP];
          }
          
      }
     requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
      {
-         
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadData" object:self];
          NSLog(@"error===%@",error);
      }];
 }

@@ -9,5 +9,5 @@
 #import "BasicViewController.h"
 
 @interface MessageDetailViewController : BasicViewController
-@property(nonatomic, retain) NSString *detailText;
+@property(nonatomic, assign) int smsID;
 @end

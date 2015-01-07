@@ -86,7 +86,7 @@
         [textField addTarget:self action:@selector(exitField:) forControlEvents:UIControlEventEditingDidEndOnExit];
         if (self.dataArray && [self.dataArray count] == 4 )
         {
-            if (![@"" isEqualToString:self.dataArray[i]])
+            if (![@"" isEqualToString:self.dataArray[i]] && ![@"0" isEqualToString:self.dataArray[i]] )
             {
                 textField.text = self.dataArray[i];
                 if (i < 2)

@@ -8,7 +8,7 @@
 
 #import "ExcitingActivitiesViewController.h"
 #import "ExcitingListCell.h"
-#import "ExcitingActivityDetailViewController.h"
+#import "AboutMeViewController.h"
 
 @interface ExcitingActivitiesViewController ()
 {
@@ -177,8 +177,8 @@
     }
     NSDictionary *rowDataDic = self.dataArray[indexPath.row];
     NSString *imageUrl = [rowDataDic objectForKey:@"mdtTopimage"];
-    imageUrl = [IMAGE_SERVER_URL stringByAppendingString:imageUrl];
-    [cell setCellDataWithImageUrl:imageUrl titleText:[rowDataDic objectForKey:@"mdtTitle"] contentText:[rowDataDic objectForKey:@"mdtContent"]];
+    imageUrl = [WEB_SERVER_URL  stringByAppendingString:imageUrl];
+    [cell setCellDataWithImageUrl:imageUrl titleText:[rowDataDic objectForKey:@"mdtTitle"] contentText:[rowDataDic objectForKey:@"mdtPushtime"]];
     return cell;
 }
 
@@ -187,9 +187,21 @@
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *dic = self.dataArray[indexPath.row];
-    ExcitingActivityDetailViewController *detailViewController = [[ExcitingActivityDetailViewController alloc]init];
-    detailViewController.title = [dic objectForKey:@"mdtTitle"];
-    detailViewController.detailText = [dic objectForKey:@"mdtContent"];
+    
+    NSString *title = [dic objectForKey:@"mdtTitle"];
+    title = (title) ? title : @"";
+    NSString *content = [dic objectForKey:@"mdtContent"];
+    content = (title) ? content : @"";
+    /*
+     * 修改为加载html片段，废弃此页面
+     ExcitingActivityDetailViewController *detailViewController = [[ExcitingActivityDetailViewController alloc]init];
+     detailViewController.title = title;
+     detailViewController.detailText = content;
+     [self.navigationController pushViewController:detailViewController animated:YES];
+     */
+    AboutMeViewController *detailViewController = [[AboutMeViewController alloc] init];
+    detailViewController.title = title;
+    detailViewController.contentString = content;
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 

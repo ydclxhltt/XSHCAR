@@ -159,6 +159,7 @@
 {
     AboutMeViewController *aboutMeViewController = [[AboutMeViewController alloc] init];
     aboutMeViewController.hidesBottomBarWhenPushed = YES;
+    aboutMeViewController.title = @"帮助";
     [self.navigationController pushViewController:aboutMeViewController animated:YES];
 }
 

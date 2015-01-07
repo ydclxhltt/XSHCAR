@@ -9,6 +9,7 @@
 #import "MobileStoreListViewController.h"
 #import "ExcitingActivityDetailViewController.h"
 #import "MobileStoreCell.h"
+#import "AboutMeViewController.h"
 
 @interface MobileStoreListViewController ()
 {
@@ -183,10 +184,10 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     NSDictionary *dic = self.dataArray[indexPath.row];
-    NSString *url = [NSString stringWithFormat:@"%@%@",IMAGE_SERVER_URL,[dic objectForKey:@"p_indeximg"]];
+    NSString *url = [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,[dic objectForKey:@"p_indeximg"]];
     NSLog(@"url===%@",url);
     NSString *title = ([dic objectForKey:@"p_name"]) ? [dic objectForKey:@"p_name"] : @"";
-    NSString *content = ([dic objectForKey:@"p_introduct"]) ? [dic objectForKey:@"p_introduct"] : @"";
+    NSString *content = ([dic objectForKey:@"p_content"]) ? [dic objectForKey:@"p_content"] : @"";
     NSString *price = ([dic objectForKey:@"p_price"]) ? [dic objectForKey:@"p_price"] : @"";
     price = [NSString stringWithFormat:@"价格:%@元",price];
     [cell setCellDataWithImageUrl:url titleText:title contentText:content priceText:price];
@@ -199,10 +200,22 @@
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *dic = self.dataArray[indexPath.row];
-    ExcitingActivityDetailViewController *detailViewController = [[ExcitingActivityDetailViewController alloc]init];
-    detailViewController.title = [dic objectForKey:@"p_name"];
-    detailViewController.detailText = [dic objectForKey:@"p_content"];
+    NSString *title = [dic objectForKey:@"p_name"];
+    title = (title) ? title : @"";
+    NSString *content = [dic objectForKey:@"p_introduct"];
+    content = (title) ? content : @"";
+    /*
+     * 修改为加载html片段，废弃此页面
+         ExcitingActivityDetailViewController *detailViewController = [[ExcitingActivityDetailViewController alloc]init];
+         detailViewController.title = title;
+         detailViewController.detailText = content;
+         [self.navigationController pushViewController:detailViewController animated:YES];
+     */
+    AboutMeViewController *detailViewController = [[AboutMeViewController alloc] init];
+    detailViewController.title = title;
+    detailViewController.contentString = content;
     [self.navigationController pushViewController:detailViewController animated:YES];
+    //p_introduct
 }
 
 - (void)didReceiveMemoryWarning {

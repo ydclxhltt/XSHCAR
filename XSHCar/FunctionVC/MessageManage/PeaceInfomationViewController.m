@@ -9,9 +9,10 @@
 #import "PeaceInfomationViewController.h"
 #import "CityListViewController.h"
 
-@interface PeaceInfomationViewController ()<UIAlertViewDelegate>
+@interface PeaceInfomationViewController ()<UIAlertViewDelegate,UITableViewDelegate>
 {
     BOOL isCanAdd;
+    BOOL isReloadData;
     CityListViewController *cityViewController;
 }
 @property(nonatomic, strong) NSArray *headerArray;
@@ -31,8 +32,15 @@
     //获取平安信息数据
     cityViewController = [[CityListViewController alloc] init];
     cityViewController.cityScource = CityScourceFromXSH;
+    cityViewController.smsID = self.smsID;
+    cityViewController.ussID = self.ussID;
     [cityViewController viewDidLoad];
     //初始化数据
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadPeaceData) name:@"ReloadData" object:nil];
+    isReloadData = YES;
+    NSMutableArray *array1 = [NSMutableArray arrayWithObjects:@"设置省/市", nil];
+    NSMutableArray *array2 = [NSMutableArray arrayWithObjects:@"", nil];
+    self.dataArray = [NSMutableArray arrayWithObjects:array1,array2,nil];
     self.headerArray = @[@"设置车辆所在地",@"手机号码"];
     isCanAdd = YES;
     // Do any additional setup after loading the view.
@@ -70,6 +78,39 @@
     [CommonTool clipView:button withCornerRadius:5.0];
     [footView addSubview:button];
     [self.table setTableFooterView:footView];
+}
+
+
+#pragma mark 设置平安亲人初始数据
+- (void)reloadPeaceData
+{
+    if (isReloadData)
+    {
+        isReloadData = !isReloadData;
+        NSString *city = [[XSH_Application shareXshApplication] peaceCity];
+        city = (!city || [@"" isEqualToString:city]) ? @"设置省/市" : city;
+        NSString *phone = [[XSH_Application shareXshApplication] peacePhone];
+        phone = (!phone || [@"" isEqualToString:phone]) ? @"" : phone;
+        NSLog(@"city===%@====%@",city,phone);
+        [self.dataArray[0] replaceObjectAtIndex:0 withObject:city];
+        NSArray *array = [phone componentsSeparatedByString:@","];
+        
+        if (!array || [array count] == 0)
+        {
+            [self.dataArray[1] removeAllObjects];
+            [self.dataArray[1] addObject:@""];
+        }
+        else
+        {
+            if ([array count] <= 4)
+            {
+                [self.dataArray[1] removeAllObjects];
+                [self.dataArray[1] addObjectsFromArray:array];
+                [self.dataArray[1] addObject:@""];
+            }
+        }
+    }
+    [self isCanAddPhone];
 }
 
 #pragma mark 提交按钮响应事件
@@ -237,6 +278,38 @@
     }
 }
 
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 1)
+    {
+        NSString *string = self.dataArray[1][indexPath.row];
+        if (![@"" isEqualToString:string])
+        {
+            return UITableViewCellEditingStyleDelete;
+        }
+    }
+  
+    return UITableViewCellEditingStyleNone;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"删除";
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.dataArray[1] count] == 4)
+    {
+        [self.dataArray[1] addObject:@""];
+    }
+    [self.dataArray[1] removeObjectAtIndex:indexPath.row];
+    [self isCanAddPhone];
+}
+
+
+
 #pragma mark 添加手机号码
 - (void)addPhoneNumber
 {
@@ -262,12 +335,7 @@
             if ([CommonTool isEmailOrPhoneNumber:phoneNumber])
             {
                 [self.dataArray[1] insertObject:phoneNumber atIndex:0];
-                isCanAdd = ([self.dataArray[1] count] == 5) ? NO : YES;
-                if (!isCanAdd)
-                {
-                    [self.dataArray[1] removeObject:self.dataArray[1][[self.dataArray[1] count] - 1]];
-                }
-                [self.table  reloadData];
+                [self isCanAddPhone];
             }
             else
             {
@@ -282,10 +350,37 @@
 }
 
 
+- (void)isCanAddPhone
+{
+    isCanAdd = ([self.dataArray[1] count] == 5) ? NO : YES;
+    
+    NSString *string = self.dataArray[1][[self.dataArray[1] count] - 1];
+    
+    if ([self.dataArray[1] count] == 4 && ![@"" isEqualToString:string])
+    {
+        isCanAdd = NO;
+    }
+    
+    if (!isCanAdd)
+    {
+        if ([@"" isEqualToString:string])
+        {
+            [self.dataArray[1] removeObject:self.dataArray[1][[self.dataArray[1] count] - 1]];
+        }
+    }
+    [self.table  reloadData];
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

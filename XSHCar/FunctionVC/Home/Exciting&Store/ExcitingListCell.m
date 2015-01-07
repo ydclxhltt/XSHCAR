@@ -29,14 +29,14 @@
         prevImageView = [CreateViewTool createImageViewWithFrame:CGRectMake(4, 5, 78, 50) placeholderImage:[UIImage imageNamed:@"pic_default"]];
         [self.contentView addSubview:prevImageView];
         
-        titleLabel=[[UILabel alloc]initWithFrame:CGRectMake(96, 4 ,SCREEN_WIDTH - 96 - 30, 20)];
+        titleLabel=[[UILabel alloc]initWithFrame:CGRectMake(90, 10 ,SCREEN_WIDTH - 96 - 30, 20)];
         titleLabel.backgroundColor =[UIColor clearColor];
         titleLabel.textColor = [UIColor blackColor];
         titleLabel.font = FONT(16.0);
         [self.contentView addSubview:titleLabel];
       
         
-        contentLabel=[[UILabel alloc]initWithFrame:CGRectMake(96, 25 ,SCREEN_WIDTH - 96 - 30, 35)];
+        contentLabel=[[UILabel alloc]initWithFrame:CGRectMake(90, 30 ,SCREEN_WIDTH - 96 - 30, 30)];
         contentLabel.backgroundColor=[UIColor clearColor];
         contentLabel.numberOfLines = 2;
         contentLabel.textColor = [UIColor grayColor];

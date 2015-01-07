@@ -21,7 +21,7 @@
     [super viewDidLoad];
     //添加返回item
     [self addBackItem];
-
+    self.automaticallyAdjustsScrollViewInsets = NO;
     // Do any additional setup after loading the view.
 }
 
@@ -30,6 +30,7 @@
     [super viewDidAppear:YES];
     //初始化UI
     [self createUI];
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -45,13 +46,22 @@
 
 - (void)addWebView
 {
+    
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
-    webwiew = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    webwiew = [[UIWebView alloc] initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
     webwiew.scrollView.bounces = NO;
-    webwiew.scalesPageToFit = YES;
     webwiew.delegate = self;
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:HELP_URL]];
-    [webwiew loadRequest:request];
+    //webwiew.scalesPageToFit = YES;
+    if (self.contentString)
+    {
+        [webwiew loadHTMLString:self.contentString baseURL:nil];
+    }
+    else
+    {
+        webwiew.scalesPageToFit = YES;
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:HELP_URL]];
+        [webwiew loadRequest:request];
+    }
     [self.view addSubview:webwiew];
 }
 

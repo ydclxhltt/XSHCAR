@@ -101,13 +101,24 @@
          if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
          {
              self.textString = @"";
+             int statues = [[responseDic objectForKey:@"status"] intValue];
+             float mileage = [[responseDic objectForKey:@"maintenanceMileage"] floatValue];
+             if (statues == 0)
+             {
+                 self.textString = @"保养状态:\n您还没有设置保养里程";
+             }
+             else if (statues == 1)
+             {
+                 self.textString = [NSString stringWithFormat:@"保养状态:\n距离您下次保养里程还有\n%.2f KM",mileage];
+             }
              NSArray *array = [responseDic objectForKey:@"faultInfoList"];
              if (array || [array count] == 0)
              {
-                 self.textString = @"车辆状况良好!\n\n没有任何故障,请继续保持...";
+                 self.textString = [self.textString stringByAppendingString:@"\n\n故障诊断:\n车辆状况良好!\n没有任何故障,请继续保持..."];
              }
              else
              {
+                 self.textString = [self.textString stringByAppendingString:@"\n\n故障诊断:\n"];
                  for (NSDictionary *dic in array)
                  {
                      if (dic)

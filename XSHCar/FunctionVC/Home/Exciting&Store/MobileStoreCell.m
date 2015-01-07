@@ -63,6 +63,7 @@
 - (void)setCellDataWithImageUrl:(NSString *)imageUrl titleText:(NSString *)title contentText:(NSString *)content priceText:(NSString *)price
 {
     [prevImageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"pic_default"]];
+    prevImageView.contentMode = UIViewContentModeScaleAspectFit;
     priceLable.text = price;
     titleLabel.text = title;
     contentLabel.text = content;

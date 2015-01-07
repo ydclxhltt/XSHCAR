@@ -11,6 +11,7 @@
 #import "SDSegmentedControl.h"
 #import "MobileStoreCell.h"
 #import "ExcitingListCell.h"
+#import "AboutMeViewController.h"
 
 @interface FourSServiceViewController ()
 {
@@ -294,7 +295,10 @@
         detailViewController.detailText = content;
         [self.navigationController pushViewController:detailViewController animated:YES];
      */
-    
+    AboutMeViewController *detailViewController = [[AboutMeViewController alloc] init];
+    detailViewController.title = title;
+    detailViewController.contentString = content;
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 

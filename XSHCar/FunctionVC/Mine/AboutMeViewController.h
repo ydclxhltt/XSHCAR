@@ -9,5 +9,5 @@
 #import "BasicViewController.h"
 
 @interface AboutMeViewController : BasicViewController
-
+@property(nonatomic, strong) NSString *contentString;
 @end

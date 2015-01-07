@@ -260,7 +260,7 @@
         nameString = ([rowDic objectForKey:@"sms_name"]) ? [rowDic objectForKey:@"sms_name"] : @"";
     }
     
-    if ([@"碰撞报警" isEqualToString:nameString ] || [@"侧翻报警" isEqualToString:nameString])
+    if ([@"碰撞报警" isEqualToString:nameString ] || [@"侧翻报警" isEqualToString:nameString] || [@"预约提示" isEqualToString:nameString])
     {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
@@ -294,33 +294,17 @@
     NSMutableDictionary *rowDic = [self.dataArray objectAtIndex:indexPath.row];
     if (rowDic)
     {
-        NSString * imageName = ([rowDic objectForKey:@"sms_filepath"]) ? [rowDic objectForKey:@"sms_filepath"] : @"";
-        if ([@"collision_warning.png" isEqualToString:imageName ])
-        {
-            MessageDetailViewController *detailViewController = [[MessageDetailViewController alloc] init];
-            detailViewController.title = @"碰撞报警说明";
-            detailViewController.hidesBottomBarWhenPushed = YES;
-            detailViewController.detailText = COLLISION_WARNING_TIP;
-            [self.navigationController pushViewController:detailViewController animated:YES];
-        }
-        else if ([@"rollover_alarm.png" isEqualToString:imageName])
-        {
-            MessageDetailViewController *detailViewController = [[MessageDetailViewController alloc] init];
-            detailViewController.title = @"侧翻报警说明";
-            detailViewController.hidesBottomBarWhenPushed = YES;
-            detailViewController.detailText = ROLLOVER_ALARM_TIP;
-            [self.navigationController pushViewController:detailViewController animated:YES];
-        }
-        else
-        {
-            NSString *remarkString = [rowDic objectForKey:@"sms_remark"];
-            if (remarkString && ![@"" isEqualToString:remarkString])
-            {
-                [CommonTool addAlertTipWithMessage:remarkString];
-            }
-        }
+        int messageID = [[rowDic objectForKey:@"sms_id"] intValue];
+        MessageDetailViewController *detailViewController = [[MessageDetailViewController alloc] init];
+        detailViewController.smsID = messageID;
+        detailViewController.title = [rowDic objectForKey:@"sms_name"];
+        detailViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detailViewController animated:YES];
     }
 }
+
+
+
 
 
 - (void)didReceiveMemoryWarning
