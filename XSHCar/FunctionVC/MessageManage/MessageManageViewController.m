@@ -107,7 +107,9 @@
 {
     if (!self.table)
     {
-        [self addTableViewWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, 44.0 * [self.dataArray count]) tableType:UITableViewStylePlain tableDelegate:self];
+        float height =  44.0 * [self.dataArray count];
+        height = ((SCREEN_HEIGHT - NAV_HEIGHT) < height) ? SCREEN_HEIGHT - NAV_HEIGHT : height;
+        [self addTableViewWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, height) tableType:UITableViewStylePlain tableDelegate:self];
         self.table.separatorInset = UIEdgeInsetsZero;
     }
     else

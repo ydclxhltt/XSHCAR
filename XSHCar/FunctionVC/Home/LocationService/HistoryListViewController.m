@@ -217,6 +217,7 @@
         //暂无数据
         [CommonTool addAlertTipWithMessage:@"暂无数据"];
         self.dataArray = nil;
+        self.table.tableFooterView = nil;
         [self.table reloadData];
     }
     else if (dataArray)
@@ -329,22 +330,23 @@
         UIColor *fontColor = [UIColor blackColor];
         UIColor *lineColor = [UIColor lightGrayColor];
     
+        UIFont *font = FONT(14.0);
         
         detailButton = [CreateViewTool createButtonWithFrame:CGRectMake(SCREEN_WIDTH - 60, 0, 60.0, cell.frame.size.height) buttonTitle:@"详情" titleColor:APP_MAIN_COLOR normalBackgroundColor:nil highlightedBackgroundColor:[UIColor lightGrayColor] selectorName:@"detailButtonPressed:" tagDelegate:self];
         detailButton.tag = 103 + indexPath.row;
-        detailButton.titleLabel.font = FONT(15.0);
+        detailButton.titleLabel.font = font;
         [CommonTool setViewLayer:detailButton withLayerColor:lineColor bordWidth:.5];
         [cell.contentView addSubview:detailButton];
         
         float width = (SCREEN_WIDTH - detailButton.frame.size.width)/2;
         
-        startLabel = [CreateViewTool createLabelWithFrame:CGRectMake(0, 0, width, cell.frame.size.height) textString:@"" textColor:fontColor textFont:FONT(15.0)];
+        startLabel = [CreateViewTool createLabelWithFrame:CGRectMake(0, 0, width, cell.frame.size.height) textString:@"" textColor:fontColor textFont:font];
         startLabel.tag = 101;
         startLabel.textAlignment = NSTextAlignmentCenter;
         [CommonTool setViewLayer:startLabel withLayerColor:lineColor bordWidth:.5];
         [cell.contentView addSubview:startLabel];
         
-        endLabel = [CreateViewTool createLabelWithFrame:CGRectMake(startLabel.frame.origin.x + width, 0, width, cell.frame.size.height) textString:@"" textColor:fontColor textFont:FONT(15.0)];
+        endLabel = [CreateViewTool createLabelWithFrame:CGRectMake(startLabel.frame.origin.x + width, 0, width, cell.frame.size.height) textString:@"" textColor:fontColor textFont:font];
         endLabel.tag = 102;
         endLabel.textAlignment = NSTextAlignmentCenter;
         [CommonTool setViewLayer:endLabel withLayerColor:lineColor bordWidth:.5];

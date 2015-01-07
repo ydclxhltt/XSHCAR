@@ -10,6 +10,7 @@
 #import "ExcitingActivityDetailViewController.h"
 #import "SDSegmentedControl.h"
 #import "MobileStoreCell.h"
+#import "ExcitingListCell.h"
 
 @interface FourSServiceViewController ()
 {
@@ -53,7 +54,7 @@
     [request requestWithUrl:GET_4S_DATA_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
      {
-         NSLog(@"historyResponseDic===%@",responseDic);
+         NSLog(@"4sResponseDic===%@",responseDic);
          if ([responseDic isKindOfClass:[NSDictionary class]] || [responseDic isKindOfClass:[NSMutableDictionary class]])
          {
              if (currentPage == 1)
@@ -245,30 +246,34 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70.0;
+    return 60.0;
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellID = @"4sCellID";
     
-    MobileStoreCell *cell = (MobileStoreCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
+    //MobileStoreCell *cell = (MobileStoreCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
+    ExcitingListCell *cell = (ExcitingListCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
     
     if (cell == nil)
     {
-        cell = [[MobileStoreCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
+        //cell = [[MobileStoreCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
+        cell = [[ExcitingListCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
         cell.backgroundColor = [UIColor whiteColor];
         cell.separatorInset = UIEdgeInsetsZero;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     NSDictionary *rowDic = self.dataArray[indexPath.row];
-    NSString *url = [NSString stringWithFormat:@"%@%@",IMAGE_SERVER_URL,[rowDic objectForKey:@"mdtTopimage"]];
+    NSString *url = [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,[rowDic objectForKey:@"mdtTopimage"]];
     NSLog(@"url===%@",url);
     NSString *title = ([rowDic objectForKey:@"mdtTitle"]) ? [rowDic objectForKey:@"mdtTitle"] : @"";
-    NSString *content = ([rowDic objectForKey:@"mdtIntrdouct"]) ? [rowDic objectForKey:@"mdtIntrdouct"] : [rowDic objectForKey:@"mdtTitle"];
+    //NSString *content = ([rowDic objectForKey:@"mdtIntrdouct"]) ? [rowDic objectForKey:@"mdtIntrdouct"] : [rowDic objectForKey:@"mdtTitle"];
     NSString *time = ([rowDic objectForKey:@"mdtPushtime"]) ? [rowDic objectForKey:@"mdtPushtime"] : @"";
-    [cell setCellDataWithImageUrl:url titleText:title contentText:content priceText:time];
+    //[cell setCellDataWithImageUrl:url titleText:title contentText:content priceText:time];
+    [cell setCellDataWithImageUrl:url titleText:title contentText:time];
     return cell;
 }
 
@@ -277,10 +282,19 @@
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *dic = self.dataArray[indexPath.row];
-    ExcitingActivityDetailViewController *detailViewController = [[ExcitingActivityDetailViewController alloc]init];
-    detailViewController.title = [dic objectForKey:@"mdtTitle"];
-    detailViewController.detailText = [dic objectForKey:@"mdtContent"];
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    NSString *title = [dic objectForKey:@"mdtTitle"];
+    title = (title) ? title : @"";
+    NSString *content = [dic objectForKey:@"mdtContent"];
+    content = (title) ? content : @"";
+    /*
+     * 修改为加载html片段，废弃此页面
+     
+        ExcitingActivityDetailViewController *detailViewController = [[ExcitingActivityDetailViewController alloc]init];
+        detailViewController.title = title;
+        detailViewController.detailText = content;
+        [self.navigationController pushViewController:detailViewController animated:YES];
+     */
+    
 }
 
 

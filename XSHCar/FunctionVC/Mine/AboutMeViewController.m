@@ -19,8 +19,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //设置title
-    self.title = @"帮助";
     //添加返回item
     [self addBackItem];
 

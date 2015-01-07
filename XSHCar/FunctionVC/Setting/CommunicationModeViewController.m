@@ -207,7 +207,7 @@
 {
     [SVProgressHUD showWithStatus:@"正在保存..."];
     RequestTool *request = [[RequestTool alloc] init];
-    NSDictionary *requestDic = @{@"cmc_id":[NSNumber numberWithInt:[self.dataArray[0] intValue]],@"cmc_gps":[NSNumber numberWithInt:[self.dataArray[1] intValue]],@"cmc_travel":[NSNumber numberWithInt:[self.dataArray[2] intValue]]};
+    NSDictionary *requestDic = @{@"cmc_id":[NSNumber numberWithInt:[self.dataArray[0] intValue]],@"cmc_gps":[NSNumber numberWithInt:[self.dataArray[1] intValue]],@"cmc_travel":[NSNumber numberWithInt:[self.dataArray[2] intValue]],@"shop_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] shopID]],@"c_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] carID]],@"user_id":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] userID]]};
     NSLog(@"requestDic == %@",requestDic);
     [request requestWithUrl1:COMMIT_COMMUNICATION_URL requestParamas:requestDic requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation, id responseDic)
