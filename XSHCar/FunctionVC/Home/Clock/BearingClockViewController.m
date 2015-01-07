@@ -331,7 +331,7 @@
         UIButton *button = (UIButton *)[self.view viewWithTag:100 + i];
         button.selected = (sender == button) ? YES : NO;
     }
-    [self addBottomViewWithIndex:sender.tag];
+    [self addBottomViewWithIndex:(int)sender.tag];
     if (sender.tag == 100)
     {
         if (!self.speedArray)

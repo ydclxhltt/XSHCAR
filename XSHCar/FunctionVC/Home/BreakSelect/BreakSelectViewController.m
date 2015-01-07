@@ -448,7 +448,7 @@
 - (void)getMoreData
 {
     currentPage++;
-    [self getBreakDataWithType:segmentView.selectedSegmentIndex];
+    [self getBreakDataWithType:(int)segmentView.selectedSegmentIndex];
 }
 
 
@@ -567,7 +567,7 @@
 }
 
 #pragma mark tableDelegate
-- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.section];
     if (indexPath.row == 1)
