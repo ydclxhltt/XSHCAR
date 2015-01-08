@@ -174,6 +174,7 @@
 		CEF3EF891A431ACA004262E2 /* communication_mode_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF851A431ACA004262E2 /* communication_mode_setting.png */; };
 		CEF3EF8A1A431ACA004262E2 /* maintenance_prompt_correction.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF861A431ACA004262E2 /* maintenance_prompt_correction.png */; };
 		CEF3EF8B1A431ACA004262E2 /* position_switch.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF3EF871A431ACA004262E2 /* position_switch.png */; };
+		CEFFB5591A5EEDEF00DA19F5 /* wetherIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFFB5581A5EEDEF00DA19F5 /* wetherIcon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -513,6 +514,7 @@
 		CEF3EF851A431ACA004262E2 /* communication_mode_setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = communication_mode_setting.png; sourceTree = "<group>"; };
 		CEF3EF861A431ACA004262E2 /* maintenance_prompt_correction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maintenance_prompt_correction.png; sourceTree = "<group>"; };
 		CEF3EF871A431ACA004262E2 /* position_switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = position_switch.png; sourceTree = "<group>"; };
+		CEFFB5581A5EEDEF00DA19F5 /* wetherIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wetherIcon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -966,6 +968,7 @@
 				CEE6B1491A54EDAD0087364A /* nav_start@2x.png */,
 				CEACD7B41A564C8F000875ED /* threeline.png */,
 				CEACD7B51A564C8F000875ED /* towline.png */,
+				CEFFB5581A5EEDEF00DA19F5 /* wetherIcon.png */,
 			);
 			path = home_images;
 			sourceTree = "<group>";
@@ -1405,6 +1408,7 @@
 				7792DFA41A42C64C008F43A6 /* icon3.png in Resources */,
 				77957C1D1A526D0600EEC088 /* drivingHabit_8.png in Resources */,
 				77957C171A526D0600EEC088 /* drivingHabit_2.png in Resources */,
+				CEFFB5591A5EEDEF00DA19F5 /* wetherIcon.png in Resources */,
 				7792DFA31A42C64C008F43A6 /* icon2.png in Resources */,
 				7792DFA21A42C64C008F43A6 /* icon1.png in Resources */,
 				CE9A3B9A1A500A7E000F2C03 /* logo_title.png in Resources */,
