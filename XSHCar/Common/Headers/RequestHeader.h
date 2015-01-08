@@ -15,6 +15,8 @@
 //图片地址
 #define IMAGE_SERVER_URL        @"http://pcnew.xshcar.com:9988/carcloud/image/icon/"
 
+//天气预报地址
+#define GET_WEATHER_URL         @"http://webservice.webxml.com.cn/WebServices/WeatherWebService.asmx/getWeatherbyCityName?theCityName="
 
 //token上报地址
 #define SEND_TOKEN_URL          [NSString stringWithFormat:@"%@%@",WEB_SERVER_URL,@"carcloud/userlogin!getToken"]
