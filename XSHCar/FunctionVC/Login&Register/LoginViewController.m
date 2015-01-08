@@ -357,6 +357,7 @@
             [userDefault setValue:(!isAutoLogin && !isSavePwd) ? @"" : passwordTextField.text forKey:@"PassWord"];
             [SVProgressHUD showSuccessWithStatus:@"登录成功"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"SendToken" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetWeather" object:nil];
             [self dismissViewControllerAnimated:YES completion:Nil];
         }
         else

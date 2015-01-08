@@ -7,6 +7,7 @@
 //
 
 #import "AboutMeViewController.h"
+#import "AdvView.h"
 
 @interface AboutMeViewController ()<UIWebViewDelegate>
 {
@@ -41,14 +42,55 @@
 #pragma mark 初始化UI
 - (void)createUI
 {
+    [self addPicView];
     [self addWebView];
+}
+
+- (void)addPicView
+{
+    if (self.dataArray && [self.dataArray count] > 0)
+    {
+        for (int i = 0; i < [self.dataArray count]; i++)
+        {
+            NSDictionary *dic = self.dataArray[i];
+            NSString *imageUrl = [dic objectForKey:@"PFilepath"];
+            imageUrl = (imageUrl && ![@"" isEqualToString:imageUrl]) ? imageUrl : nil;
+            if (imageUrl)
+            {
+                [self.dataArray replaceObjectAtIndex:i withObject:imageUrl];
+            }
+            else
+            {
+                [self.dataArray removeObject:dic];
+            }
+        }
+
+    }
+    if (self.dataArray && [self.dataArray count] > 0)
+    {
+        //设置frame
+        float height = 240.0;
+        float advHeight = (SCREEN_WIDTH/320.0) * height;
+        
+        //初始化广告视图
+        AdvView *advView = [[AdvView alloc] initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, advHeight)];
+        [advView setAdvData:self.dataArray];
+        [self.view addSubview:advView];
+        
+        startHeight += advView.frame.origin.y + advView.frame.size.height + 5.0;
+    }
+    else
+    {
+        startHeight = NAV_HEIGHT;
+    }
+    
 }
 
 - (void)addWebView
 {
     
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
-    webwiew = [[UIWebView alloc] initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    webwiew = [[UIWebView alloc] initWithFrame:CGRectMake(0, startHeight, SCREEN_WIDTH, SCREEN_HEIGHT)];
     webwiew.scrollView.bounces = NO;
     webwiew.delegate = self;
     //webwiew.scalesPageToFit = YES;

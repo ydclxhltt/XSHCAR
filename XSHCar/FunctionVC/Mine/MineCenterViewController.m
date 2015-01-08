@@ -60,7 +60,7 @@
              NSArray *array = [responseDic componentsSeparatedByString:@","];
              if ([array count] == 1)
              {
-                 weakSelf.dataArray = (NSMutableArray *)@[@[array[0],@"点击添加车辆信息"],@[@""]];
+                 weakSelf.dataArray = (NSMutableArray *)@[@[array[0],@"未添加车辆信息"],@[@""]];
              }
              else if ([array count] == 2)
              {

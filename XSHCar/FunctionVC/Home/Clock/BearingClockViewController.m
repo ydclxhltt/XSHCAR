@@ -305,9 +305,9 @@
 
 - (void)setLabelsText:(NSDictionary *)responseDic
 {
-    NSArray *array = @[@"ctr_totalmileage",@"ctr_averagespeed",@"ctr_cumulativeOil",@"ctr_FuelEconomyFKM",@"ctr_averagespeed",@"ctr_Totaltraveltime",@"totalMileage",@"uboxmileage"];
+    NSArray *array = @[@"ctr_totalmileage",@"ctr_instantaneousspeed",@"ctr_cumulativeOil",@"ctr_FuelEconomyFKM",@"ctr_averagespeed",@"ctr_Totaltraveltime",@"totalMileage",@"uboxmileage"];
     NSMutableArray *textArray = [NSMutableArray array];
-    NSArray *preArray = @[@"  里程: %@km",@"  车速: %@km/h",@"  油耗量: %@L",@"  油耗: %@L/km",@"  平均车速: %@km/h",@"  行程时间: %@",@"  总里程: %@km",@"  Ubox行驶里程: %@km"];
+    NSArray *preArray = @[@"  里程: %@km",@"  车速: %@km/h",@"  油耗量: %@L",@"  油耗: %@L/km",@"  平均车速: %@km/h",@"  行程时间: %@",@"  总里程: %@km",@"  Ubox里程: %@km"];
     for (NSString *key in array)
     {
         NSString *textString = [responseDic objectForKey:key];
@@ -361,7 +361,7 @@
     __weak __typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
     RequestTool *request = [[RequestTool alloc] init];
-    [request requestWithUrl:CLOCK_DRIVING_HABITS requestParamas:@{@"ctrId":[NSNumber numberWithInt:[[XSH_Application shareXshApplication] carID]]} requestType:RequestTypeAsynchronous
+    [request requestWithUrl:CLOCK_DRIVING_HABITS requestParamas:@{@"ctrId":[NSNumber numberWithInt:ctrId]} requestType:RequestTypeAsynchronous
     requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
      {
          NSLog(@"drivingHabitsResponseDic===%@",operation.responseString);

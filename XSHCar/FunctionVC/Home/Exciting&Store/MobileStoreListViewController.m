@@ -214,6 +214,7 @@
     AboutMeViewController *detailViewController = [[AboutMeViewController alloc] init];
     detailViewController.title = title;
     detailViewController.contentString = content;
+    detailViewController.dataArray = [NSMutableArray arrayWithArray:[dic objectForKey:@"productImg"]];
     [self.navigationController pushViewController:detailViewController animated:YES];
     //p_introduct
 }

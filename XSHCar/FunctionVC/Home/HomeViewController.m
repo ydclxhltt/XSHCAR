@@ -21,10 +21,12 @@
 
 #import "AdvView.h"
 
-@interface HomeViewController ()
+@interface HomeViewController ()<BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
 {
     float height;
     AdvView *advView;
+    BMKLocationService *locationService;
+    BMKGeoCodeSearch *geocodesearch;
 }
 @end
 
@@ -47,6 +49,7 @@
     [super viewDidLoad];
     //初始化数据
     self.dataArray = (NSMutableArray *)@[@"一键救援",@"预约服务",@"精彩活动",@"移动商城",@"仪表盘",@"驾驶习惯",@"故障提示",@"车况检查",@"违章查询",@"油耗里程",@"位置服务",@"4S服务"];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getWeather) name:@"GetWeather" object:nil];
     //初始化UI
     [self createUI];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -58,8 +61,21 @@
     [super viewWillAppear:YES];
     self.navigationController.navigationBar.translucent = YES;
     [self setAdvData];
- 
+    [self setAboutLocationDelegate:self];
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self setAboutLocationDelegate:nil];
+}
+
+#pragma mark 设置定位/地图代理
+- (void)setAboutLocationDelegate:(id)delegate
+{
+    if (locationService)
+        locationService.delegate = delegate;
+}
+
 
 #pragma mark 初始化UI
 - (void)createUI
@@ -139,6 +155,8 @@
     [advView setAdvData:imageUrlArray];
 }
 
+
+
 #pragma mark 按钮响应时间
 - (void)buttonPressed:(UIButton *)button
 {
@@ -200,34 +218,140 @@
     RequestTool *request = [[RequestTool alloc] init];
     int shopID = [[XSH_Application shareXshApplication] shopID];
     [request requestWithUrl1:KEY_RESCUE_URL requestParamas:@{@"shop_id":[NSNumber numberWithInt:shopID]} requestType:RequestTypeAsynchronous requestSucess:^(AFHTTPRequestOperation *operation,id responseDic)
+     {
+         NSLog(@"=====%@",responseDic);
+         NSString *responseString = (NSString *)responseDic;
+         if(responseString && ![@"" isEqualToString:responseString])
+         {
+             [SVProgressHUD showSuccessWithStatus:@"获取成功" duration:.5];
+             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",responseString]];
+             if ([[UIApplication sharedApplication] canOpenURL:url])
+             {
+                 [[UIApplication sharedApplication] openURL:url];
+             }
+             else
+             {
+                 //设备不支持
+                 [CommonTool addAlertTipWithMessage:@"设备不支持"];
+             }
+         }
+         else
+         {
+             //获取失败
+             [SVProgressHUD showErrorWithStatus:@"获取号码失败"];
+         }
+     }
+                 requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+     {
+         [SVProgressHUD showErrorWithStatus:@"获取号码失败"];
+         NSLog(@"error===%@",error);
+     }];
+}
+
+
+
+#pragma mark 开始获取天气
+- (void)getWeather
+{
+    [self setLocation];
+    [self startLocation];
+}
+
+#pragma mark  定位相关
+- (void)setLocation
+{
+    locationService = [[BMKLocationService alloc]init];
+    //定位的最小更新距离
+    [BMKLocationService setLocationDistanceFilter:kCLDistanceFilterNone];
+    //定位精确度
+    [BMKLocationService setLocationDesiredAccuracy:kCLLocationAccuracyBest];
+}
+
+- (void)startLocation
+{
+    locationService.delegate = self;
+    [locationService startUserLocationService];
+}
+
+
+- (void)stopLocation
+{
+    locationService.delegate = nil;
+    [locationService stopUserLocationService];
+    
+}
+
+
+
+#pragma mark 编译地址
+- (void)getReverseGeocodeWithLocation:(CLLocationCoordinate2D)locaotion
+{
+    if (!geocodesearch)
     {
-        NSLog(@"=====%@",responseDic);
-        NSString *responseString = (NSString *)responseDic;
-        if(responseString && ![@"" isEqualToString:responseString])
-        {
-            [SVProgressHUD showSuccessWithStatus:@"获取成功" duration:.5];
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",responseString]];
-            if ([[UIApplication sharedApplication] canOpenURL:url])
-            {
-                [[UIApplication sharedApplication] openURL:url];
-            }
-            else
-            {
-                //设备不支持
-                [CommonTool addAlertTipWithMessage:@"设备不支持"];
-            }
-        }
-        else
-        {
-            //获取失败
-            [SVProgressHUD showErrorWithStatus:@"获取号码失败"];
-        }
+        geocodesearch = [[BMKGeoCodeSearch alloc] init];
+        geocodesearch.delegate = self;
     }
-    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
+    reverseGeocodeSearchOption.reverseGeoPoint = locaotion;
+    BOOL flag = [geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
+    if(flag)
     {
-        [SVProgressHUD showErrorWithStatus:@"获取号码失败"];
-        NSLog(@"error===%@",error);
-    }];
+        NSLog(@"反geo检索发送成功");
+    }
+    else
+    {
+        NSLog(@"反geo检索发送失败");
+    }
+}
+
+
+#pragma mark  获取天气信息
+- (void)getWeatherDataWithCity:(NSString *)city
+{
+    city = (city && ![@"" isEqualToString:city]) ? city : nil;
+    if (city)
+    {
+        city = [city stringByReplacingOccurrencesOfString:@"市" withString:@""];
+        NSString *url = [GET_WEATHER_URL stringByAppendingString:city];
+        NSLog(@"url====%@",url);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),^
+        {
+            NSURL *weatherUrl = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            NSString *weatherString = [NSString  stringWithContentsOfURL:weatherUrl encoding:NSUTF8StringEncoding error:nil];
+            NSLog(@"weatherUrl=====%@",weatherString);
+        });
+
+    }
+}
+
+
+#pragma mark 坐标转换地址Delegate
+-(void) onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+{
+    NSLog(@"result====%@",[[result addressDetail] city]);
+    [self getWeatherDataWithCity:[[result addressDetail] city]];
+}
+
+#pragma mark locationManageDelegate
+
+/**
+ *用户位置更新后，会调用此函数
+ *@param userLocation 新的用户位置
+ */
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
+{
+    NSLog(@"userLocation====%@",[userLocation.location description]);
+    [self getReverseGeocodeWithLocation:userLocation.location.coordinate];
+    [self stopLocation];
+}
+
+/**
+ *定位失败后，会调用此函数
+ *@param error 错误号
+ */
+- (void)didFailToLocateUserWithError:(NSError *)error
+{
+    
 }
 
 
@@ -235,6 +359,20 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)dealloc
+{
+    if (locationService)
+    {
+        [self startLocation];
+        locationService = nil;
+    }
+    if (geocodesearch)
+    {
+        geocodesearch = nil;
+    }
 }
 
 /*
