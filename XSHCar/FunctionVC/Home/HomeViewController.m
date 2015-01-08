@@ -21,13 +21,18 @@
 
 #import "AdvView.h"
 
-@interface HomeViewController ()<BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
+@interface HomeViewController ()<BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,NSXMLParserDelegate>
 {
     float height;
     AdvView *advView;
     BMKLocationService *locationService;
     BMKGeoCodeSearch *geocodesearch;
+    NSXMLParser *xmlParser;
+    NSMutableArray *xmlWeatherStringArray;
 }
+@property(nonatomic, strong) NSString *cityName;
+@property(nonatomic, strong) NSString *tempString;
+@property(nonatomic, strong) NSString *timeString;
 @end
 
 @implementation HomeViewController
@@ -39,6 +44,7 @@
     {
         self.title = @"熙盛恒汽车卫士";
         height = NAV_HEIGHT;
+        xmlWeatherStringArray = [NSMutableArray array];
         // Custom initialization
     }
     return self;
@@ -134,6 +140,34 @@
             button.showsTouchWhenHighlighted = YES;
             [scrollView addSubview:button];
         }
+    }
+}
+
+- (void)addWeatherView
+{
+    UIImageView *bgImageView = [CreateViewTool createImageViewWithFrame:CGRectMake(5, NAV_HEIGHT + 10, 120, 45) placeholderImage:nil];
+    [CommonTool clipView:bgImageView withCornerRadius:22.5];
+    bgImageView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:.8];
+    [self.view addSubview:bgImageView];
+    
+    UIImage *iconImage = [UIImage imageNamed:@"wetherIcon.png"];
+    UIImageView *weatherIcon = [CreateViewTool createImageViewWithFrame:CGRectMake( 10 ,(bgImageView.frame.size.height - iconImage.size.height)/2 , iconImage.size.width, iconImage.size.height) placeholderImage:iconImage];
+    [bgImageView addSubview:weatherIcon];
+    
+    NSArray *array = @[self.cityName,self.tempString];
+    NSLog(@"array===%@",array);
+    startHeight = weatherIcon.frame.origin.x + weatherIcon.frame.size.width + 5;
+    
+    for (int i = 0; i < [array count]; i++)
+    {
+        NSString *string = [array[i] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        //NSLog(@"array====%@===%@",@"--",[string stringByAddingPercentEscapesUsingEncoding:<#(NSStringEncoding)#>]);
+        float left_y = 5.0;
+        float labelHeight = (bgImageView.frame.size.height - left_y*2)/[array count];
+        UILabel *label = [CreateViewTool createLabelWithFrame:CGRectMake(startHeight, left_y + i * labelHeight, bgImageView.frame.size.width - startHeight, labelHeight) textString:string textColor:[UIColor whiteColor] textFont:FONT(13.0)];
+        if (i == 0)
+        label.textAlignment = NSTextAlignmentCenter;
+        [bgImageView addSubview:label];
     }
 }
 
@@ -318,7 +352,15 @@
         {
             NSURL *weatherUrl = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             NSString *weatherString = [NSString  stringWithContentsOfURL:weatherUrl encoding:NSUTF8StringEncoding error:nil];
-            NSLog(@"weatherUrl=====%@",weatherString);
+            NSData *data = [weatherString dataUsingEncoding:NSUTF8StringEncoding];
+            NSLog(@"data====%@",data);
+            xmlParser = [[NSXMLParser alloc] initWithData:data];
+            [xmlParser setDelegate:self];
+            [xmlParser setShouldProcessNamespaces:NO];
+            [xmlParser setShouldReportNamespacePrefixes:NO];
+            [xmlParser setShouldResolveExternalEntities:NO];
+            [xmlParser parse];
+
         });
 
     }
@@ -353,6 +395,48 @@
 {
     
 }
+
+#pragma mark xml parser delegate
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+    NSCharacterSet *whitespace = [NSCharacterSet whitespaceCharacterSet];
+    string = [string stringByTrimmingCharactersInSet:whitespace];
+    
+    if (![string isEqualToString:@"\n"]) {
+        [xmlWeatherStringArray addObject:string];
+    }
+}
+
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError{
+    NSLog(@"%@", [parseError description]);
+}
+
+- (void)parserDidEndDocument:(NSXMLParser *)parser{
+    [self outputParseInfo];
+    
+    //取出xml中数据后提取信息
+    [self splitXmlWeatherInfo];
+}	
+
+#pragma mark other
+- (void)outputParseInfo{
+    for (int i = 0; i < [xmlWeatherStringArray count]; ++i) {
+        NSLog(@"<%d>%@", i, [xmlWeatherStringArray objectAtIndex:i]);
+    }
+}
+
+- (void)splitXmlWeatherInfo
+{
+    if ([xmlWeatherStringArray count] >= 30)
+    {
+        NSLog(@"%@",xmlWeatherStringArray);
+        self.cityName = xmlWeatherStringArray[1];
+        self.timeString = xmlWeatherStringArray[4];
+        self.tempString =[xmlWeatherStringArray[5] stringByAppendingString:xmlWeatherStringArray[6]];
+        dispatch_async(dispatch_get_main_queue(), ^{[self addWeatherView];});
+        
+    }
+}
+
 
 
 - (void)didReceiveMemoryWarning
