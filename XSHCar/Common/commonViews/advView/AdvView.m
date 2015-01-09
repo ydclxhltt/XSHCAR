@@ -95,7 +95,9 @@
        // NSLog(@"IMAGE_SERVER_URL===%@",url);
         UIImageView *imageView = [CreateViewTool createImageViewWithFrame:CGRectMake(advscrollview.frame.size.width*i, 0, advscrollview.frame.size.width, advscrollview.frame.size.height) placeholderImage:nil];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
-        [imageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"car1.png"]];
+        NSString *imageName = (self.frame.size.height == ADV_HEIGHT) ? @"advDefault.png" : @"storeDefault.png";
+        NSLog(@"imageName====%@",imageName);
+        [imageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:imageName]];
         [advscrollview addSubview:imageView];
         //advimageview.frame = CGRectOffset(advimageview.frame, SCREEN_WIDTH * i, 0);
     }
@@ -138,7 +140,7 @@
 //取消定时器
 -(void)cancelTimer
 {
-    if ([timer isValid])
+    if (timer && [timer isValid])
     {
         [timer invalidate];
         timer = nil;
@@ -179,7 +181,10 @@
 }
 
 
-
+- (void)dealloc
+{
+    [self cancelTimer];
+}
 
 
 @end

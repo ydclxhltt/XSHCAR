@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define ADV_HEIGHT 160.0
+#define ADV_HEIGHT 150.0
 
 @interface AdvView : UIView
 
