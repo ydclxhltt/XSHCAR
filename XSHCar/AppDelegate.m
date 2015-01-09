@@ -58,6 +58,9 @@
     //添加登录视图
     [self addLoginViewWithAnimation:NO];
     
+    //添加引导视图
+    //[self addTechView];
+    
     //检查更新
     [self checkUpdate];
     
