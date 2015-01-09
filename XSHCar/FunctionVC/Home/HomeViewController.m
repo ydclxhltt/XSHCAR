@@ -393,7 +393,7 @@
  */
 - (void)didFailToLocateUserWithError:(NSError *)error
 {
-    
+    [CommonTool addAlertTipWithMessage:LOCATION_FAIL_TIP];
 }
 
 #pragma mark xml parser delegate

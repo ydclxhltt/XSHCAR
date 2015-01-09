@@ -108,7 +108,7 @@
     if (!self.table)
     {
         float height =  44.0 * [self.dataArray count];
-        height = ((SCREEN_HEIGHT - NAV_HEIGHT) < height) ? SCREEN_HEIGHT - NAV_HEIGHT : height;
+        height = ((SCREEN_HEIGHT - NAV_HEIGHT - TABBAR_HEIGHT) < height) ? SCREEN_HEIGHT - NAV_HEIGHT - TABBAR_HEIGHT : height;
         [self addTableViewWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, height) tableType:UITableViewStylePlain tableDelegate:self];
         self.table.separatorInset = UIEdgeInsetsZero;
     }
@@ -253,14 +253,16 @@
     int flag = 0;
     NSString *imageName = @"";
     NSString *nameString = @"";
+    int  isSet = 1;
     if (rowDic)
     {
         flag = [[rowDic objectForKey:@"flag"] intValue];
         imageName = ([rowDic objectForKey:@"sms_filepath"]) ? [rowDic objectForKey:@"sms_filepath"] : @"";
         nameString = ([rowDic objectForKey:@"sms_name"]) ? [rowDic objectForKey:@"sms_name"] : @"";
+        isSet = [[rowDic objectForKey:@"sms_isset"] intValue];
     }
     
-    if ([@"碰撞报警" isEqualToString:nameString ] || [@"侧翻报警" isEqualToString:nameString] || [@"预约提示" isEqualToString:nameString])
+    if (isSet == 0)
     {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
