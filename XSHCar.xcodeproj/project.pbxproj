@@ -1352,7 +1352,7 @@
 				ORGANIZATIONNAME = chenlei;
 				TargetAttributes = {
 					7789DFFE1A42796500B4CD09 = {
-						DevelopmentTeam = 75V3F7P6CN;
+						DevelopmentTeam = 68JHPZ577U;
 					};
 					7789E0191A42796500B4CD09 = {
 						TestTargetID = 7789DFFE1A42796500B4CD09;
@@ -1623,7 +1623,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -1655,7 +1655,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1666,8 +1666,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang wei (9AHM5GNUN5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang wei (9AHM5GNUN5)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: zhang wei (68JHPZ577U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: zhang wei (68JHPZ577U)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XSHCar/XSHCar-Prefix.pch";
@@ -1683,7 +1683,7 @@
 					"$(PROJECT_DIR)/XSHCar/Common/BaiDu_Map/Release-iphonesimulator",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1b55b1c4-c2a1-4769-8e4f-a54dcdc601c8";
+				PROVISIONING_PROFILE = "35d013cb-1229-4c69-aee3-a4438cfd2661";
 				SDKROOT = iphoneos8.1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1694,8 +1694,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang wei (9AHM5GNUN5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang wei (9AHM5GNUN5)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: zhang wei (68JHPZ577U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: zhang wei (68JHPZ577U)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XSHCar/XSHCar-Prefix.pch";
@@ -1711,7 +1711,7 @@
 					"$(PROJECT_DIR)/XSHCar/Common/BaiDu_Map/Release-iphonesimulator",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1b55b1c4-c2a1-4769-8e4f-a54dcdc601c8";
+				PROVISIONING_PROFILE = "35d013cb-1229-4c69-aee3-a4438cfd2661";
 				SDKROOT = iphoneos8.1;
 				WRAPPER_EXTENSION = app;
 			};
