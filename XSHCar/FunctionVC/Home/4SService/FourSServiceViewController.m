@@ -225,7 +225,7 @@
     {
         return;
     }
-    lastSelectedIndex = segmentView.selectedSegmentIndex;
+    lastSelectedIndex = (int)segmentView.selectedSegmentIndex;
     currentPage = 1;
     self.dataArray = nil;
     [self.table reloadData];

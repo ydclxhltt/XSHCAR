@@ -10,10 +10,10 @@
 #define SmallPig_RequestHeader_h
 
 //服务器地址
-#define WEB_SERVER_URL          @"http://pcnew.xshcar.com:9988/"
+#define WEB_SERVER_URL          @"http://pcnew.xshcar.com/"
 
 //图片地址
-#define IMAGE_SERVER_URL        @"http://pcnew.xshcar.com:9988/carcloud/image/icon/"
+#define IMAGE_SERVER_URL        @"http://pcnew.xshcar.com/carcloud/image/icon/"
 
 //天气预报地址
 #define GET_WEATHER_URL         @"http://webservice.webxml.com.cn/WebServices/WeatherWebService.asmx/getWeatherbyCityName?theCityName="

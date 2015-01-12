@@ -299,7 +299,6 @@
     startTime = (startTime) ? startTime : @"";
     NSString *endTime = [responseDic objectForKey:@"endtime"];
     endTime = (endTime) ? endTime : @"";
-    
     timeLabel.text = [NSString stringWithFormat:@"  最近行程: %@ -- %@",startTime,endTime];
 }
 
@@ -420,6 +419,7 @@
 {
     if ([self.trackArray count] == 4)
     {
+        [_mapView removeOverlays:_mapView.overlays];
         self.trackArray = @[@"23.040772",@"113.176361",@"23.040772",@"113.196361"];
         CLLocationCoordinate2D corss[2];
         CLLocationCoordinate2D coor2d1 = CLLocationCoordinate2DMake([self.trackArray[0] floatValue], [self.trackArray[1] floatValue]);

@@ -21,7 +21,7 @@
 
 #import "AdvView.h"
 
-@interface HomeViewController ()<BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,NSXMLParserDelegate>
+@interface HomeViewController ()<BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,NSXMLParserDelegate,UIAlertViewDelegate>
 {
     float height;
     AdvView *advView;
@@ -257,11 +257,13 @@
          NSString *responseString = (NSString *)responseDic;
          if(responseString && ![@"" isEqualToString:responseString])
          {
-             [SVProgressHUD showSuccessWithStatus:@"获取成功" duration:.5];
+             [SVProgressHUD showSuccessWithStatus:@"获取成功" duration:.1];
+
              NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",responseString]];
              if ([[UIApplication sharedApplication] canOpenURL:url])
              {
-                 [[UIApplication sharedApplication] openURL:url];
+                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"救援电话" message:responseString delegate:self cancelButtonTitle:@"拨打" otherButtonTitles:@"取消", nil];
+                 [alertView show];
              }
              else
              {
@@ -275,13 +277,23 @@
              [SVProgressHUD showErrorWithStatus:@"获取号码失败"];
          }
      }
-                 requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
+    requestFail:^(AFHTTPRequestOperation *operation,NSError *error)
      {
          [SVProgressHUD showErrorWithStatus:@"获取号码失败"];
          NSLog(@"error===%@",error);
      }];
 }
 
+#pragma mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if ([@"拨打" isEqualToString:title])
+    {
+         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",alertView.message]];
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
 
 
 #pragma mark 开始获取天气

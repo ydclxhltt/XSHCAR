@@ -68,7 +68,7 @@
         self.advarray=(NSMutableArray *)advdata;
         if (self.advarray && [self.advarray count]>0)
         {
-            totalPage = [self.advarray count];
+            totalPage = (int)[self.advarray count];
             [self refreshScrollView];
         }
     }

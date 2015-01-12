@@ -13,8 +13,8 @@
 #define PRODUCT_NAME            @""
 
 //产品版本号
-#define PRODUCT_VERSION         @"V1.2.1"
-#define INT_VERSION             121
+#define PRODUCT_VERSION         @"V1.2.2"
+#define INT_VERSION             122
 
 //平台//@"IOS"
 #define APPLICATION_PLATFORM    2

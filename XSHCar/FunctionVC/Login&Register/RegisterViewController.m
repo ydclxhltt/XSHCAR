@@ -287,7 +287,7 @@
 #pragma mark  textFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    int tag = textField.tag;
+    int tag = (int)textField.tag;
     if (tag == 5)
     {
         //获取4Slist

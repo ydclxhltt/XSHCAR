@@ -119,8 +119,7 @@
 #pragma mark 刷新数据
 - (void)reloadData:(NSDictionary *)responseDic
 {
-    scoreLabel.text = @"90.00";
-    //[responseDic objectForKey:@"countScore"];
+    scoreLabel.text = [responseDic objectForKey:@"countScore"];
     enLable.attributedText = [self makeStringWithTitle:@"环境指数: " scoreText:[responseDic objectForKey:@"envimentzhishu"]];
     safeLabel.attributedText = [self makeStringWithTitle:@"安全指数: " scoreText:[responseDic objectForKey:@"safezhishu"]];
     self.dataArray = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", nil];
@@ -151,7 +150,6 @@
 #pragma mark 设置多属性字符串
 - (NSMutableAttributedString *)makeStringWithTitle:(NSString *)title scoreText:(NSString *)score
 {
-    score = @"97.53";
     NSString *textString = [NSString stringWithFormat:@"%@%@",title,score];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:textString];
     [attributedString addAttribute:NSFontAttributeName

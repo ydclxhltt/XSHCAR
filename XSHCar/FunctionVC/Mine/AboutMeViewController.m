@@ -90,7 +90,7 @@
 {
     
     [SVProgressHUD showWithStatus:LOADING_DEFAULT_TIP];
-    webwiew = [[UIWebView alloc] initWithFrame:CGRectMake(0, startHeight, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    webwiew = [[UIWebView alloc] initWithFrame:CGRectMake(0, startHeight, SCREEN_WIDTH, SCREEN_HEIGHT - startHeight)];
     webwiew.scrollView.bounces = NO;
     webwiew.delegate = self;
     //webwiew.scalesPageToFit = YES;

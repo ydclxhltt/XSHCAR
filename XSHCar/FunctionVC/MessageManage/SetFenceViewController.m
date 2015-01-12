@@ -215,7 +215,7 @@
     {
         polygon = nil;
     }
-    int count = [self.dataArray count];
+    int count = (int)[self.dataArray count];
     CLLocationCoordinate2D locationArray[count];
     for (int i = 0; i < [self.dataArray count];i++)
     {
