@@ -29,7 +29,7 @@
     [self addBackItem];
     //初始化UI
     [self createUI];
-    //获取平安信息数据
+    //获取平安信息数据(后台变态设计，把平安信息信息和自己定义的城市列表一起返回，特殊处理取平安亲人数据)
     cityViewController = [[CityListViewController alloc] init];
     cityViewController.cityScource = CityScourceFromXSH;
     cityViewController.smsID = self.smsID;

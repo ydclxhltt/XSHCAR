@@ -96,7 +96,6 @@
         UIImageView *imageView = [CreateViewTool createImageViewWithFrame:CGRectMake(advscrollview.frame.size.width*i, 0, advscrollview.frame.size.width, advscrollview.frame.size.height) placeholderImage:nil];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         NSString *imageName = (self.frame.size.height == ADV_HEIGHT) ? @"advDefault.png" : @"storeDefault.png";
-        NSLog(@"imageName====%@",imageName);
         [imageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:imageName]];
         [advscrollview addSubview:imageView];
         //advimageview.frame = CGRectOffset(advimageview.frame, SCREEN_WIDTH * i, 0);

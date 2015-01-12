@@ -39,8 +39,15 @@
     //通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exit) name:@"Exit" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendToken) name:@"SendToken" object:nil];
+    
     //注册远程通知
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge)];
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)])
+    {
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }
+    else
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge)];
     
     //注册百度地图
     mapManager = [[BMKMapManager alloc] init];

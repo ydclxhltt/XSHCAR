@@ -185,7 +185,7 @@
  */
 - (void)didFailToLocateUserWithError:(NSError *)error
 {
-    [CommonTool addAlertTipWithMessage:LOCATION_FAIL_TIP];
+    
 }
 
 

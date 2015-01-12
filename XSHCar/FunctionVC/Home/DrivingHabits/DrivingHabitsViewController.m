@@ -47,6 +47,7 @@
 - (void)setTableHeaderView
 {
     float add_y = 15.0;
+    //获取放大比例,手动适配
     float scale = SCREEN_WIDTH/320.0;
     UIImage *image = [UIImage imageNamed:@"numberBg"];
     UIImageView *headerView = [CreateViewTool createImageViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, add_y + image.size.height/2 + add_y) placeholderImage:nil];
@@ -55,21 +56,21 @@
     imageView.backgroundColor = [UIColor clearColor];
     [headerView addSubview:imageView];
     
-    float left_x = 22.0 * scale;
-    float left_y = 22.0 * scale;
-    float lbl_width = 60.0 * scale;
+    float left_x = 20.0 * scale;
+    float left_y = 20.0 * scale;
+    float lbl_width = 65.0 * scale;
     
-    scoreLabel = [CreateViewTool createLabelWithFrame:CGRectMake(left_x, left_y, lbl_width, 35.0) textString:@"" textColor:APP_MAIN_COLOR textFont:BOLD_FONT(30.0)];
+    scoreLabel = [CreateViewTool createLabelWithFrame:CGRectMake(left_x, left_y, lbl_width, 35.0) textString:@"" textColor:APP_MAIN_COLOR textFont:BOLD_FONT(25.0)];
     scoreLabel.textAlignment = NSTextAlignmentCenter;
     [imageView  addSubview:scoreLabel];
     
-    UILabel *label = [CreateViewTool createLabelWithFrame:CGRectMake(left_x, left_y + scoreLabel.frame.size.height, lbl_width, 20.0) textString:@"总得分" textColor:[UIColor blackColor] textFont:BOLD_FONT(17.0)];
+    UILabel *label = [CreateViewTool createLabelWithFrame:CGRectMake(left_x, left_y + scoreLabel.frame.size.height, lbl_width, 20.0) textString:@"总得分" textColor:[UIColor blackColor] textFont:FONT(16.0)];
     label.textAlignment = NSTextAlignmentCenter;
     [imageView  addSubview:label];
     
-    float add_x = 30.0 * scale;
-    float add_y1 = 4.0 * scale;
-    float lbl_width1 = 100.0 * scale;
+    float add_x = 15.0 * scale;
+    float add_y1 = 10.0 * scale;
+    float lbl_width1 = 120.0 * scale;
     float lbl_height = 25.0 * scale;
     left_x = left_x + add_x + scoreLabel.frame.size.width;
     
@@ -118,7 +119,8 @@
 #pragma mark 刷新数据
 - (void)reloadData:(NSDictionary *)responseDic
 {
-    scoreLabel.text = [responseDic objectForKey:@"countScore"];
+    scoreLabel.text = @"90.00";
+    //[responseDic objectForKey:@"countScore"];
     enLable.attributedText = [self makeStringWithTitle:@"环境指数: " scoreText:[responseDic objectForKey:@"envimentzhishu"]];
     safeLabel.attributedText = [self makeStringWithTitle:@"安全指数: " scoreText:[responseDic objectForKey:@"safezhishu"]];
     self.dataArray = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", nil];
@@ -149,16 +151,17 @@
 #pragma mark 设置多属性字符串
 - (NSMutableAttributedString *)makeStringWithTitle:(NSString *)title scoreText:(NSString *)score
 {
+    score = @"97.53";
     NSString *textString = [NSString stringWithFormat:@"%@%@",title,score];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:textString];
     [attributedString addAttribute:NSFontAttributeName
-                             value:BOLD_FONT(16.0)
+                             value:FONT(15.0)
                              range:[textString rangeOfString:title]];
     [attributedString addAttribute:NSForegroundColorAttributeName
                              value:[UIColor blackColor]
                              range:[textString rangeOfString:title]];
     [attributedString addAttribute:NSFontAttributeName
-                             value:BOLD_FONT(25.0)
+                             value:BOLD_FONT(19.0)
                              range:[textString rangeOfString:score]];
     [attributedString addAttribute:NSForegroundColorAttributeName
                              value:APP_MAIN_COLOR

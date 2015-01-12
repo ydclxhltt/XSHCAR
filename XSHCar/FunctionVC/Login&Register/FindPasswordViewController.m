@@ -287,7 +287,7 @@
     {
         return YES;
     }
-    int tag = textField.tag;
+    int tag = (int)textField.tag;
     if (tag >= 4)
     {
         [UIView animateWithDuration:.3 animations:^{bgImageView.transform = CGAffineTransformMakeTranslation(0, -75.0);}];

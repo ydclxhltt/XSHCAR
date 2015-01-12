@@ -104,6 +104,7 @@
                 ((UITextField *)[selectView viewWithTag:2]).text = array[1];
                 ((UITextField *)[selectView viewWithTag:3]).text = array[2];
                 [self initCarInfo];
+                 //需特殊处理请求第三方，对比取出第三方对应的城市ID
                 tempListViewController = [[CityListViewController alloc]init];
                 tempListViewController.cityScource = CityScourceFromThird;
                 [tempListViewController viewDidLoad];
